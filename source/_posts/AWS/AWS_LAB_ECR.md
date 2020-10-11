@@ -19,6 +19,7 @@ https://ap-east-1.console.aws.amazon.com/ecr/home?region=ap-east-1#
 ## 1. Demo
 ### 1.1 create docker images
 - Dockerfile
+
 ```bash
 FROM ubuntu:16.04
 

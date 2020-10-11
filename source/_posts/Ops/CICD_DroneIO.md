@@ -5,7 +5,7 @@ tags:
     - cicd
     - drone io
 category: 
-    - cicd
+    - cicd_ops
 ---
 
 # Drone IO - tool hỗ trợ việc CICD

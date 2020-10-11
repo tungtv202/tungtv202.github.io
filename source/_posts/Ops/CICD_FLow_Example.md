@@ -4,7 +4,7 @@ date: 2020-02-22 18:00:26
 tags:
     - cicd
 category: 
-    - cicd
+    - cicd_ops
 ---
 ## Example 1 - Jenkins 
 ![Example 1](https://tungexplorer.s3.ap-southeast-1.amazonaws.com/cicd/Diagram_Example_1.png)
