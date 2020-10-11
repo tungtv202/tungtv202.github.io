@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AWS - LAB - Cognitor | Tung Explorer</title>
+  <meta name="keywords" content=" aws , cognito ">
+  <meta name="description" content="AWS - LAB - Cognitor | Tung Explorer">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="ThreadLocal Tư tưởng là mỗi thread, sẽ có 1 “vùng nhớ” riêng để chứa dữ liệu, khi các method ở các class khác nhau, được chạy trong cùng 1 thread, sẽ lấy được giá trị ở “vùng nhớ” đó.&#x3D;&gt; Ví dụ có th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java - Concurrency">
+<meta property="og:url" content="http://example.com/2020/09/Java/Concurrency/index.html">
+<meta property="og:site_name" content="Tung Explorer">
+<meta property="og:description" content="ThreadLocal Tư tưởng là mỗi thread, sẽ có 1 “vùng nhớ” riêng để chứa dữ liệu, khi các method ở các class khác nhau, được chạy trong cùng 1 thread, sẽ lấy được giá trị ở “vùng nhớ” đó.&#x3D;&gt; Ví dụ có th">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.viblo.asia/59d1214d-4438-4f46-878f-5db8af35fa1c.png">
+<meta property="article:published_time" content="2020-09-30T11:00:26.000Z">
+<meta property="article:modified_time" content="2020-10-11T14:51:42.673Z">
+<meta property="article:author" content="Tung Explorer">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="concurrency">
+<meta property="article:tag" content="thread local">
+<meta property="article:tag" content="volatile">
+<meta property="article:tag" content="thread safe">
+<meta property="article:tag" content="completable future">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.viblo.asia/59d1214d-4438-4f46-878f-5db8af35fa1c.png">
+
+
+<link rel="icon" href="/img/icon.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/zenbum.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/ahbp.gif" />
+</a>
+<div class="author">
+    <span>Tung Explorer</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="github" href="https://github.com/tungtv202" target="_blank">
+            
+                <i class="iconfont icon-github"></i>
+            
+        </a>
+        
+    
+        
+        <a title="facebook" href="https://www.facebook.com/tungtv2029x/" target="_blank">
+            
+                <i class="iconfont icon-facebook"></i>
+            
+        </a>
+        
+    
+        
+        <a title="linkedin" href="https://www.linkedin.com/in/tungtv202" target="_blank">
+            
+                <i class="iconfont icon-linkedin"></i>
+            
+        </a>
+        
+    
+        
+        <a title="email" href="mailto:tungtv202@gmail.com" target="_blank">
+            
+                <i class="iconfont icon-email"></i>
+            
+        </a>
+        
+    
+</div>
+
+
+
+<a class="more-menus">更多菜单</a>
+
+
+<ul>
+    <li><div class="all active" data-rel="All">All<small>(45)</small></div></li>
+    
+        
+            
+            <li><div data-rel="aws">aws<small>(12)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="cicd">cicd<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="code_template">code_template<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="docker">docker<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="elastic_search">elastic_search<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="install_guide">install_guide<small>(8)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="java"><i class="fold iconfont icon-right"></i>java<small>(18)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="java<--->feign">feign<small>(3)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="java<--->jackson">jackson<small>(2)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    <a class="dynamic-menu site_url"   href="/bookmarks">Bookmarks</a>
+    
+    
+    
+    </div>
+    <div><a class="about  site_url"  href="/about">About</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="45">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="find  i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="TOC "></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="back"></i>
+            <input id="local-search-input" />
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="match case"></i>
+            <i class="iconfont icon-tag" data-title="tag"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">---TOC---</div>
+            <i class="iconfont icon-list" data-title="list article"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>aria2</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>auto scheduler</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>auto tool</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>aws</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>beanstalk</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cicd</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>code template</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cognito</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>command</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>completable future</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>concurrency</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>diff</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>docker</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>drone io</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>EBS</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ecr</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ecs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>elastic beanstalk</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>elastic search</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>evaluation logic</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>feign</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>gen code</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>GeneratedValue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>google translate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>http client</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>install</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jackson</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>javers</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jhipster</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jpa</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>junit</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jvm internal</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafdrop</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafka</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>KafkaListener</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>lambda</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>log</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>logback</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>memory leak</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>metric</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mockito</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>node</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>note</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>note total</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>npm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>object storage</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>postgresql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>prometheus</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>quartz</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>route53</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>s3</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>script</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>secureCRT</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>security</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>security token service</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>serialize</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>simple queue service</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>spring</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sqs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ssh tool</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>stompJs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sts</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>template</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread local</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread safe</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>translate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>unit test</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>volatile</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>web socket</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>yaml</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>zookeeper</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="All java "
+           href="/2020/09/Java/Concurrency/"
+           data-tag="java,concurrency,thread local,volatile,thread safe,completable future"
+           data-author="" >
+            <span class="post-title" title="Java - Concurrency">Java - Concurrency</span>
+            <span class="post-date" title="2020-09-30 18:00:26">2020/09/30</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/08/Java/JVM_Internal/"
+           data-tag="java,jvm internal"
+           data-author="" >
+            <span class="post-title" title="Java - JVM Internal">Java - JVM Internal</span>
+            <span class="post-date" title="2020-08-10 18:00:26">2020/08/10</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/07/Java/SpringSecurity/"
+           data-tag="java,spring,security"
+           data-author="" >
+            <span class="post-title" title="Java - Spring Security">Java - Spring Security</span>
+            <span class="post-date" title="2020-07-18 18:00:26">2020/07/18</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/06/AWS/AWS_Note/"
+           data-tag="aws,note total"
+           data-author="" >
+            <span class="post-title" title="AWS - Note Total">AWS - Note Total</span>
+            <span class="post-date" title="2020-06-18 18:00:26">2020/06/18</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/06/Java/Logback/"
+           data-tag="log,logback"
+           data-author="" >
+            <span class="post-title" title="Java - Logback">Java - Logback</span>
+            <span class="post-date" title="2020-06-09 18:00:26">2020/06/09</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/06/Java/Quartz/"
+           data-tag="java,quartz,auto scheduler"
+           data-author="" >
+            <span class="post-title" title="Java - Implement Quartz">Java - Implement Quartz</span>
+            <span class="post-date" title="2020-06-03 18:00:26">2020/06/03</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/04/Java/Jhipster/"
+           data-tag="java,jhipster,auto tool,gen code"
+           data-author="" >
+            <span class="post-title" title="Java - Jhipster">Java - Jhipster</span>
+            <span class="post-date" title="2020-04-25 18:00:26">2020/04/25</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/04/Install_Guide/Install_Guide_Node_Npm/"
+           data-tag="script,node,npm"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Node + npm">Install Guide - Node + npm</span>
+            <span class="post-date" title="2020-04-20 18:00:26">2020/04/20</span>
+        </a>
+        
+        <a  class="All code_template "
+           href="/2020/03/CodeTemplate/GoogleTranslateExmple/"
+           data-tag="code template,google translate,translate"
+           data-author="" >
+            <span class="post-title" title="Code Template - Google Translate">Code Template - Google Translate</span>
+            <span class="post-date" title="2020-03-10 18:00:26">2020/03/10</span>
+        </a>
+        
+        <a  class="All cicd "
+           href="/2020/02/CICD/CICD_FLow_Example/"
+           data-tag="cicd"
+           data-author="" >
+            <span class="post-title" title="CICD - Flow Example">CICD - Flow Example</span>
+            <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/02/Install_Guide/Install_Guide_Prometheus/"
+           data-tag="yaml,prometheus"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Prometheus">Install Guide - Prometheus</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        <a  class="All docker "
+           href="/2020/02/Docker/Docker_TemplateFile/"
+           data-tag="docker,template"
+           data-author="" >
+            <span class="post-title" title="Docker - Template File">Docker - Template File</span>
+            <span class="post-date" title="2020-02-10 18:00:26">2020/02/10</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/02/Java/Java_Total/"
+           data-tag="java,note,KafkaListener"
+           data-author="" >
+            <span class="post-title" title="Java - Note Total">Java - Note Total</span>
+            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/02/Java/Java_Code_Prometheus_Metric/"
+           data-tag="prometheus,java,metric"
+           data-author="" >
+            <span class="post-title" title="Java - Code Application expose Metric for Prometheus">Java - Code Application expose Metric for Prometheus</span>
+            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_Cognito/"
+           data-tag="aws,cognito"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - Cognitor">AWS - LAB - Cognitor</span>
+            <span class="post-date" title="2020-01-30 18:00:26">2020/01/30</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ElasticBeanstalk/"
+           data-tag="aws,elastic beanstalk,beanstalk"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB- Beanstalk">AWS - LAB- Beanstalk</span>
+            <span class="post-date" title="2020-01-27 18:00:26">2020/01/27</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_Route53/"
+           data-tag="aws,route53"
+           data-author="" >
+            <span class="post-title" title="AWS - Route 53">AWS - Route 53</span>
+            <span class="post-date" title="2020-01-27 18:00:26">2020/01/27</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_STS/"
+           data-tag="aws,sts,security token service"
+           data-author="" >
+            <span class="post-title" title="AWS - STS">AWS - STS</span>
+            <span class="post-date" title="2020-01-26 18:00:26">2020/01/26</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_Design_For_Organizational_Complexity/"
+           data-tag="aws"
+           data-author="" >
+            <span class="post-title" title="AWS - Design for organizational">AWS - Design for organizational</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ECR/"
+           data-tag="aws,ecr"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - ECR">AWS - LAB - ECR</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Mount_EBS_to_EC2/"
+           data-tag="install,EBS"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Mount an EBS volume to EC2 Linux">Install Guide - Mount an EBS volume to EC2 Linux</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ECS/"
+           data-tag="aws,ecs"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - ECS">AWS - LAB - ECS</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Aria2/"
+           data-tag="script,aria2"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Aria2">Install Guide - Aria2</span>
+            <span class="post-date" title="2020-01-24 18:00:26">2020/01/24</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Install_Guide_Kafka/"
+           data-tag="script,zookeeper,kafka,kafdrop"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Kafka">Install Guide - Kafka</span>
+            <span class="post-date" title="2020-01-24 18:00:26">2020/01/24</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Install_Guide_Postgresql/"
+           data-tag="script,install,postgresql"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Postgres SQL">Install Guide - Postgres SQL</span>
+            <span class="post-date" title="2020-01-22 18:00:26">2020/01/22</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/01/Java/SpringBoot_WebSocket_StompJS/"
+           data-tag="java,web socket,stompJs,spring"
+           data-author="" >
+            <span class="post-title" title="Java - Spring web Socket + StompJS">Java - Spring web Socket + StompJS</span>
+            <span class="post-date" title="2020-01-15 18:00:26">2020/01/15</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/01/Java/Javers_Diff/"
+           data-tag="java,javers,diff"
+           data-author="" >
+            <span class="post-title" title="Java - Javers Diff">Java - Javers Diff</span>
+            <span class="post-date" title="2020-01-13 18:00:26">2020/01/13</span>
+        </a>
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/FeignClient_CustomizeByBean/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Customize Feign By Bean">Feign Client - Customize Feign By Bean</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/Feign_BuilderExample/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Client builder example">Feign Client - Client builder example</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/Feign_MultipleConfig/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Multiple Configuration">Feign Client - Multiple Configuration</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        <a  class="All code_template "
+           href="/2019/12/CodeTemplate/CodeTemplate_S3/"
+           data-tag="aws,s3,code template"
+           data-author="" >
+            <span class="post-title" title="Code Template - AWS - S3">Code Template - AWS - S3</span>
+            <span class="post-date" title="2019-12-27 18:00:26">2019/12/27</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2019/12/AWS/AWS_PolicyEvaluationLogic/"
+           data-tag="aws,evaluation logic"
+           data-author="" >
+            <span class="post-title" title="AWS - Policy Evaluation Logic">AWS - Policy Evaluation Logic</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        <a  class="All java jackson "
+           href="/2019/12/Java/JackSon/Jackson_Deserialize_Abstractclass/"
+           data-tag="java,serialize,jackson"
+           data-author="" >
+            <span class="post-title" title="Jackson - Deserialize Abstract class">Jackson - Deserialize Abstract class</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        <a  class="All java jackson "
+           href="/2019/12/Java/JackSon/Jackson/"
+           data-tag="java,serialize,jackson"
+           data-author="" >
+            <span class="post-title" title="Jackson - Note">Jackson - Note</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        <a  class="All docker "
+           href="/2019/12/Docker/Docker_Command/"
+           data-tag="docker,command,script,install"
+           data-author="" >
+            <span class="post-title" title="Docker - Command">Docker - Command</span>
+            <span class="post-date" title="2019-12-03 18:00:26">2019/12/03</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2019/12/Install_Guide/Install_SecureCRT/"
+           data-tag="install,secureCRT,ssh tool"
+           data-author="" >
+            <span class="post-title" title="Install Guide - SecureCRT">Install Guide - SecureCRT</span>
+            <span class="post-date" title="2019-12-03 18:00:26">2019/12/03</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2019/12/Install_Guide/Install_Java/"
+           data-tag="script,install,java"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Java">Install Guide - Java</span>
+            <span class="post-date" title="2019-12-03 18:00:26">2019/12/03</span>
+        </a>
+        
+        <a  class="All cicd "
+           href="/2019/05/CICD/CICD_DroneIO/"
+           data-tag="cicd,drone io"
+           data-author="" >
+            <span class="post-title" title="CICD - DroneIO">CICD - DroneIO</span>
+            <span class="post-date" title="2019-05-17 18:00:26">2019/05/17</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2019/05/AWS/AWS_LAB_S3/"
+           data-tag="aws,s3,object storage"
+           data-author="" >
+            <span class="post-title" title="AWS - S3">AWS - S3</span>
+            <span class="post-date" title="2019-05-17 18:00:26">2019/05/17</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2019/03/Java/MemoryLeak/"
+           data-tag="java,memory leak"
+           data-author="" >
+            <span class="post-title" title="Java - Memory Leak">Java - Memory Leak</span>
+            <span class="post-date" title="2019-03-17 18:00:26">2019/03/17</span>
+        </a>
+        
+        <a  class="All elastic_search "
+           href="/2018/11/ElasticSearch/ElasticSearch_Note/"
+           data-tag="elastic search"
+           data-author="" >
+            <span class="post-title" title="Elastic Search - Some Note">Elastic Search - Some Note</span>
+            <span class="post-date" title="2018-11-20 18:00:26">2018/11/20</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2018/10/AWS/AWS_Lambda_CaseStudy/"
+           data-tag="aws,lambda"
+           data-author="" >
+            <span class="post-title" title="AWS - Lambda - Case study">AWS - Lambda - Case study</span>
+            <span class="post-date" title="2018-10-14 18:00:26">2018/10/14</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2018/10/Java/Junit_Mockito/"
+           data-tag="java,junit,mockito,unit test"
+           data-author="" >
+            <span class="post-title" title="Java - Junit + Mockito">Java - Junit + Mockito</span>
+            <span class="post-date" title="2018-10-12 18:00:26">2018/10/12</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2018/10/Java/JPA_GeneratedValue/"
+           data-tag="java,GeneratedValue,jpa"
+           data-author="" >
+            <span class="post-title" title="Java - Annotation @GeneratedValue trong JPA">Java - Annotation @GeneratedValue trong JPA</span>
+            <span class="post-date" title="2018-10-12 18:00:26">2018/10/12</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2018/09/AWS/AWS_SQS/"
+           data-tag="aws,sqs,simple queue service"
+           data-author="" >
+            <span class="post-title" title="AWS - SQS">AWS - SQS</span>
+            <span class="post-date" title="2018-09-11 18:00:26">2018/09/11</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="full-screen  s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-AWS/AWS_LAB_Cognito" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">AWS - LAB - Cognitor</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="aws">aws</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">aws</a>
+            
+            <a class="color3">cognito</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2020-10-11 18:54:36'>2020-01-30 18:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <!-- <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span> -->
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Su-dung-AWS-Cognitor-de-identify"><span class="toc-text">Sử dụng AWS Cognitor để identify</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Tao-User-Pool"><span class="toc-text">1. Tạo User Pool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-code"><span class="toc-text">2. code</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dang-nhap"><span class="toc-text">Đăng nhập</span></a></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Su-dung-AWS-Cognitor-de-identify"><a href="#Su-dung-AWS-Cognitor-de-identify" class="headerlink" title="Sử dụng AWS Cognitor để identify"></a>Sử dụng AWS Cognitor để identify</h1><p>AWS Cognito có 2 loại authentication là cho phép người dùng tự cấu hình (User Pool) hoặc dùng các dịch vụ có sẵn (Identity Pool).<br>Ở đây, mình sẽ dùng dạng User Pool. Công việc cần làm như sau:</p>
+<ul>
+<li>Tạo User Pool</li>
+<li>Viết code đăng nhập   </li>
+</ul>
+<p><img src="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/img/aws-cognito.jpg" alt="createPool"></p>
+<h2 id="1-Tao-User-Pool"><a href="#1-Tao-User-Pool" class="headerlink" title="1. Tạo User Pool"></a>1. Tạo User Pool</h2><ul>
+<li>Vào trang chủ của AWS Cognito, chọn Manage <code>User Pool » Create a user pool.</code>    </li>
+<li>Bạn nhập tên User Pool và chọn Step through settings để tự cấu hình.<br><img src="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/img/create__name.jpg"><br>Bước này, bạn chọn thuộc tính của <code>User Pool</code>. Ở đây, mình cần đăng nhập bằng số điện thoại, không cần thuộc tính gì thêm nữa nên chọn <code>Email address or phone number</code>, đánh dấu chọn <code>Allow phone numbers</code>. Nhấn <code>Next Step.</code><br><img src="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/img/create_attributes.jpg"><br>Tiếp theo là tuỳ chỉnh chính sách của User Pool. Đầu tiên là phần mật khẩu ở phần <code>What password strength do you want to require?</code>, bạn muốn cấu trúc của mật khẩu như thế nào, độ dài, có chữ thường, có chữ hoa, có số, có kí tự đặc biệt. Tiếp theo là bạn có muốn người dùng được tự do đăng ký tài khoản hay chỉ admin được phép tạo thì chỉnh ở phần <code>Do you want to allow users to sign themselves up?</code>. Nếu bạn chỉ cho phép admin tạo tài khoản, thì tài khoản sẽ bị hết hạn trong vòng bao nhiêu ngày thì chỉnh ở <code>How quickly should user accounts created by administrators expire if not used?.</code><br><img src="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/img/create__policies.jpg"><br>Chỗ này sẽ giúp bạn có gửi OTP code hay không. Ở <code>Do you want to enable Multi-Factor Authentication (MFA)?</code>, bạn chọn là <code>Required</code> nhé. Ý nghĩa như sau:</li>
+<li><code>Off</code> - Không có Multi-Factor Authentication gì hết.</li>
+<li><code>Optional</code> - Chỉ có phần đăng ký là sẽ gửi mã về để xác nhận. Còn đăng nhập thì không. Phải bật MFA cho từng user lên, khá cực.</li>
+<li><code>Required</code> - Mặc định là đăng ký lẫn đăng nhập đều bắt buộc sử dụng mã để xác nhận.<br>Ở phần <code>Which second factors do you want to enable?</code>, bạn check vào <code>SMS text message</code> để gửi SMS cho user và <code>Time-based One-time Password</code> để sử dụng code OTP. Ở<code> Do you want to require verification of emails or phone numbers?</code> thì mình chọn <code>Phone Number</code> được rồi. Ở <code>You must provide a role to allow Amazon Cognito to send SMS messages</code> thì cứ nhập tên gì đó rồi nhấn <code>Create Role</code> sẽ ra được ARN như hình dưới đây.<br><img src="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/img/create__MFA.jpg"><br>Tiếp theo là tuỳ chỉnh lại nội dung của SMS hoặc Email khi kích hoạt MFA. Không thích thì cứ nhấn <code>Next Step.</code><br><img src="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/img/create__message-custom.jpg"><br>Bước này thích thì chỉnh, không thì <code>Next Step.</code><br><img src="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/img/create__tags.jpg"><br>Vụ <code>remmember user&#39;s devices</code> hình như phục vụ mục đích SEO. Cá nhân mình chọn <code>NO</code> vì yêu cầu không cần và đỡ phải chỉnh code tè le.<br><img src="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/img/create__devices.jpg"><br>Bước kết nối với App Clients thì cứ mạnh dạn chọn <code>Add an app client</code>. Về phần cấu hình thì nhớ không được check <code>Generate client secret</code> để lúc code không bị lằng nhằng và chỉ check <code>Enable username-password (non-SRP) flow for app-based authentication (USER_PASSWORD_AUTH).</code><br><img src="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/img/create__app-clients.jpg"><br><img src="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/img/create__app-clients__create.jpg"><br>Ở bước kết nối với Triggers thì bạn có thể bỏ qua. Cơ chế ở đây là sẽ dùng AWS Lambda để xử lý các sự kiện liên quan đến Authenication.<br><img src="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/img/create__triggers.jpg"><br>Xong xuôi thì lúc review sẽ như sau. Nhấn <code>Create pool</code> được rồi.</li>
+</ul>
+<p><img src="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/img/create_reviews.jpg"></p>
+<h2 id="2-code"><a href="#2-code" class="headerlink" title="2. code"></a>2. code</h2><p>Ban đầu, mình google thì thấy hướng dẫn dùng <code>amazon-cognito-identity-js</code> nằm trong phần <code>Auth</code> của <code>amplify-js</code> để xử lý. Điều nổi máu đầu tiên, nếu bạn xài <code>amazon-cognito-identity-js</code> thì code của bạn khá là thủ công. Còn xài <code>aws-amplify</code> code sẽ khoẻ hơn. Bạn có thể tham khảo cách viết của 2 thằng này, cùng giải quyết một vấn đề nhé.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/aws-amplify/amplify-js/tree/master/packages/amazon-cognito-identity-js">https://github.com/aws-amplify/amplify-js/tree/master/packages/amazon-cognito-identity-js</a></li>
+<li><a target="_blank" rel="noopener" href="https://aws-amplify.github.io/amplify-js/media/authentication_guide">https://aws-amplify.github.io/amplify-js/media/authentication_guide</a><h3 id="Dang-nhap"><a href="#Dang-nhap" class="headerlink" title="Đăng nhập"></a>Đăng nhập</h3>Phần đăng ký khá dễ, vì bạn có thể dùng amplify-js hoặc amazon-cognito-identity-js đều giải quyết được vấn đề cho API phía back-end. Tuy nhiên, để đăng ký khi viết API bằng Node.js thì 2 anh này rất ư là phế. Phế vì bạn phải nhập OTP code chung với Username và Password. Như vậy sẽ ảnh hưởng đến workflow. Do đó giải pháp là bạn phải tách thành 2 API riêng biệt.</li>
+<li>Đăng nhập với username và password</li>
+<li>Nhập code OTP để xác nhận<br>Thư viện để giải quyết vụ này là <code>aws-sdk.</code> Luồng xử lý vấn đề như mô hình sau.<br><img src="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/img/thumbnails.jpg"></li>
+</ul>
+<p><strong>Đăng nhập với username và password</strong><br>Phần này, bạn sử dụng hàm <code>initialAuth</code> của <code>aws-sdk.</code></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#initiateAuth-property">https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#initiateAuth-property</a><br>Ở đây, bạn sẽ dùng <code>AuthFlow</code> là <code>USER_PASSWORD_AUTH</code>. Và để sử dụng thì App client lúc bạn tạo User Pool phải check vào <code>Enable username-password (non-SRP) flow for app-based authentication (USER_PASSWORD_AUTH) </code>mới dùng được. Đi kèm với AuthFlow này, tham số trong <code>AuthParameters</code> sẽ là <code>USERNAME</code> và <code>PASSWORD</code>.<pre><code class="js">login: async (user) =&gt; &#123;
+return new Promise((resolve, reject) =&gt; &#123;
+  cognitoIdentityServiceProvider.initiateAuth(&#123;
+    ClientId: config.AWS_CLIENT_ID,
+    AuthFlow: &#39;USER_PASSWORD_AUTH&#39;,
+    AuthParameters: &#123;
+      &#39;USERNAME&#39;: user.username,
+      &#39;PASSWORD&#39;: user.password
+    &#125;
+  &#125;, function (err, data) &#123;
+    if (err) reject(err);
+    else resolve(data);
+  &#125;);
+&#125;);
+&#125;,</code></pre>
+</li>
+<li>Lưu ý một điều, trong response trả về, bạn phải lưu lại <code>SESSION</code> để xài cho bước sau.    </li>
+</ul>
+<p><strong>Nhập code OTP để xác nhận</strong><br>Bước này được gọi là challenge trong thuật ngữ của aws-sdk. Sau khi hệ thống gửi cho bạn code OTP gồm 6 số, bạn sẽ cần đến một API khác để nhập 6 số này. Hàm giải quyết vụ này là <code>respondToAuthChallenge</code>.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#respondToAuthChallenge-property">https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html#respondToAuthChallenge-property</a><br>Challenge cho vụ này là <code>SMS_MFA</code>. Tham số cho nó là <code>SMS_MFA_CODE</code> và <code>USERNAME</code>. Ngoài ra, nhớ truyền vào session của request trước nữa nhé.<pre><code class="js">confirmLogin: async (session, user) =&gt; &#123;
+return new Promise((resolve, reject) =&gt; &#123;
+  cognitoIdentityServiceProvider.respondToAuthChallenge(&#123;
+    ClientId: config.AWS_CLIENT_ID,
+    ChallengeName: &#39;SMS_MFA&#39;,
+    Session: session,
+    ChallengeResponses: &#123;
+      &#39;SMS_MFA_CODE&#39;: user.code,
+      &#39;USERNAME&#39;: user.username
+    &#125;
+  &#125;, function(err, data) &#123;
+    if (err) reject(err);
+    else resolve(data.AuthenticationResult);
+  &#125;);
+&#125;);
+&#125;,</code></pre>
+</li>
+</ul>
+<p>ref: <a target="_blank" rel="noopener" href="https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/">https://vhnam.github.io/tutorials/dang-nhap-voi-aws-cognito-su-dung-otp/</a></p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> via https://github.com/tungtv202/MyNote </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    2019-2020 Tung Explorer
+</p>
+<!-- <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p> -->
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="full-screen  s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 572px;
+    }
+    .nav.fullscreen {
+        margin-left: -572px;
+    }
+    .nav-left {
+        width: 150px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 542px;
+        }
+        .nav.fullscreen {
+            margin-left: -542px;
+        }
+        .nav-left {
+            width: 150px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 542px;
+            margin-left: -542px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #fbf4a8;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    <a class="dynamic-menu site_url"   href="/bookmarks">Bookmarks</a>
+    
+    
+    
+</div>
+
+
+</html>
