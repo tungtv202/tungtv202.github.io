@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MailChimp | Tung Explorer</title>
+  <meta name="keywords" content=" mail , mailchimp ">
+  <meta name="description" content="MailChimp | Tung Explorer">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="ThreadLocal Tư tưởng là mỗi thread, sẽ có 1 “vùng nhớ” riêng để chứa dữ liệu, khi các method ở các class khác nhau, được chạy trong cùng 1 thread, sẽ lấy được giá trị ở “vùng nhớ” đó.&#x3D;&gt; Ví dụ có th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java - Concurrency">
+<meta property="og:url" content="http://example.com/2020/09/Java/Concurrency/index.html">
+<meta property="og:site_name" content="Tung Explorer">
+<meta property="og:description" content="ThreadLocal Tư tưởng là mỗi thread, sẽ có 1 “vùng nhớ” riêng để chứa dữ liệu, khi các method ở các class khác nhau, được chạy trong cùng 1 thread, sẽ lấy được giá trị ở “vùng nhớ” đó.&#x3D;&gt; Ví dụ có th">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.viblo.asia/59d1214d-4438-4f46-878f-5db8af35fa1c.png">
+<meta property="article:published_time" content="2020-09-30T11:00:26.000Z">
+<meta property="article:modified_time" content="2020-10-11T14:51:42.673Z">
+<meta property="article:author" content="Tung Explorer">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="concurrency">
+<meta property="article:tag" content="thread local">
+<meta property="article:tag" content="volatile">
+<meta property="article:tag" content="thread safe">
+<meta property="article:tag" content="completable future">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.viblo.asia/59d1214d-4438-4f46-878f-5db8af35fa1c.png">
+
+
+<link rel="icon" href="/img/icon.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/zenbum.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/ahbp.gif" />
+</a>
+<div class="author">
+    <span>Tung Explorer</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="github" href="https://github.com/tungtv202" target="_blank">
+            
+                <i class="iconfont icon-github"></i>
+            
+        </a>
+        
+    
+        
+        <a title="facebook" href="https://www.facebook.com/tungtv2029x/" target="_blank">
+            
+                <i class="iconfont icon-facebook"></i>
+            
+        </a>
+        
+    
+        
+        <a title="linkedin" href="https://www.linkedin.com/in/tungtv202" target="_blank">
+            
+                <i class="iconfont icon-linkedin"></i>
+            
+        </a>
+        
+    
+        
+        <a title="email" href="mailto:tungtv202@gmail.com" target="_blank">
+            
+                <i class="iconfont icon-email"></i>
+            
+        </a>
+        
+    
+</div>
+
+
+
+<a class="more-menus">more menu</a>
+
+
+<ul>
+    <li><div class="all active" data-rel="All">All<small>(67)</small></div></li>
+    
+        
+            
+            <li><div data-rel="aws">aws<small>(12)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="cicd_ops">cicd_ops<small>(3)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="code_template">code_template<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="docker">docker<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="elastic_search">elastic_search<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="install_guide">install_guide<small>(9)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="java"><i class="fold iconfont icon-right"></i>java<small>(18)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="java<--->feign">feign<small>(3)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="java<--->jackson">jackson<small>(2)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="kafka">kafka<small>(4)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="linux">linux<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="other">other<small>(10)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="rabbitmq">rabbitmq<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="stories">stories<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    <a class="dynamic-menu site_url"   href="/2020/02/Other/Bookmarks/">bookmarks</a>
+    
+    
+    
+    </div>
+    <div></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="67">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="find  i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="TOC "></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="back"></i>
+            <input id="local-search-input" />
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="match case"></i>
+            <i class="iconfont icon-tag" data-title="tag"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">---TOC---</div>
+            <i class="iconfont icon-list" data-title="list article"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>aria2</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>authen</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>authentication</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>auto scheduler</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>auto tool</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>aws</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bash</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>basic</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>beanstalk</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cicd</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>code template</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cognito</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>command</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>completable future</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>concurrency</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>coordinator</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ddd</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>diff</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>docker</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>domain driver design</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>drone io</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>e-wallet</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>EBS</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ecr</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ecs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>elastic beanstalk</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>elastic search</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>evaluation logic</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>feign</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fshare</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>gen code</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>GeneratedValue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>get link</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>google translate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>grafana</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ha</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>http client</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>install</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jackson</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>javers</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jhipster</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jpa</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>junit</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jvm internal</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafdrop</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafka</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafka cli</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>KafkaListener</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>lambda</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>log</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>logback</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>lua</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mail</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mailchimp</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>memory leak</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>metric</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mirror queue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mockito</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>momo</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>network</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>nginx</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>node</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>note</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>note total</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>npm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>object storage</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>paseto</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>postgresql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>prometheus</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>quartz</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>query sql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>quorum queue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>rabbitmq</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>rebalance</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>redis</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>route53</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>s3</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>script</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>secureCRT</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>security</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>security token service</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>segment</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>serialize</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>session</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>signed url</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>simple queue service</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>snmp</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>spectre meltdown</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>spring</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sqs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ssh tool</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>stompJs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>stories</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sts</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>template</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread local</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread safe</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>token</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>total</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>translate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>unit test</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>use case</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>vagrant</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>volatile</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>web socket</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>wlan</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>wpa</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>yaml</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>zookeeper</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="All java "
+           href="/2020/09/Java/Concurrency/"
+           data-tag="java,concurrency,thread local,volatile,thread safe,completable future"
+           data-author="" >
+            <span class="post-title" title="Java - Concurrency">Java - Concurrency</span>
+            <span class="post-date" title="2020-09-30 18:00:26">2020/09/30</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/08/Java/JVM_Internal/"
+           data-tag="java,jvm internal"
+           data-author="" >
+            <span class="post-title" title="Java - JVM Internal">Java - JVM Internal</span>
+            <span class="post-date" title="2020-08-10 18:00:26">2020/08/10</span>
+        </a>
+        
+        <a  class="All rabbitmq "
+           href="/2020/07/RabbitMQ/RabbitMQ_Build_HA_Cluster/"
+           data-tag="ha,rabbitmq,stories,quorum queue"
+           data-author="" >
+            <span class="post-title" title="Rabbitmq - Cluster High Availability">Rabbitmq - Cluster High Availability</span>
+            <span class="post-date" title="2020-07-26 18:00:26">2020/07/26</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/07/Java/SpringSecurity/"
+           data-tag="java,spring,security"
+           data-author="" >
+            <span class="post-title" title="Java - Spring Security">Java - Spring Security</span>
+            <span class="post-date" title="2020-07-18 18:00:26">2020/07/18</span>
+        </a>
+        
+        <a  class="All kafka "
+           href="/2020/07/Kafka/Kafka_RebalanceProtocol/"
+           data-tag="kafka,rebalance,coordinator"
+           data-author="" >
+            <span class="post-title" title="Kafka - Rebalance Protocol">Kafka - Rebalance Protocol</span>
+            <span class="post-date" title="2020-07-13 18:00:26">2020/07/13</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/06/AWS/AWS_Note/"
+           data-tag="aws,note total"
+           data-author="" >
+            <span class="post-title" title="AWS - Note Total">AWS - Note Total</span>
+            <span class="post-date" title="2020-06-18 18:00:26">2020/06/18</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/06/Java/Logback/"
+           data-tag="log,logback"
+           data-author="" >
+            <span class="post-title" title="Java - Logback">Java - Logback</span>
+            <span class="post-date" title="2020-06-09 18:00:26">2020/06/09</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/06/Java/Quartz/"
+           data-tag="java,quartz,auto scheduler"
+           data-author="" >
+            <span class="post-title" title="Java - Implement Quartz">Java - Implement Quartz</span>
+            <span class="post-date" title="2020-06-03 18:00:26">2020/06/03</span>
+        </a>
+        
+        <a  class="All rabbitmq "
+           href="/2020/05/RabbitMQ/RabbitMQ_Mirror/"
+           data-tag="ha,rabbitmq,mirror queue"
+           data-author="" >
+            <span class="post-title" title="Rabbitmq - Mirror Queue + Durable Message">Rabbitmq - Mirror Queue + Durable Message</span>
+            <span class="post-date" title="2020-05-18 18:00:26">2020/05/18</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/04/Java/Jhipster/"
+           data-tag="java,jhipster,auto tool,gen code"
+           data-author="" >
+            <span class="post-title" title="Java - Jhipster">Java - Jhipster</span>
+            <span class="post-date" title="2020-04-25 18:00:26">2020/04/25</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/04/Install_Guide/Install_Guide_Node_Npm/"
+           data-tag="script,node,npm"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Node + npm">Install Guide - Node + npm</span>
+            <span class="post-date" title="2020-04-20 18:00:26">2020/04/20</span>
+        </a>
+        
+        <a  class="All stories "
+           href="/2020/04/Stories/BackupRestoreAthenaS3/"
+           data-tag="s3,query sql"
+           data-author="" >
+            <span class="post-title" title="Stories - Query SQL on S3">Stories - Query SQL on S3</span>
+            <span class="post-date" title="2020-04-20 18:00:26">2020/04/20</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2020/04/Other/Paseto/"
+           data-tag="token,paseto,authen"
+           data-author="" >
+            <span class="post-title" title="Paseto - Token base authentication">Paseto - Token base authentication</span>
+            <span class="post-date" title="2020-04-19 18:00:26">2020/04/19</span>
+        </a>
+        
+        <a  class="All code_template "
+           href="/2020/03/CodeTemplate/GoogleTranslateExmple/"
+           data-tag="code template,google translate,translate"
+           data-author="" >
+            <span class="post-title" title="Code Template - Google Translate">Code Template - Google Translate</span>
+            <span class="post-date" title="2020-03-10 18:00:26">2020/03/10</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2020/02/Other/EWallet/"
+           data-tag="e-wallet,momo"
+           data-author="" >
+            <span class="post-title" title="E-Wallet Note">E-Wallet Note</span>
+            <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
+        </a>
+        
+        <a  class="All cicd_ops "
+           href="/2020/02/Ops/CICD_FLow_Example/"
+           data-tag="cicd"
+           data-author="" >
+            <span class="post-title" title="CICD - Flow Example">CICD - Flow Example</span>
+            <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
+        </a>
+        
+        <a  class="All "
+           href="/2020/02/Other/Bookmarks/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="My Bookmarks">My Bookmarks</span>
+            <span class="post-date" title="2020-02-19 18:00:26">2020/02/19</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2020/02/Other/Authentication_Topic/"
+           data-tag="authentication,basic,session,token"
+           data-author="" >
+            <span class="post-title" title="Authentication Topic">Authentication Topic</span>
+            <span class="post-date" title="2020-02-17 18:00:26">2020/02/17</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/02/Install_Guide/Install_Guide_Prometheus/"
+           data-tag="yaml,prometheus"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Prometheus">Install Guide - Prometheus</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/02/Install_Guide/Install_SNMP_Prometheus_Grafana/"
+           data-tag="script,install,prometheus,snmp,grafana"
+           data-author="" >
+            <span class="post-title" title="Install Guide - SNPM + Prometheus + Grafana">Install Guide - SNPM + Prometheus + Grafana</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        <a  class="All stories "
+           href="/2020/02/Stories/48h_inhouse_getLink_project/"
+           data-tag="fshare,get link,stories"
+           data-author="" >
+            <span class="post-title" title="Stories - Get Link Fshare">Stories - Get Link Fshare</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        <a  class="All docker "
+           href="/2020/02/Docker/Docker_TemplateFile/"
+           data-tag="docker,template"
+           data-author="" >
+            <span class="post-title" title="Docker - Template File">Docker - Template File</span>
+            <span class="post-date" title="2020-02-10 18:00:26">2020/02/10</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/02/Java/Java_Total/"
+           data-tag="java,note,KafkaListener"
+           data-author="" >
+            <span class="post-title" title="Java - Note Total">Java - Note Total</span>
+            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/02/Java/Java_Code_Prometheus_Metric/"
+           data-tag="prometheus,java,metric"
+           data-author="" >
+            <span class="post-title" title="Java - Code Application expose Metric for Prometheus">Java - Code Application expose Metric for Prometheus</span>
+            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_Cognito/"
+           data-tag="aws,cognito"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - Cognitor">AWS - LAB - Cognitor</span>
+            <span class="post-date" title="2020-01-30 18:00:26">2020/01/30</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_Route53/"
+           data-tag="aws,route53"
+           data-author="" >
+            <span class="post-title" title="AWS - Route 53">AWS - Route 53</span>
+            <span class="post-date" title="2020-01-27 18:00:26">2020/01/27</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ElasticBeanstalk/"
+           data-tag="aws,elastic beanstalk,beanstalk"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB- Beanstalk">AWS - LAB- Beanstalk</span>
+            <span class="post-date" title="2020-01-27 18:00:26">2020/01/27</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2020/01/Other/DDD_EventDrivenArchitecture/"
+           data-tag="ddd,domain driver design"
+           data-author="" >
+            <span class="post-title" title="Domain Driver Design &amp; Event Driven Architecture">Domain Driver Design &amp; Event Driven Architecture</span>
+            <span class="post-date" title="2020-01-26 18:00:26">2020/01/26</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_STS/"
+           data-tag="aws,sts,security token service"
+           data-author="" >
+            <span class="post-title" title="AWS - STS">AWS - STS</span>
+            <span class="post-date" title="2020-01-26 18:00:26">2020/01/26</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ECR/"
+           data-tag="aws,ecr"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - ECR">AWS - LAB - ECR</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ECS/"
+           data-tag="aws,ecs"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - ECS">AWS - LAB - ECS</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_Design_For_Organizational_Complexity/"
+           data-tag="aws"
+           data-author="" >
+            <span class="post-title" title="AWS - Design for organizational">AWS - Design for organizational</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Mount_EBS_to_EC2/"
+           data-tag="install,EBS"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Mount an EBS volume to EC2 Linux">Install Guide - Mount an EBS volume to EC2 Linux</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Aria2/"
+           data-tag="script,aria2"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Aria2">Install Guide - Aria2</span>
+            <span class="post-date" title="2020-01-24 18:00:26">2020/01/24</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Install_Guide_Kafka/"
+           data-tag="script,zookeeper,kafka,kafdrop"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Kafka">Install Guide - Kafka</span>
+            <span class="post-date" title="2020-01-24 18:00:26">2020/01/24</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/01/Linux/Linux_BashScript/"
+           data-tag="script,install,bash"
+           data-author="" >
+            <span class="post-title" title="Linux - Bash Script Collection">Linux - Bash Script Collection</span>
+            <span class="post-date" title="2020-01-22 18:00:26">2020/01/22</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Install_Guide_Postgresql/"
+           data-tag="script,install,postgresql"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Postgres SQL">Install Guide - Postgres SQL</span>
+            <span class="post-date" title="2020-01-22 18:00:26">2020/01/22</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/01/Java/SpringBoot_WebSocket_StompJS/"
+           data-tag="java,web socket,stompJs,spring"
+           data-author="" >
+            <span class="post-title" title="Java - Spring web Socket + StompJS">Java - Spring web Socket + StompJS</span>
+            <span class="post-date" title="2020-01-15 18:00:26">2020/01/15</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/01/Java/Javers_Diff/"
+           data-tag="java,javers,diff"
+           data-author="" >
+            <span class="post-title" title="Java - Javers Diff">Java - Javers Diff</span>
+            <span class="post-date" title="2020-01-13 18:00:26">2020/01/13</span>
+        </a>
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/Feign_BuilderExample/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Client builder example">Feign Client - Client builder example</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/FeignClient_CustomizeByBean/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Customize Feign By Bean">Feign Client - Customize Feign By Bean</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/Feign_MultipleConfig/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Multiple Configuration">Feign Client - Multiple Configuration</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        <a  class="All kafka "
+           href="/2020/01/Kafka/Kafka_Command/"
+           data-tag="command,kafka,kafka cli"
+           data-author="" >
+            <span class="post-title" title="Kafka - CLI Command">Kafka - CLI Command</span>
+            <span class="post-date" title="2020-01-03 18:00:26">2020/01/03</span>
+        </a>
+        
+        <a  class="All kafka "
+           href="/2020/01/Kafka/Kafka_UseCase/"
+           data-tag="kafka,use case"
+           data-author="" >
+            <span class="post-title" title="Kafka - Use case">Kafka - Use case</span>
+            <span class="post-date" title="2020-01-02 18:00:26">2020/01/02</span>
+        </a>
+        
+        <a  class="All cicd_ops "
+           href="/2020/01/Ops/VagrantFile_Template/"
+           data-tag="template,vagrant"
+           data-author="" >
+            <span class="post-title" title="Ops - Vagrant Template">Ops - Vagrant Template</span>
+            <span class="post-date" title="2020-01-01 18:00:26">2020/01/01</span>
+        </a>
+        
+        <a  class="All kafka "
+           href="/2019/12/Kafka/Kafka_Note/"
+           data-tag="kafka,segment,total"
+           data-author="" >
+            <span class="post-title" title="Kafka - Note">Kafka - Note</span>
+            <span class="post-date" title="2019-12-31 18:00:26">2019/12/31</span>
+        </a>
+        
+        <a  class="All code_template "
+           href="/2019/12/CodeTemplate/CodeTemplate_S3/"
+           data-tag="aws,s3,code template"
+           data-author="" >
+            <span class="post-title" title="Code Template - AWS - S3">Code Template - AWS - S3</span>
+            <span class="post-date" title="2019-12-27 18:00:26">2019/12/27</span>
+        </a>
+        
+        <a  class="All java jackson "
+           href="/2019/12/Java/JackSon/Jackson/"
+           data-tag="java,serialize,jackson"
+           data-author="" >
+            <span class="post-title" title="Jackson - Note">Jackson - Note</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        <a  class="All java jackson "
+           href="/2019/12/Java/JackSon/Jackson_Deserialize_Abstractclass/"
+           data-tag="java,serialize,jackson"
+           data-author="" >
+            <span class="post-title" title="Jackson - Deserialize Abstract class">Jackson - Deserialize Abstract class</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2019/12/AWS/AWS_PolicyEvaluationLogic/"
+           data-tag="aws,evaluation logic"
+           data-author="" >
+            <span class="post-title" title="AWS - Policy Evaluation Logic">AWS - Policy Evaluation Logic</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2019/12/Install_Guide/Install_SecureCRT/"
+           data-tag="install,secureCRT,ssh tool"
+           data-author="" >
+            <span class="post-title" title="Install Guide - SecureCRT">Install Guide - SecureCRT</span>
+            <span class="post-date" title="2019-12-03 18:00:26">2019/12/03</span>
+        </a>
+        
+        <a  class="All docker "
+           href="/2019/12/Docker/Docker_Command/"
+           data-tag="docker,command,script,install"
+           data-author="" >
+            <span class="post-title" title="Docker - Command">Docker - Command</span>
+            <span class="post-date" title="2019-12-03 18:00:26">2019/12/03</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2019/12/Install_Guide/Install_Java/"
+           data-tag="script,install,java"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Java">Install Guide - Java</span>
+            <span class="post-date" title="2019-12-03 18:00:26">2019/12/03</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2019/05/Other/MailChimp/"
+           data-tag="mail,mailchimp"
+           data-author="" >
+            <span class="post-title" title="MailChimp">MailChimp</span>
+            <span class="post-date" title="2019-05-17 18:00:26">2019/05/17</span>
+        </a>
+        
+        <a  class="All cicd_ops "
+           href="/2019/05/Ops/CICD_DroneIO/"
+           data-tag="cicd,drone io"
+           data-author="" >
+            <span class="post-title" title="CICD - DroneIO">CICD - DroneIO</span>
+            <span class="post-date" title="2019-05-17 18:00:26">2019/05/17</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2019/05/AWS/AWS_LAB_S3/"
+           data-tag="aws,s3,object storage"
+           data-author="" >
+            <span class="post-title" title="AWS - S3">AWS - S3</span>
+            <span class="post-date" title="2019-05-17 18:00:26">2019/05/17</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2019/05/Other/Signed_URL/"
+           data-tag="s3,object storage,signed url"
+           data-author="" >
+            <span class="post-title" title="Signed URL">Signed URL</span>
+            <span class="post-date" title="2019-05-12 18:00:26">2019/05/12</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2019/03/Java/MemoryLeak/"
+           data-tag="java,memory leak"
+           data-author="" >
+            <span class="post-title" title="Java - Memory Leak">Java - Memory Leak</span>
+            <span class="post-date" title="2019-03-17 18:00:26">2019/03/17</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2019/02/Other/WP2_WLAN/"
+           data-tag="network,security,wlan,wpa"
+           data-author="" >
+            <span class="post-title" title="WPA2 on WLAN">WPA2 on WLAN</span>
+            <span class="post-date" title="2019-02-18 18:00:26">2019/02/18</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2019/02/Other/Nginx_ConfigExample/"
+           data-tag="template,nginx"
+           data-author="" >
+            <span class="post-title" title="Nginx - Config exmaple">Nginx - Config exmaple</span>
+            <span class="post-date" title="2019-02-11 18:00:26">2019/02/11</span>
+        </a>
+        
+        <a  class="All elastic_search "
+           href="/2018/11/ElasticSearch/ElasticSearch_Note/"
+           data-tag="elastic search"
+           data-author="" >
+            <span class="post-title" title="Elastic Search - Some Note">Elastic Search - Some Note</span>
+            <span class="post-date" title="2018-11-20 18:00:26">2018/11/20</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2018/10/AWS/AWS_Lambda_CaseStudy/"
+           data-tag="aws,lambda"
+           data-author="" >
+            <span class="post-title" title="AWS - Lambda - Case study">AWS - Lambda - Case study</span>
+            <span class="post-date" title="2018-10-14 18:00:26">2018/10/14</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2018/10/Java/JPA_GeneratedValue/"
+           data-tag="java,GeneratedValue,jpa"
+           data-author="" >
+            <span class="post-title" title="Java - Annotation @GeneratedValue trong JPA">Java - Annotation @GeneratedValue trong JPA</span>
+            <span class="post-date" title="2018-10-12 18:00:26">2018/10/12</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2018/10/Java/Junit_Mockito/"
+           data-tag="java,junit,mockito,unit test"
+           data-author="" >
+            <span class="post-title" title="Java - Junit + Mockito">Java - Junit + Mockito</span>
+            <span class="post-date" title="2018-10-12 18:00:26">2018/10/12</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2018/09/AWS/AWS_SQS/"
+           data-tag="aws,sqs,simple queue service"
+           data-author="" >
+            <span class="post-title" title="AWS - SQS">AWS - SQS</span>
+            <span class="post-date" title="2018-09-11 18:00:26">2018/09/11</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2018/04/Other/Lua_redis_java/"
+           data-tag="script,lua,redis"
+           data-author="" >
+            <span class="post-title" title="Run lua script on Java">Run lua script on Java</span>
+            <span class="post-date" title="2018-04-09 18:00:26">2018/04/09</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2018/02/Other/Spectre_Meltdown/"
+           data-tag="spectre meltdown"
+           data-author="" >
+            <span class="post-title" title="Spectre Meltdown">Spectre Meltdown</span>
+            <span class="post-date" title="2018-02-09 18:00:26">2018/02/09</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="full-screen  s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-Other/MailChimp" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">MailChimp</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="other">other</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color5">mail</a>
+            
+            <a class="color5">mailchimp</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2020-10-12 06:39:33'>2019-05-17 18:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <!-- <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span> -->
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MailChimp-1-service-cho-bai-toan-email-marketing"><span class="toc-text">MailChimp - 1 service cho bài toán email marketing</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Gioi-thieu"><span class="toc-text">1. Giới thiệu</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-1-Tao-LIST"><span class="toc-text">Step 1.    Tạo LIST</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-2-Tao-Campaign"><span class="toc-text">Step 2. Tạo Campaign</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-3-Send-Campaign"><span class="toc-text">Step 3. Send Campaign</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-4-Xem-thong-ke-report"><span class="toc-text">Step 4. Xem thống kê report</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Thu-vien-Ecwid-maleorang"><span class="toc-text">2. Thư viện Ecwid&#x2F;maleorang</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Demo"><span class="toc-text">3. Demo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-1-Import-thu-vien"><span class="toc-text">Step 1. Import thư viện</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-2-Lay-API-Key"><span class="toc-text">Step 2. Lấy API Key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-3-Tao-mot-LIST-moi-Co-ten-la-SinhVien"><span class="toc-text">Step 3. Tạo một LIST mới, Có tên là SinhVien</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-4-Them-danh-sach-email-nguoi-nhan-vao-List-SinhVien"><span class="toc-text">Step 4. Thêm danh sách email người nhận vào List SinhVien</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-5-Tao-Campaign"><span class="toc-text">Step 5. Tạo Campaign</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step-6-Set-noi-dung-email-va-kich-hoat-Campaign-gui"><span class="toc-text">Step 6. Set nội dung email và kích hoạt Campaign gửi</span></a></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="MailChimp-1-service-cho-bai-toan-email-marketing"><a href="#MailChimp-1-service-cho-bai-toan-email-marketing" class="headerlink" title="MailChimp - 1 service cho bài toán email marketing"></a>MailChimp - 1 service cho bài toán email marketing</h1><h2 id="1-Gioi-thieu"><a href="#1-Gioi-thieu" class="headerlink" title="1. Giới thiệu"></a>1. Giới thiệu</h2><p>MailChimp là dịch vụ Email Marketing rất nổi tiếng. Ngoài ý nghĩa marketing chính ra thì MailChimp còn có thể sử dụng cho nhiều mục đích khác nữa. Ví dụ có thể phát triển làm hệ thống mail thông báo khi có event từ user…</p>
+<p>Việc sử dụng MailChimp cơ bản gồm các bước sau:</p>
+<h3 id="Step-1-Tao-LIST"><a href="#Step-1-Tao-LIST" class="headerlink" title="Step 1.    Tạo LIST"></a>Step 1.    Tạo LIST</h3><p>Tạo danh sách chứa các email người nhận. Ví dụ:</p>
+<ul>
+<li>List SinhVien, chứa thông tin 1000 email của sinh viên</li>
+<li>List ITCustomer, chứa thông tin 5000 email của người công tác, làm việc trong lĩnh vực CNTT.</li>
+</ul>
+<h3 id="Step-2-Tao-Campaign"><a href="#Step-2-Tao-Campaign" class="headerlink" title="Step 2. Tạo Campaign"></a>Step 2. Tạo Campaign</h3><p>Tạo chiến dịch marketting Bao gồm:</p>
+<ul>
+<li>Chọn LIST</li>
+<li>Setup title, subject email, email ngườ i gửi</li>
+<li>Setup template, nội dung email</li>
+<li>Setup lịch chạy</li>
+</ul>
+<h3 id="Step-3-Send-Campaign"><a href="#Step-3-Send-Campaign" class="headerlink" title="Step 3. Send Campaign"></a>Step 3. Send Campaign</h3><h3 id="Step-4-Xem-thong-ke-report"><a href="#Step-4-Xem-thong-ke-report" class="headerlink" title="Step 4. Xem thống kê report"></a>Step 4. Xem thống kê report</h3><ul>
+<li>Số lượt open mail</li>
+<li>Số lượt click</li>
+<li>Số lượt unsubscribe   </li>
+</ul>
+<p>Các bước trên được thực hiện thông qua 2 cách:  </p>
+<ul>
+<li>Thực hiện qua giao diện website <a target="_blank" rel="noopener" href="https://mailchimp.com/">https://mailchimp.com</a></li>
+<li>Thực hiện thông qua MailChimp API (link <a target="_blank" rel="noopener" href="https://developer.mailchimp.com/">https://developer.mailchimp.com</a> ).    </li>
+</ul>
+<p>Hiện tại MailChimp API cung cấp các API chuẩn Restful cho developer thao tác với hệ thống của họ, gần như toàn bộ thao tác user có thể làm trên web đều có thể được thực hiện thông qua API. MailChimp API mới nhất đang là version 3.0<br>Với Java để thao tác với Restful này có thể sử dụng Jersey Client (link tham khảo <a target="_blank" rel="noopener" href="https://o7planning.org/vi/11217/tao-ung-dung-java-restful-client-voi-jersey-client">https://o7planning.org/vi/11217/tao-ung-dung-java-restful-client-voi-jersey-client</a>)<br>Tuy nhiên cũng có thể sử dụng cách khác, đó là dùng các thư viện java do người khác đã dựng sẵn. Ví dụ như 1 thư viện google ra rất nhiều kết quả là:<br>Ecwid/maleorang: MailChimp API 3.0 wrapper for Java</p>
+<h2 id="2-Thu-vien-Ecwid-maleorang"><a href="#2-Thu-vien-Ecwid-maleorang" class="headerlink" title="2. Thư viện Ecwid/maleorang"></a>2. Thư viện Ecwid/maleorang</h2><p>Link ref: <a target="_blank" rel="noopener" href="https://github.com/Ecwid/maleorang">https://github.com/Ecwid/maleorang</a><br>Java doc: <a target="_blank" rel="noopener" href="http://www.javadoc.io/doc/com.ecwid/maleorang/3.0-0.9.6">http://www.javadoc.io/doc/com.ecwid/maleorang/3.0-0.9.6</a>   </p>
+<p>List package</p>
+<pre><code>•    com.ecwid.maleorang
+•    com.ecwid.maleorang.annotation
+•    com.ecwid.maleorang.connector   - kết nối API thôi, cũng không có gì
+•    com.ecwid.maleorang.method.v3_0.batches – chưa ví dụ được demo, nên cũng chưa hiểu
+•    com.ecwid.maleorang.method.v3_0.campaigns  - thêm, sửa, xóa, lấy thông tin của Campaign
+•    com.ecwid.maleorang.method.v3_0.campaigns.content  - thao tác với content của Campaign, ví dụ template email, nội dung email, set sequence…
+•    com.ecwid.maleorang.method.v3_0.lists – 3 cái lists này để thao tác thêm, sửa, xóa, lấy thông tin của List
+•    com.ecwid.maleorang.method.v3_0.lists.members
+•    com.ecwid.maleorang.method.v3_0.lists.merge_fields 
+•    com.ecwid.maleorang.method.v3_0.reports.email_activity  - thống kê hoạt động các email nằm trong list, đã làm gì với email marketing được gửi từ campaign, ví dụ: tỉ lệ open, tỉ lệ click, info…
+•    com.ecwid.maleorang.method.v3_0.reports.unsubscribed – tương tự như email_activity nhưng là các report về người đánh dấu email là spam…</code></pre>
+<h2 id="3-Demo"><a href="#3-Demo" class="headerlink" title="3. Demo"></a>3. Demo</h2><p>Đoạn code java demo dưới đây thực hiện + mô phỏng lại các bước cơ bản sử dụng MailChimp.<br>Recommend là nên xem các video hướng dẫn sử dụng Mailchimp thông qua web user trên youtube, google trước =&gt; để hiểu được dễ dàng hơn về ý nghĩa của các đoạn code.</p>
+<h3 id="Step-1-Import-thu-vien"><a href="#Step-1-Import-thu-vien" class="headerlink" title="Step 1. Import thư viện"></a>Step 1. Import thư viện</h3><p>Sử dụng maven để import</p>
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;com.ecwid&lt;/groupId&gt;
+    &lt;artifactId&gt;maleorang&lt;/artifactId&gt;
+    &lt;version&gt;3.0-0.9.6&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<h3 id="Step-2-Lay-API-Key"><a href="#Step-2-Lay-API-Key" class="headerlink" title="Step 2. Lấy API Key"></a>Step 2. Lấy API Key</h3><p>Để thao tác với MailChimp API, bạn cần phải có APIKey (1 đoạn mã hash, thay cho username + pass).<br>Để có APIKey bạn bắt buộc phải có account ở <a target="_blank" rel="noopener" href="https://mailchimp.com/">https://mailchimp.com</a>.<br>Việc tạo account và lấy API có thể tham khảo tại đây:<br><a target="_blank" rel="noopener" href="https://wiki.chili.vn/huong-dan/huong-dan-lay-ma-api-mailchimp/">https://wiki.chili.vn/huong-dan/huong-dan-lay-ma-api-mailchimp/</a></p>
+<h3 id="Step-3-Tao-mot-LIST-moi-Co-ten-la-SinhVien"><a href="#Step-3-Tao-mot-LIST-moi-Co-ten-la-SinhVien" class="headerlink" title="Step 3. Tạo một LIST mới, Có tên là SinhVien"></a>Step 3. Tạo một LIST mới, Có tên là SinhVien</h3><pre><code class="java">import com.ecwid.maleorang.MailchimpClient;
+import com.ecwid.maleorang.method.v3_0.lists.*;
+
+public class CreateList &#123;
+
+    public static void main(String[] args) throws Exception &#123;
+        String apiKey = &quot;60205bb15d24ac4769dedd6e68d0dd77-us18&quot;;
+        MailchimpClient client = new MailchimpClient(apiKey);
+
+        // create new CreateList
+        EditListMethod.Create editListMethod = new EditListMethod.Create();
+        editListMethod.name = &quot;SinhVien&quot;;
+        editListMethod.permission_reminder = &quot;Ban nhan duoc email nay vi ban la Sinh Vien gioi, co tai nang&quot;;
+        editListMethod.email_type_option = false;
+        editListMethod.visibility = &quot;pub&quot;;
+
+        // Create contactInfo
+        ContactInfo contactInfo = new ContactInfo();
+        contactInfo.company = &quot;Freelancer&quot;;
+        contactInfo.city = &quot;Ha Noi&quot;;
+        contactInfo.address1 = &quot;18 Pham Hung, Q. Nam Tu Liem&quot;;
+        contactInfo.country = &quot;VietNam&quot;;
+        contactInfo.zip = &quot;100000&quot;;
+        contactInfo.state = &quot;Ha Noi&quot;;
+
+        // CampaignDefaultInfo
+        CampaignDefaultsInfo campaignDefaultsInfo = new CampaignDefaultsInfo();
+        campaignDefaultsInfo.from_name = &quot;Tran Van Tung Sender&quot;;
+        campaignDefaultsInfo.from_email = &quot;tungtv202@gmail.com&quot;;
+        campaignDefaultsInfo.language = &quot;en&quot;;
+        campaignDefaultsInfo.subject = &quot;&quot;;
+
+        // Implement
+        editListMethod.contact = contactInfo;
+        editListMethod.campaign_defaults = campaignDefaultsInfo;
+
+        // Run
+        ListInfo listInfo = client.execute(editListMethod);
+        System.out.println(listInfo.id);
+    &#125;
+&#125;</code></pre>
+<p>-&gt;    List ID = a1417c3117<br>Vào website F5 xem có gì HOT ?<br><img src="https://images.viblo.asia/96d8ad72-3395-4feb-aefe-ec7567f56195.jpg" alt="MailChimp"></p>
+<h3 id="Step-4-Them-danh-sach-email-nguoi-nhan-vao-List-SinhVien"><a href="#Step-4-Them-danh-sach-email-nguoi-nhan-vao-List-SinhVien" class="headerlink" title="Step 4. Thêm danh sách email người nhận vào List SinhVien"></a>Step 4. Thêm danh sách email người nhận vào List SinhVien</h3><pre><code class="java">      import com.ecwid.maleorang.MailchimpClient;
+        import com.ecwid.maleorang.MailchimpObject;
+        import com.ecwid.maleorang.method.v3_0.lists.members.EditMemberMethod;
+
+public class AddReceiverToList &#123;
+    public static void main(String[] args) throws Exception &#123;
+        String apiKey = &quot;60205bb15d24ac4769dedd6e68d0dd77-us18&quot;;
+        MailchimpClient client = new MailchimpClient(apiKey);
+
+        String listId = &quot;a1417c3117&quot;;
+
+        EditMemberMethod.CreateOrUpdate createOrUpdate = new EditMemberMethod.CreateOrUpdate(listId, &quot;cafeviet9x@gmail.com&quot;);
+        createOrUpdate.status = &quot;subscribed&quot;;
+        createOrUpdate.merge_fields = new MailchimpObject();
+        createOrUpdate.merge_fields.mapping.put(&quot;FNAME&quot;, &quot;SinhVien&quot;);
+        createOrUpdate.merge_fields.mapping.put(&quot;LNAME&quot;, &quot;Tung&quot;);
+        client.execute(createOrUpdate);
+    &#125;
+&#125;</code></pre>
+<p><img src="https://images.viblo.asia/6bb5cbe8-02e0-449c-89d0-1f48113b6c7e.jpg" alt="MC2"></p>
+<h3 id="Step-5-Tao-Campaign"><a href="#Step-5-Tao-Campaign" class="headerlink" title="Step 5. Tạo Campaign"></a>Step 5. Tạo Campaign</h3><pre><code class="java">import com.ecwid.maleorang.MailchimpClient;
+import com.ecwid.maleorang.method.v3_0.campaigns.CampaignInfo;
+import com.ecwid.maleorang.method.v3_0.campaigns.EditCampaignMethod;
+import static com.ecwid.maleorang.method.v3_0.campaigns.CampaignInfo.Type.PLAINTEXT;
+
+public class Campaign &#123;
+    public static void main(String[] args) throws  Exception&#123;
+        String apiKey = &quot;60205bb15d24ac4769dedd6e68d0dd77-us18&quot;;
+        MailchimpClient client = new MailchimpClient(apiKey);
+
+        EditCampaignMethod.Create campaign = new EditCampaignMethod.Create();
+        campaign.type = PLAINTEXT;
+        campaign.settings = new CampaignInfo.SettingsInfo();
+        campaign.settings.mapping.put(&quot;title&quot;, &quot;Campaign_DuHocSinh&quot;);
+        campaign.settings.mapping.put(&quot;subject_line&quot;, &quot;Subject email - Cơ hội du học sinh miễn phí&quot;);
+        campaign.settings.mapping.put(&quot;from_name&quot;, &quot;To Chuc Tuyen Sinh&quot;);
+        campaign.settings.mapping.put(&quot;reply_to&quot;, &quot;tungtv202@gmail.com&quot;);
+
+        // set List receiver
+        CampaignInfo.RecipientsInfo recipientsInfo = new CampaignInfo.RecipientsInfo();
+        String listId = &quot;a1417c3117&quot;;
+        recipientsInfo.list_id= listId;
+
+        campaign.recipients = recipientsInfo;
+
+        CampaignInfo campaignInfo = client.execute(campaign);
+        System.out.println(campaignInfo.id);
+
+    &#125;
+&#125;</code></pre>
+<p>-&gt; Campaign ID: 87b2227f76<br><img src="https://images.viblo.asia/6de625a2-3b64-46a2-b879-abf8e3a10ea8.jpg" alt="MC3"></p>
+<h3 id="Step-6-Set-noi-dung-email-va-kich-hoat-Campaign-gui"><a href="#Step-6-Set-noi-dung-email-va-kich-hoat-Campaign-gui" class="headerlink" title="Step 6. Set nội dung email và kích hoạt Campaign gửi"></a>Step 6. Set nội dung email và kích hoạt Campaign gửi</h3><pre><code class="java">import com.ecwid.maleorang.MailchimpClient;
+import com.ecwid.maleorang.method.v3_0.campaigns.CampaignActionMethod;
+import com.ecwid.maleorang.method.v3_0.campaigns.content.ContentInfo;
+import com.ecwid.maleorang.method.v3_0.campaigns.content.SetCampaignContentMethod;
+
+public class SetContentEmailAndSend &#123;
+    public static void main(String[] args) throws Exception &#123;
+        String apiKey = &quot;60205bb15d24ac4769dedd6e68d0dd77-us18&quot;;
+        MailchimpClient client = new MailchimpClient(apiKey);
+
+        String campaintId = &quot;5432c9c488&quot;;
+
+        // Set content email
+        SetCampaignContentMethod setCampaignContentMethod = new SetCampaignContentMethod(campaintId);
+        setCampaignContentMethod.mapping.put(&quot;plain_text&quot;,&quot;Xin chào! Bạn đang có cơ hội được đi du học miễn phí!&quot;);
+        ContentInfo contentInfo = client.execute(setCampaignContentMethod);
+
+//         Run campaign
+        CampaignActionMethod.Send send = new CampaignActionMethod.Send(campaintId);
+        client.execute(send);
+    &#125;
+&#125;</code></pre>
+<p>Vào inbox email <a href="mailto:&#99;&#x61;&#x66;&#101;&#x76;&#x69;&#x65;&#116;&#57;&#120;&#x40;&#x67;&#109;&#97;&#105;&#x6c;&#46;&#99;&#111;&#109;">&#99;&#x61;&#x66;&#101;&#x76;&#x69;&#x65;&#116;&#57;&#120;&#x40;&#x67;&#109;&#97;&#105;&#x6c;&#46;&#99;&#111;&#109;</a> check kết quả<br><img src="https://images.viblo.asia/1e0ca7b2-a24f-4234-8815-d2d5fc84bf47.jpg" alt="MC4"><br><img src="https://images.viblo.asia/57cb64d8-0b95-4a88-8340-4776dea9f5ba.jpg" alt="MC5"></p>
+<p>Vì hiện tại email content Java mình code, đang để nội dung là plainText, vậy nên sẽ không thể report thống kê khi receiver open email hoặc click được! (Cái này mailchimp nói)</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> via https://github.com/tungtv202/MyNote </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    © 2019-2020 Tung Explorer
+</p>
+<!-- <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p> -->
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="full-screen  s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 572px;
+    }
+    .nav.fullscreen {
+        margin-left: -572px;
+    }
+    .nav-left {
+        width: 150px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 542px;
+        }
+        .nav.fullscreen {
+            margin-left: -542px;
+        }
+        .nav-left {
+            width: 150px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 542px;
+            margin-left: -542px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #fbf4a8;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    <a class="dynamic-menu site_url"   href="/2020/02/Other/Bookmarks/">bookmarks</a>
+    
+    
+    
+</div>
+
+
+</html>

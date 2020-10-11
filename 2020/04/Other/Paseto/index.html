@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Paseto - Token base authentication | Tung Explorer</title>
+  <meta name="keywords" content=" token , paseto , authen ">
+  <meta name="description" content="Paseto - Token base authentication | Tung Explorer">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="ThreadLocal Tư tưởng là mỗi thread, sẽ có 1 “vùng nhớ” riêng để chứa dữ liệu, khi các method ở các class khác nhau, được chạy trong cùng 1 thread, sẽ lấy được giá trị ở “vùng nhớ” đó.&#x3D;&gt; Ví dụ có th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java - Concurrency">
+<meta property="og:url" content="http://example.com/2020/09/Java/Concurrency/index.html">
+<meta property="og:site_name" content="Tung Explorer">
+<meta property="og:description" content="ThreadLocal Tư tưởng là mỗi thread, sẽ có 1 “vùng nhớ” riêng để chứa dữ liệu, khi các method ở các class khác nhau, được chạy trong cùng 1 thread, sẽ lấy được giá trị ở “vùng nhớ” đó.&#x3D;&gt; Ví dụ có th">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.viblo.asia/59d1214d-4438-4f46-878f-5db8af35fa1c.png">
+<meta property="article:published_time" content="2020-09-30T11:00:26.000Z">
+<meta property="article:modified_time" content="2020-10-11T14:51:42.673Z">
+<meta property="article:author" content="Tung Explorer">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="concurrency">
+<meta property="article:tag" content="thread local">
+<meta property="article:tag" content="volatile">
+<meta property="article:tag" content="thread safe">
+<meta property="article:tag" content="completable future">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.viblo.asia/59d1214d-4438-4f46-878f-5db8af35fa1c.png">
+
+
+<link rel="icon" href="/img/icon.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/zenbum.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/ahbp.gif" />
+</a>
+<div class="author">
+    <span>Tung Explorer</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="github" href="https://github.com/tungtv202" target="_blank">
+            
+                <i class="iconfont icon-github"></i>
+            
+        </a>
+        
+    
+        
+        <a title="facebook" href="https://www.facebook.com/tungtv2029x/" target="_blank">
+            
+                <i class="iconfont icon-facebook"></i>
+            
+        </a>
+        
+    
+        
+        <a title="linkedin" href="https://www.linkedin.com/in/tungtv202" target="_blank">
+            
+                <i class="iconfont icon-linkedin"></i>
+            
+        </a>
+        
+    
+        
+        <a title="email" href="mailto:tungtv202@gmail.com" target="_blank">
+            
+                <i class="iconfont icon-email"></i>
+            
+        </a>
+        
+    
+</div>
+
+
+
+<a class="more-menus">more menu</a>
+
+
+<ul>
+    <li><div class="all active" data-rel="All">All<small>(67)</small></div></li>
+    
+        
+            
+            <li><div data-rel="aws">aws<small>(12)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="cicd_ops">cicd_ops<small>(3)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="code_template">code_template<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="docker">docker<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="elastic_search">elastic_search<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="install_guide">install_guide<small>(9)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="java"><i class="fold iconfont icon-right"></i>java<small>(18)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="java<--->feign">feign<small>(3)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="java<--->jackson">jackson<small>(2)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="kafka">kafka<small>(4)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="linux">linux<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="other">other<small>(10)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="rabbitmq">rabbitmq<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="stories">stories<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    <a class="dynamic-menu site_url"   href="/2020/02/Other/Bookmarks/">bookmarks</a>
+    
+    
+    
+    </div>
+    <div></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="67">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="find  i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="TOC "></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="back"></i>
+            <input id="local-search-input" />
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="match case"></i>
+            <i class="iconfont icon-tag" data-title="tag"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">---TOC---</div>
+            <i class="iconfont icon-list" data-title="list article"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>aria2</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>authen</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>authentication</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>auto scheduler</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>auto tool</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>aws</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bash</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>basic</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>beanstalk</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cicd</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>code template</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cognito</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>command</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>completable future</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>concurrency</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>coordinator</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ddd</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>diff</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>docker</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>domain driver design</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>drone io</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>e-wallet</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>EBS</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ecr</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ecs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>elastic beanstalk</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>elastic search</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>evaluation logic</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>feign</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fshare</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>gen code</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>GeneratedValue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>get link</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>google translate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>grafana</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ha</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>http client</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>install</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jackson</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>javers</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jhipster</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jpa</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>junit</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jvm internal</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafdrop</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafka</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafka cli</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>KafkaListener</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>lambda</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>log</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>logback</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>lua</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mail</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mailchimp</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>memory leak</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>metric</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mirror queue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mockito</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>momo</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>network</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>nginx</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>node</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>note</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>note total</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>npm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>object storage</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>paseto</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>postgresql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>prometheus</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>quartz</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>query sql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>quorum queue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>rabbitmq</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>rebalance</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>redis</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>route53</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>s3</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>script</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>secureCRT</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>security</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>security token service</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>segment</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>serialize</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>session</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>signed url</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>simple queue service</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>snmp</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>spectre meltdown</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>spring</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sqs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ssh tool</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>stompJs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>stories</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sts</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>template</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread local</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread safe</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>token</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>total</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>translate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>unit test</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>use case</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>vagrant</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>volatile</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>web socket</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>wlan</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>wpa</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>yaml</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>zookeeper</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a  class="All java "
+           href="/2020/09/Java/Concurrency/"
+           data-tag="java,concurrency,thread local,volatile,thread safe,completable future"
+           data-author="" >
+            <span class="post-title" title="Java - Concurrency">Java - Concurrency</span>
+            <span class="post-date" title="2020-09-30 18:00:26">2020/09/30</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/08/Java/JVM_Internal/"
+           data-tag="java,jvm internal"
+           data-author="" >
+            <span class="post-title" title="Java - JVM Internal">Java - JVM Internal</span>
+            <span class="post-date" title="2020-08-10 18:00:26">2020/08/10</span>
+        </a>
+        
+        <a  class="All rabbitmq "
+           href="/2020/07/RabbitMQ/RabbitMQ_Build_HA_Cluster/"
+           data-tag="ha,rabbitmq,stories,quorum queue"
+           data-author="" >
+            <span class="post-title" title="Rabbitmq - Cluster High Availability">Rabbitmq - Cluster High Availability</span>
+            <span class="post-date" title="2020-07-26 18:00:26">2020/07/26</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/07/Java/SpringSecurity/"
+           data-tag="java,spring,security"
+           data-author="" >
+            <span class="post-title" title="Java - Spring Security">Java - Spring Security</span>
+            <span class="post-date" title="2020-07-18 18:00:26">2020/07/18</span>
+        </a>
+        
+        <a  class="All kafka "
+           href="/2020/07/Kafka/Kafka_RebalanceProtocol/"
+           data-tag="kafka,rebalance,coordinator"
+           data-author="" >
+            <span class="post-title" title="Kafka - Rebalance Protocol">Kafka - Rebalance Protocol</span>
+            <span class="post-date" title="2020-07-13 18:00:26">2020/07/13</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/06/AWS/AWS_Note/"
+           data-tag="aws,note total"
+           data-author="" >
+            <span class="post-title" title="AWS - Note Total">AWS - Note Total</span>
+            <span class="post-date" title="2020-06-18 18:00:26">2020/06/18</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/06/Java/Logback/"
+           data-tag="log,logback"
+           data-author="" >
+            <span class="post-title" title="Java - Logback">Java - Logback</span>
+            <span class="post-date" title="2020-06-09 18:00:26">2020/06/09</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/06/Java/Quartz/"
+           data-tag="java,quartz,auto scheduler"
+           data-author="" >
+            <span class="post-title" title="Java - Implement Quartz">Java - Implement Quartz</span>
+            <span class="post-date" title="2020-06-03 18:00:26">2020/06/03</span>
+        </a>
+        
+        <a  class="All rabbitmq "
+           href="/2020/05/RabbitMQ/RabbitMQ_Mirror/"
+           data-tag="ha,rabbitmq,mirror queue"
+           data-author="" >
+            <span class="post-title" title="Rabbitmq - Mirror Queue + Durable Message">Rabbitmq - Mirror Queue + Durable Message</span>
+            <span class="post-date" title="2020-05-18 18:00:26">2020/05/18</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/04/Java/Jhipster/"
+           data-tag="java,jhipster,auto tool,gen code"
+           data-author="" >
+            <span class="post-title" title="Java - Jhipster">Java - Jhipster</span>
+            <span class="post-date" title="2020-04-25 18:00:26">2020/04/25</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/04/Install_Guide/Install_Guide_Node_Npm/"
+           data-tag="script,node,npm"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Node + npm">Install Guide - Node + npm</span>
+            <span class="post-date" title="2020-04-20 18:00:26">2020/04/20</span>
+        </a>
+        
+        <a  class="All stories "
+           href="/2020/04/Stories/BackupRestoreAthenaS3/"
+           data-tag="s3,query sql"
+           data-author="" >
+            <span class="post-title" title="Stories - Query SQL on S3">Stories - Query SQL on S3</span>
+            <span class="post-date" title="2020-04-20 18:00:26">2020/04/20</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2020/04/Other/Paseto/"
+           data-tag="token,paseto,authen"
+           data-author="" >
+            <span class="post-title" title="Paseto - Token base authentication">Paseto - Token base authentication</span>
+            <span class="post-date" title="2020-04-19 18:00:26">2020/04/19</span>
+        </a>
+        
+        <a  class="All code_template "
+           href="/2020/03/CodeTemplate/GoogleTranslateExmple/"
+           data-tag="code template,google translate,translate"
+           data-author="" >
+            <span class="post-title" title="Code Template - Google Translate">Code Template - Google Translate</span>
+            <span class="post-date" title="2020-03-10 18:00:26">2020/03/10</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2020/02/Other/EWallet/"
+           data-tag="e-wallet,momo"
+           data-author="" >
+            <span class="post-title" title="E-Wallet Note">E-Wallet Note</span>
+            <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
+        </a>
+        
+        <a  class="All cicd_ops "
+           href="/2020/02/Ops/CICD_FLow_Example/"
+           data-tag="cicd"
+           data-author="" >
+            <span class="post-title" title="CICD - Flow Example">CICD - Flow Example</span>
+            <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
+        </a>
+        
+        <a  class="All "
+           href="/2020/02/Other/Bookmarks/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="My Bookmarks">My Bookmarks</span>
+            <span class="post-date" title="2020-02-19 18:00:26">2020/02/19</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2020/02/Other/Authentication_Topic/"
+           data-tag="authentication,basic,session,token"
+           data-author="" >
+            <span class="post-title" title="Authentication Topic">Authentication Topic</span>
+            <span class="post-date" title="2020-02-17 18:00:26">2020/02/17</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/02/Install_Guide/Install_Guide_Prometheus/"
+           data-tag="yaml,prometheus"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Prometheus">Install Guide - Prometheus</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/02/Install_Guide/Install_SNMP_Prometheus_Grafana/"
+           data-tag="script,install,prometheus,snmp,grafana"
+           data-author="" >
+            <span class="post-title" title="Install Guide - SNPM + Prometheus + Grafana">Install Guide - SNPM + Prometheus + Grafana</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        <a  class="All stories "
+           href="/2020/02/Stories/48h_inhouse_getLink_project/"
+           data-tag="fshare,get link,stories"
+           data-author="" >
+            <span class="post-title" title="Stories - Get Link Fshare">Stories - Get Link Fshare</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        <a  class="All docker "
+           href="/2020/02/Docker/Docker_TemplateFile/"
+           data-tag="docker,template"
+           data-author="" >
+            <span class="post-title" title="Docker - Template File">Docker - Template File</span>
+            <span class="post-date" title="2020-02-10 18:00:26">2020/02/10</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/02/Java/Java_Total/"
+           data-tag="java,note,KafkaListener"
+           data-author="" >
+            <span class="post-title" title="Java - Note Total">Java - Note Total</span>
+            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/02/Java/Java_Code_Prometheus_Metric/"
+           data-tag="prometheus,java,metric"
+           data-author="" >
+            <span class="post-title" title="Java - Code Application expose Metric for Prometheus">Java - Code Application expose Metric for Prometheus</span>
+            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_Cognito/"
+           data-tag="aws,cognito"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - Cognitor">AWS - LAB - Cognitor</span>
+            <span class="post-date" title="2020-01-30 18:00:26">2020/01/30</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_Route53/"
+           data-tag="aws,route53"
+           data-author="" >
+            <span class="post-title" title="AWS - Route 53">AWS - Route 53</span>
+            <span class="post-date" title="2020-01-27 18:00:26">2020/01/27</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ElasticBeanstalk/"
+           data-tag="aws,elastic beanstalk,beanstalk"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB- Beanstalk">AWS - LAB- Beanstalk</span>
+            <span class="post-date" title="2020-01-27 18:00:26">2020/01/27</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2020/01/Other/DDD_EventDrivenArchitecture/"
+           data-tag="ddd,domain driver design"
+           data-author="" >
+            <span class="post-title" title="Domain Driver Design &amp; Event Driven Architecture">Domain Driver Design &amp; Event Driven Architecture</span>
+            <span class="post-date" title="2020-01-26 18:00:26">2020/01/26</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_STS/"
+           data-tag="aws,sts,security token service"
+           data-author="" >
+            <span class="post-title" title="AWS - STS">AWS - STS</span>
+            <span class="post-date" title="2020-01-26 18:00:26">2020/01/26</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ECR/"
+           data-tag="aws,ecr"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - ECR">AWS - LAB - ECR</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ECS/"
+           data-tag="aws,ecs"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - ECS">AWS - LAB - ECS</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_Design_For_Organizational_Complexity/"
+           data-tag="aws"
+           data-author="" >
+            <span class="post-title" title="AWS - Design for organizational">AWS - Design for organizational</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Mount_EBS_to_EC2/"
+           data-tag="install,EBS"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Mount an EBS volume to EC2 Linux">Install Guide - Mount an EBS volume to EC2 Linux</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Aria2/"
+           data-tag="script,aria2"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Aria2">Install Guide - Aria2</span>
+            <span class="post-date" title="2020-01-24 18:00:26">2020/01/24</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Install_Guide_Kafka/"
+           data-tag="script,zookeeper,kafka,kafdrop"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Kafka">Install Guide - Kafka</span>
+            <span class="post-date" title="2020-01-24 18:00:26">2020/01/24</span>
+        </a>
+        
+        <a  class="All linux "
+           href="/2020/01/Linux/Linux_BashScript/"
+           data-tag="script,install,bash"
+           data-author="" >
+            <span class="post-title" title="Linux - Bash Script Collection">Linux - Bash Script Collection</span>
+            <span class="post-date" title="2020-01-22 18:00:26">2020/01/22</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Install_Guide_Postgresql/"
+           data-tag="script,install,postgresql"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Postgres SQL">Install Guide - Postgres SQL</span>
+            <span class="post-date" title="2020-01-22 18:00:26">2020/01/22</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/01/Java/SpringBoot_WebSocket_StompJS/"
+           data-tag="java,web socket,stompJs,spring"
+           data-author="" >
+            <span class="post-title" title="Java - Spring web Socket + StompJS">Java - Spring web Socket + StompJS</span>
+            <span class="post-date" title="2020-01-15 18:00:26">2020/01/15</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2020/01/Java/Javers_Diff/"
+           data-tag="java,javers,diff"
+           data-author="" >
+            <span class="post-title" title="Java - Javers Diff">Java - Javers Diff</span>
+            <span class="post-date" title="2020-01-13 18:00:26">2020/01/13</span>
+        </a>
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/Feign_BuilderExample/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Client builder example">Feign Client - Client builder example</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/FeignClient_CustomizeByBean/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Customize Feign By Bean">Feign Client - Customize Feign By Bean</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/Feign_MultipleConfig/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Multiple Configuration">Feign Client - Multiple Configuration</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        <a  class="All kafka "
+           href="/2020/01/Kafka/Kafka_Command/"
+           data-tag="command,kafka,kafka cli"
+           data-author="" >
+            <span class="post-title" title="Kafka - CLI Command">Kafka - CLI Command</span>
+            <span class="post-date" title="2020-01-03 18:00:26">2020/01/03</span>
+        </a>
+        
+        <a  class="All kafka "
+           href="/2020/01/Kafka/Kafka_UseCase/"
+           data-tag="kafka,use case"
+           data-author="" >
+            <span class="post-title" title="Kafka - Use case">Kafka - Use case</span>
+            <span class="post-date" title="2020-01-02 18:00:26">2020/01/02</span>
+        </a>
+        
+        <a  class="All cicd_ops "
+           href="/2020/01/Ops/VagrantFile_Template/"
+           data-tag="template,vagrant"
+           data-author="" >
+            <span class="post-title" title="Ops - Vagrant Template">Ops - Vagrant Template</span>
+            <span class="post-date" title="2020-01-01 18:00:26">2020/01/01</span>
+        </a>
+        
+        <a  class="All kafka "
+           href="/2019/12/Kafka/Kafka_Note/"
+           data-tag="kafka,segment,total"
+           data-author="" >
+            <span class="post-title" title="Kafka - Note">Kafka - Note</span>
+            <span class="post-date" title="2019-12-31 18:00:26">2019/12/31</span>
+        </a>
+        
+        <a  class="All code_template "
+           href="/2019/12/CodeTemplate/CodeTemplate_S3/"
+           data-tag="aws,s3,code template"
+           data-author="" >
+            <span class="post-title" title="Code Template - AWS - S3">Code Template - AWS - S3</span>
+            <span class="post-date" title="2019-12-27 18:00:26">2019/12/27</span>
+        </a>
+        
+        <a  class="All java jackson "
+           href="/2019/12/Java/JackSon/Jackson/"
+           data-tag="java,serialize,jackson"
+           data-author="" >
+            <span class="post-title" title="Jackson - Note">Jackson - Note</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        <a  class="All java jackson "
+           href="/2019/12/Java/JackSon/Jackson_Deserialize_Abstractclass/"
+           data-tag="java,serialize,jackson"
+           data-author="" >
+            <span class="post-title" title="Jackson - Deserialize Abstract class">Jackson - Deserialize Abstract class</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2019/12/AWS/AWS_PolicyEvaluationLogic/"
+           data-tag="aws,evaluation logic"
+           data-author="" >
+            <span class="post-title" title="AWS - Policy Evaluation Logic">AWS - Policy Evaluation Logic</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2019/12/Install_Guide/Install_SecureCRT/"
+           data-tag="install,secureCRT,ssh tool"
+           data-author="" >
+            <span class="post-title" title="Install Guide - SecureCRT">Install Guide - SecureCRT</span>
+            <span class="post-date" title="2019-12-03 18:00:26">2019/12/03</span>
+        </a>
+        
+        <a  class="All docker "
+           href="/2019/12/Docker/Docker_Command/"
+           data-tag="docker,command,script,install"
+           data-author="" >
+            <span class="post-title" title="Docker - Command">Docker - Command</span>
+            <span class="post-date" title="2019-12-03 18:00:26">2019/12/03</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2019/12/Install_Guide/Install_Java/"
+           data-tag="script,install,java"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Java">Install Guide - Java</span>
+            <span class="post-date" title="2019-12-03 18:00:26">2019/12/03</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2019/05/Other/MailChimp/"
+           data-tag="mail,mailchimp"
+           data-author="" >
+            <span class="post-title" title="MailChimp">MailChimp</span>
+            <span class="post-date" title="2019-05-17 18:00:26">2019/05/17</span>
+        </a>
+        
+        <a  class="All cicd_ops "
+           href="/2019/05/Ops/CICD_DroneIO/"
+           data-tag="cicd,drone io"
+           data-author="" >
+            <span class="post-title" title="CICD - DroneIO">CICD - DroneIO</span>
+            <span class="post-date" title="2019-05-17 18:00:26">2019/05/17</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2019/05/AWS/AWS_LAB_S3/"
+           data-tag="aws,s3,object storage"
+           data-author="" >
+            <span class="post-title" title="AWS - S3">AWS - S3</span>
+            <span class="post-date" title="2019-05-17 18:00:26">2019/05/17</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2019/05/Other/Signed_URL/"
+           data-tag="s3,object storage,signed url"
+           data-author="" >
+            <span class="post-title" title="Signed URL">Signed URL</span>
+            <span class="post-date" title="2019-05-12 18:00:26">2019/05/12</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2019/03/Java/MemoryLeak/"
+           data-tag="java,memory leak"
+           data-author="" >
+            <span class="post-title" title="Java - Memory Leak">Java - Memory Leak</span>
+            <span class="post-date" title="2019-03-17 18:00:26">2019/03/17</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2019/02/Other/WP2_WLAN/"
+           data-tag="network,security,wlan,wpa"
+           data-author="" >
+            <span class="post-title" title="WPA2 on WLAN">WPA2 on WLAN</span>
+            <span class="post-date" title="2019-02-18 18:00:26">2019/02/18</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2019/02/Other/Nginx_ConfigExample/"
+           data-tag="template,nginx"
+           data-author="" >
+            <span class="post-title" title="Nginx - Config exmaple">Nginx - Config exmaple</span>
+            <span class="post-date" title="2019-02-11 18:00:26">2019/02/11</span>
+        </a>
+        
+        <a  class="All elastic_search "
+           href="/2018/11/ElasticSearch/ElasticSearch_Note/"
+           data-tag="elastic search"
+           data-author="" >
+            <span class="post-title" title="Elastic Search - Some Note">Elastic Search - Some Note</span>
+            <span class="post-date" title="2018-11-20 18:00:26">2018/11/20</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2018/10/AWS/AWS_Lambda_CaseStudy/"
+           data-tag="aws,lambda"
+           data-author="" >
+            <span class="post-title" title="AWS - Lambda - Case study">AWS - Lambda - Case study</span>
+            <span class="post-date" title="2018-10-14 18:00:26">2018/10/14</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2018/10/Java/JPA_GeneratedValue/"
+           data-tag="java,GeneratedValue,jpa"
+           data-author="" >
+            <span class="post-title" title="Java - Annotation @GeneratedValue trong JPA">Java - Annotation @GeneratedValue trong JPA</span>
+            <span class="post-date" title="2018-10-12 18:00:26">2018/10/12</span>
+        </a>
+        
+        <a  class="All java "
+           href="/2018/10/Java/Junit_Mockito/"
+           data-tag="java,junit,mockito,unit test"
+           data-author="" >
+            <span class="post-title" title="Java - Junit + Mockito">Java - Junit + Mockito</span>
+            <span class="post-date" title="2018-10-12 18:00:26">2018/10/12</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2018/09/AWS/AWS_SQS/"
+           data-tag="aws,sqs,simple queue service"
+           data-author="" >
+            <span class="post-title" title="AWS - SQS">AWS - SQS</span>
+            <span class="post-date" title="2018-09-11 18:00:26">2018/09/11</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2018/04/Other/Lua_redis_java/"
+           data-tag="script,lua,redis"
+           data-author="" >
+            <span class="post-title" title="Run lua script on Java">Run lua script on Java</span>
+            <span class="post-date" title="2018-04-09 18:00:26">2018/04/09</span>
+        </a>
+        
+        <a  class="All other "
+           href="/2018/02/Other/Spectre_Meltdown/"
+           data-tag="spectre meltdown"
+           data-author="" >
+            <span class="post-title" title="Spectre Meltdown">Spectre Meltdown</span>
+            <span class="post-date" title="2018-02-09 18:00:26">2018/02/09</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="full-screen  s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-Other/Paseto" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">Paseto - Token base authentication</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="other">other</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color1">token</a>
+            
+            <a class="color2">paseto</a>
+            
+            <a class="color2">authen</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2020-10-12 06:40:57'>2020-04-19 18:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <!-- <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span> -->
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Bai-toan-Best-use-case"><span class="toc-text">1. Bài toán &#x2F; Best use case</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-Bai-toan-1"><span class="toc-text">1.1. Bài toán 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-Bai-toan-2"><span class="toc-text">1.2. Bài toán 2</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-PASETO"><span class="toc-text">2. PASETO</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-Mode-LOCAL"><span class="toc-text">2.1 Mode LOCAL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-Mode-PUBLIC"><span class="toc-text">2.2 Mode PUBLIC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-So-sanh-PASETO-vs-JWT"><span class="toc-text">3. So sánh PASETO vs JWT</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-Giong-nhau"><span class="toc-text">3.1 Giống nhau</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-Khac-nhau"><span class="toc-text">3.2 Khác nhau</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-Diem-yeu-cua-JWT"><span class="toc-text">3.3 Điểm yếu của JWT</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Reference"><span class="toc-text">4. Reference</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-Algorithm"><span class="toc-text">4.1 Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-Link-lien-quan"><span class="toc-text">4.2 Link liên quan</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-Bai-toan-Best-use-case"><a href="#1-Bai-toan-Best-use-case" class="headerlink" title="1. Bài toán / Best use case"></a>1. Bài toán / Best use case</h1><h2 id="1-1-Bai-toan-1"><a href="#1-1-Bai-toan-1" class="headerlink" title="1.1. Bài toán 1"></a>1.1. Bài toán 1</h2><ul>
+<li>Bạn xây dựng 1 hệ thống. Gồm 2 application:<ul>
+<li>Web application: cho phép user trả tiền để download file.  </li>
+<li>Download service application: cung cấp service tải file (user dùng url Web Application trả về, để request tải)</li>
+<li>2 application này có 1 kênh kết nối an toàn vs nhau. (ví dụ cùng mạng LAN, kết nối sử dụng private IP..)</li>
+</ul>
+</li>
+<li>Kịch bản mong muốn:<ul>
+<li>User thực hiện thanh toán trên Website</li>
+<li>Website xác thực việc thanh toán hoàn tất. Và tạo link download (có kèm token), trả về cho user</li>
+<li>User sử dụng link download để tải xuống.  </li>
+</ul>
+</li>
+</ul>
+<p>Làm thế nào để Download service validate được url request download?…Mà không phải call tới bất kỳ database nào. (kiểu không query tới db để check token, check lịch sử thanh toán…)</p>
+<h2 id="1-2-Bai-toan-2"><a href="#1-2-Bai-toan-2" class="headerlink" title="1.2. Bài toán 2"></a>1.2. Bài toán 2</h2><ul>
+<li>Bạn xây dựng 2 hệ thống:<ul>
+<li>Hệ thống cung cấp dịch vụ authorization. Quản lý việc user login, và cấp quyền</li>
+<li>Hệ thống Website, cho phép user login</li>
+<li>2 hệ thống này có 1 kênh kết nối không đảm bảo chắc chắn an toàn. (Ví dụ: hệ thống authorization sau này không chỉ cung cấp cho 1 website kia, mà còn cho bất website khác. Kiểu như OpenID, OAuth 2…)</li>
+</ul>
+</li>
+<li>Kịch bản mong muốn: <ul>
+<li>User truy cập website và login (vd: <a href="https://example.com/login">https://example.com/login</a>)</li>
+<li>Website điều hướng user về hệ thống authorization (vd: <a target="_blank" rel="noopener" href="https://authorization-ex.com/">https://authorization-ex.com</a>)</li>
+<li>User điền thông tin username/password tại form login của authorization service.</li>
+<li>Authorization Service xác thực tài khoản + điều hướng user về website, kèm token. (<a href="https://example.com/authen?token=abcxyz">https://example.com/authen?token=abcxyz</a>)</li>
+<li>Website nhận được token. Thực hiện validate, và tạo session truy cập cho user.</li>
+<li>User truy cập Website sử dụng session được cấp.</li>
+</ul>
+</li>
+</ul>
+<p>Làm thế nào để Website đảm bảo được token đúng là của Authorization Service tạo? (Phòng ngừa kiểu tấn công Middle-Man)</p>
+<h1 id="2-PASETO"><a href="#2-PASETO" class="headerlink" title="2. PASETO"></a>2. PASETO</h1><ul>
+<li>PASETO = Platform-Agnostic SEcurity TOkens</li>
+<li>Là một prototol cho bài toán Token-based authentication</li>
+<li>Là 1 Stateless token (tức là tự bản thân nó có khả năng validate, mà không cần phải lưu trữ / truy vấn thêm ở đâu)</li>
+<li>Có nhiều nét tương đồng với JWT (JSON Web Tokens), nhưng “nâng cấp” hơn.  </li>
+<li>PASETO có 2 mode:<ul>
+<li>LOCAL  (được dùng cho bài toán 1 bên trên)</li>
+<li>PUBLIC (được dùng cho bài toán 2 bên trên)<h2 id="2-1-Mode-LOCAL"><a href="#2-1-Mode-LOCAL" class="headerlink" title="2.1 Mode LOCAL"></a>2.1 Mode LOCAL</h2></li>
+</ul>
+</li>
+<li>Token format: <code>v1.local.payload.optional_footer</code> <ul>
+<li>Exxample:<pre><code>v1.local.CuizxAzVIz5bCqAjsZpXXV5mk_WWGHbVxmdF81DORwyYcMLvzoUHUmS_VKvJ1hn5zXyoMkygkEYLM2LM00uBI3G9gXC5VrZCUM.BLZo1q9IDIncAZTxYkE1NUTMz</code></pre>
+</li>
+<li>v1: là <code>version</code> của PASETO. Việc lựa chọn version sẽ quyết định loại thuật toán được sử dụng để mã hóa. (Version càng cao, thì thuật toán mã hóa càng mới, càng có tính bảo mật cao, nhưng nhược điểm là cần thiết bị tương thích). Hiện tại đang chỉ có 2 version v1, v2</li>
+<li>local: là mode LOCAL</li>
+<li>payload: 1 object json, sau đó được mã hóa.</li>
+<li>optional_footer: có thể có hoặc không. Được dùng để chứa metadata. Và không được mã hóa.</li>
+</ul>
+</li>
+<li>Mode LOCAL sử dụng kiểu mã hóa đối xứng - <code>Symmetric</code> (tức là khóa để encrypt và khóa để decrypt là giống nhau). Vd: giải thuật AES</li>
+<li>Các phiên bản Paseto không có tính tương thích ngược. Tức là bên mã hóa dùng version nào, thì bên giải mã cũng phải dùng version đó.</li>
+<li>Tên các trường trong object json ở payload theo chuẩn của <a target="_blank" rel="noopener" href="https://paseto.io/rfc/">PASETO RFC</a><pre><code class="text">+-----+------------+--------+-------------------------------------+
+| Key |    Name    |  Type  |               Example               |
++-----+------------+--------+-------------------------------------+
+| iss |   Issuer   | string |       &#123;&quot;iss&quot;:&quot;paragonie.com&quot;&#125;       |
+| sub |  Subject   | string |            &#123;&quot;sub&quot;:&quot;test&quot;&#125;           |
+| aud |  Audience  | string |       &#123;&quot;aud&quot;:&quot;pie-hosted.com&quot;&#125;      |
+| exp | Expiration | DtTime | &#123;&quot;exp&quot;:&quot;2039-01-01T00:00:00+00:00&quot;&#125; |
+| nbf | Not Before | DtTime | &#123;&quot;nbf&quot;:&quot;2038-04-01T00:00:00+00:00&quot;&#125; |
+| iat | Issued At  | DtTime | &#123;&quot;iat&quot;:&quot;2038-03-17T00:00:00+00:00&quot;&#125; |
+| jti |  Token ID  | string |  &#123;&quot;jti&quot;:&quot;87IFSGFgPNtQNNuw0AtuLttP&quot;&#125; |
+| kid |   Key-ID   | string |    &#123;&quot;kid&quot;:&quot;stored-in-the-footer&quot;&#125;   |
++-----+------------+--------+-------------------------------------+</code></pre>
+</li>
+<li>Thường field <code>exp</code> + <code>iat</code> được sử dụng để check thời hạn của token.</li>
+</ul>
+<p>// :-? Một trong những điểm mà mình không thích ở JWT, đó là phần payload của JWT chỉ được decode bởi base64. Nó như kiểu là “tao cho mày xem thông tin đấy, nhưng mày xem thấy cũng chả làm được gì đâu”</p>
+<ul>
+<li>Lời giải cho bài toán 1 dùng PASETO.<br>  <img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/paseto/baitoan1.gif" alt="Baitoan1"></li>
+</ul>
+<h2 id="2-2-Mode-PUBLIC"><a href="#2-2-Mode-PUBLIC" class="headerlink" title="2.2 Mode PUBLIC"></a>2.2 Mode PUBLIC</h2><ul>
+<li><p>Token format: <code>v1.public.payload.optional_footer</code> </p>
+<ul>
+<li>Format giống với mode LOCAL</li>
+</ul>
+</li>
+<li><p>Payload ở mode PUBLIC được mã hóa/ giải mã bởi kiểu mã hóa BẤT đối xứng - <code>ASymmetric</code> (tức là sẽ có 1 cặp khóa, privateKey và publicKey riêng biệt. PrivateKey dùng để mã hóa. PublicKey dùng để giải mã. Kiểu như: ai cũng có thể giải mã, nhưng chỉ 1 người mới có thể mã hóa). Vd: giải thuật RSA</p>
+<p>  <img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/paseto/format.JPG" alt="Format"></p>
+</li>
+<li><p>Lời giải cho bài toán 2:<br>  <img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/paseto/baitoan2.gif" alt="Baitoan2"></p>
+</li>
+</ul>
+<h1 id="3-So-sanh-PASETO-vs-JWT"><a href="#3-So-sanh-PASETO-vs-JWT" class="headerlink" title="3. So sánh PASETO vs JWT"></a>3. So sánh PASETO vs JWT</h1><h2 id="3-1-Giong-nhau"><a href="#3-1-Giong-nhau" class="headerlink" title="3.1 Giống nhau"></a>3.1 Giống nhau</h2><ul>
+<li>Đều là protocol cho bài toán Token-based authentication</li>
+<li>Payload đều là object json</li>
+<li>Đều là staless token</li>
+<li>Tư tưởng phần <code>payload</code> đều có trường “expire time”, để check hạn sử dụng của token</li>
+<li>Đều không có khả năng chống replay attack. (tức token bị lọt vào tay attacker, thì attacker có thể sử dụng nó như chính user thật)</li>
+</ul>
+<h2 id="3-2-Khac-nhau"><a href="#3-2-Khac-nhau" class="headerlink" title="3.2 Khác nhau"></a>3.2 Khác nhau</h2><table>
+<thead>
+<tr>
+<th>Sự khác biệt</th>
+<th>JWT</th>
+<th>PASETO</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cách self validate (tự check chữ ký)</td>
+<td>phần payload + header được decode bởi base64, sau đó sẽ được băm <code>hash</code> với giải thuật được khai báo ở header, có sử dụng secret key. Rồi sau đó so sánh với phần signature</td>
+<td>phần payload được decrypt bởi shareKey (hoặc publicKey), nếu decrypt thành công tức token hợp lệ</td>
+</tr>
+<tr>
+<td>Số mode</td>
+<td>chỉ có 1 mode</td>
+<td>có 2 mode: local + public, tùy use case mà lựa chọn</td>
+</tr>
+</tbody></table>
+<h2 id="3-3-Diem-yeu-cua-JWT"><a href="#3-3-Diem-yeu-cua-JWT" class="headerlink" title="3.3 Điểm yếu của JWT"></a>3.3 Điểm yếu của JWT</h2><ul>
+<li>Attacker có thể sửa trường <code>alt</code> ở header, để thay đổi giải thuật băm, bằng 1 hàm băm có độ bảo mật yếu, đồng thời sửa <code>signature</code>. Nếu phía server không thực hiện check <code>alt</code>, thì sẽ tăng nguy cơ bị hổng.</li>
+</ul>
+<h1 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4. Reference"></a>4. Reference</h1><h2 id="4-1-Algorithm"><a href="#4-1-Algorithm" class="headerlink" title="4.1 Algorithm"></a>4.1 Algorithm</h2><ul>
+<li>v1.local: AES-256-CTR + HMAC-SHA384 (Encrypt-then-MAC)</li>
+<li>v1.public: 2048-bit RSA</li>
+<li>v2.local: XChaCha20-Poly1305 (192-bit nonce, 256-bit key, 128-bit authentication tag)</li>
+<li>v2.public: Ed25519 (EdDSA over Curve25519)</li>
+</ul>
+<h2 id="4-2-Link-lien-quan"><a href="#4-2-Link-lien-quan" class="headerlink" title="4.2 Link liên quan"></a>4.2 Link liên quan</h2><ul>
+<li>Bài viết được viết lại từ: <a target="_blank" rel="noopener" href="https://developer.okta.com/blog/2019/10/17/a-thorough-introduction-to-paseto">https://developer.okta.com/blog/2019/10/17/a-thorough-introduction-to-paseto</a></li>
+<li>Trang chủ paseto: <a target="_blank" rel="noopener" href="https://paseto.io/">https://paseto.io</a></li>
+<li>NoWayJoseCPV2018: <a target="_blank" rel="noopener" href="https://docs.google.com/presentation/d/1Rn4xQWB0NCKvy7_lcyowZGz0QPvbAskGjNdYLmuQMhY">https://docs.google.com/presentation/d/1Rn4xQWB0NCKvy7_lcyowZGz0QPvbAskGjNdYLmuQMhY</a></li>
+</ul>
+<ul>
+<li>Lưu ý: khi code thử nghiệm với <code>V2</code>, có thể sẽ cần phải cài đặt thêm <code>sodium</code>, để OS có hỗ trợ giải thuật được sử dụng trong PASETO. (Vì các giải thuật trong V2 khá mới, nên OS có thể không có sẵn)</li>
+</ul>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> via https://github.com/tungtv202/MyNote </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    © 2019-2020 Tung Explorer
+</p>
+<!-- <p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p> -->
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="full-screen  s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 572px;
+    }
+    .nav.fullscreen {
+        margin-left: -572px;
+    }
+    .nav-left {
+        width: 150px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 542px;
+        }
+        .nav.fullscreen {
+            margin-left: -542px;
+        }
+        .nav-left {
+            width: 150px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 542px;
+            margin-left: -542px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #fbf4a8;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+<div class="mobile-menus-out" >
+
+</div>
+<div class="mobile-menus">
+    
+    
+    <a class="dynamic-menu site_url"   href="/2020/02/Other/Bookmarks/">bookmarks</a>
+    
+    
+    
+</div>
+
+
+</html>
