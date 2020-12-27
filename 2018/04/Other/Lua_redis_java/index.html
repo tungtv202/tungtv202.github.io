@@ -6,33 +6,29 @@
   <meta name="keywords" content=" script , lua , redis ">
   <meta name="description" content="Run lua script on Java | Tung Explorer">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="Transaction - IsolationConcurency Control Two phase locking (avoid conflict) Shared lock (read lock) Exclusive lock (write lock)    &#x3D;&gt; Deadlock   Mutli-Version Concurrency control (detect conflict)">
+<meta name="description" content="Bài toán Xây dựng ứng dụng phục vụ việc sao lưu &amp; khôi phục dữ liệu.  Đối tượng cần sao lưu: dữ liệu của khách hàng được chứa trên hệ thống X. Việc lấy dữ liệu (backup) &amp; chỉnh sửa dữ liệu (re">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Transaction - Isolation &amp; Durability">
-<meta property="og:url" content="http://example.com/2020/12/Database/Transaction_Isolation/index.html">
+<meta property="og:title" content="Nhật ký xây dựng app Backup &amp; Restore">
+<meta property="og:url" content="http://example.com/2020/12/Stories/App_Backup_Restore/index.html">
 <meta property="og:site_name" content="Tung Explorer">
-<meta property="og:description" content="Transaction - IsolationConcurency Control Two phase locking (avoid conflict) Shared lock (read lock) Exclusive lock (write lock)    &#x3D;&gt; Deadlock   Mutli-Version Concurrency control (detect conflict)">
+<meta property="og:description" content="Bài toán Xây dựng ứng dụng phục vụ việc sao lưu &amp; khôi phục dữ liệu.  Đối tượng cần sao lưu: dữ liệu của khách hàng được chứa trên hệ thống X. Việc lấy dữ liệu (backup) &amp; chỉnh sửa dữ liệu (re">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/persistence/sqldb/dirty_write1.JPG">
-<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/persistence/sqldb/drity_read1.JPG">
-<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/persistence/sqldb/Non_reapeatable_read1.JPG">
-<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/persistence/sqldb/PhantomRead1.JPG">
-<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/persistence/sqldb/ReadSkew1.JPG">
-<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/persistence/sqldb/WriteSkew1.JPG">
-<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/persistence/sqldb/LostUpdate1.JPG">
-<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/persistence/sqldb/ReadUncommited_Table1.JPG">
-<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/persistence/sqldb/ReadCommited_Table1.JPG">
-<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/persistence/sqldb/ReapeabtaleRead_Table1.JPG">
-<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/persistence/sqldb/Serializable_table1.JPG">
-<meta property="article:published_time" content="2020-12-20T11:00:26.000Z">
-<meta property="article:modified_time" content="2020-12-27T08:44:01.321Z">
+<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/BackupLogs.png">
+<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/BackupLogDetails.JPG">
+<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/Media.JPG">
+<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/MediaDependencyLogs.JPG">
+<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/RestoreLog.JPG">
+<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/RestoreLogDetails.JPG">
+<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/RestoreErrorLogs.JPG">
+<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/DiffRequests.JPG">
+<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/DiffRequestDetails.JPG">
+<meta property="og:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/Diff.JPG">
+<meta property="article:published_time" content="2020-12-27T17:39:26.000Z">
+<meta property="article:modified_time" content="2020-12-27T17:43:52.185Z">
 <meta property="article:author" content="Tung Explorer">
-<meta property="article:tag" content="transaction">
-<meta property="article:tag" content="isolation">
-<meta property="article:tag" content="durability">
-<meta property="article:tag" content="persistence">
+<meta property="article:tag" content="backup restore">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/persistence/sqldb/dirty_write1.JPG">
+<meta name="twitter:image" content="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/BackupLogs.png">
 
 
 <link rel="icon" href="/img/icon.jpg">
@@ -123,7 +119,7 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="All">All<small>(72)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(73)</small></div></li>
     
         
             
@@ -243,7 +239,7 @@
     
         
             
-            <li><div data-rel="stories">stories<small>(3)</small></div>
+            <li><div data-rel="stories">stories<small>(4)</small></div>
                 
             </li>
             
@@ -261,7 +257,7 @@
     </div>
     <div></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="72">
+<input type="hidden" id="yelog_site_posts_number" value="73">
 
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
@@ -329,6 +325,10 @@
         
             <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>aws</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>backup restore</a>
             </li>
         
             <li class="article-tag-list-item">
@@ -802,12 +802,12 @@
     
     <nav id="title-list-nav">
         
-        <a  class="All database "
-           href="/2020/12/Database/Transaction_Isolation/"
-           data-tag="transaction,isolation,durability,persistence"
+        <a  class="All stories "
+           href="/2020/12/Stories/App_Backup_Restore/"
+           data-tag="backup restore"
            data-author="" >
-            <span class="post-title" title="Transaction - Isolation &amp; Durability">Transaction - Isolation &amp; Durability</span>
-            <span class="post-date" title="2020-12-20 18:00:26">2020/12/20</span>
+            <span class="post-title" title="Nhật ký xây dựng app Backup &amp; Restore">Nhật ký xây dựng app Backup &amp; Restore</span>
+            <span class="post-date" title="2020-12-28 00:39:26">2020/12/28</span>
         </a>
         
         <a  class="All database "
@@ -815,6 +815,14 @@
            data-tag="jpa,hibernate,persistance"
            data-author="" >
             <span class="post-title" title="JPA - Hibernate - Persistance Note">JPA - Hibernate - Persistance Note</span>
+            <span class="post-date" title="2020-12-27 13:47:26">2020/12/27</span>
+        </a>
+        
+        <a  class="All database "
+           href="/2020/12/Database/Transaction_Isolation/"
+           data-tag="transaction,isolation,durability,persistence"
+           data-author="" >
+            <span class="post-title" title="Transaction - Isolation &amp; Durability">Transaction - Isolation &amp; Durability</span>
             <span class="post-date" title="2020-12-20 18:00:26">2020/12/20</span>
         </a>
         
@@ -938,19 +946,19 @@
             <span class="post-date" title="2020-03-10 18:00:26">2020/03/10</span>
         </a>
         
-        <a  class="All cicd_ops "
-           href="/2020/02/Ops/CICD_FLow_Example/"
-           data-tag="cicd"
-           data-author="" >
-            <span class="post-title" title="CICD - Flow Example">CICD - Flow Example</span>
-            <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
-        </a>
-        
         <a  class="All other "
            href="/2020/02/Other/EWallet/"
            data-tag="e-wallet,momo"
            data-author="" >
             <span class="post-title" title="E-Wallet Note">E-Wallet Note</span>
+            <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
+        </a>
+        
+        <a  class="All cicd_ops "
+           href="/2020/02/Ops/CICD_FLow_Example/"
+           data-tag="cicd"
+           data-author="" >
+            <span class="post-title" title="CICD - Flow Example">CICD - Flow Example</span>
             <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
         </a>
         
@@ -970,19 +978,19 @@
             <span class="post-date" title="2020-02-17 18:00:26">2020/02/17</span>
         </a>
         
-        <a  class="All install_guide "
-           href="/2020/02/Install_Guide/Install_Guide_Prometheus/"
-           data-tag="yaml,prometheus"
-           data-author="" >
-            <span class="post-title" title="Install Guide - Prometheus">Install Guide - Prometheus</span>
-            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
-        </a>
-        
         <a  class="All stories "
            href="/2020/02/Stories/48h_inhouse_getLink_project/"
            data-tag="fshare,get link,stories"
            data-author="" >
             <span class="post-title" title="Stories - Get Link Fshare">Stories - Get Link Fshare</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/02/Install_Guide/Install_Guide_Prometheus/"
+           data-tag="yaml,prometheus"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Prometheus">Install Guide - Prometheus</span>
             <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
         </a>
         
@@ -1003,14 +1011,6 @@
         </a>
         
         <a  class="All java "
-           href="/2020/02/Java/Java_Total/"
-           data-tag="java,note,KafkaListener"
-           data-author="" >
-            <span class="post-title" title="Java - Note Total">Java - Note Total</span>
-            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
-        </a>
-        
-        <a  class="All java "
            href="/2020/02/Java/Java_Code_Prometheus_Metric/"
            data-tag="prometheus,java,metric"
            data-author="" >
@@ -1018,12 +1018,12 @@
             <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
         </a>
         
-        <a  class="All aws "
-           href="/2020/01/AWS/AWS_LAB_Cognito/"
-           data-tag="aws,cognito"
+        <a  class="All java "
+           href="/2020/02/Java/Java_Total/"
+           data-tag="java,note,KafkaListener"
            data-author="" >
-            <span class="post-title" title="AWS - LAB - Cognitor">AWS - LAB - Cognitor</span>
-            <span class="post-date" title="2020-01-30 18:00:26">2020/01/30</span>
+            <span class="post-title" title="Java - Note Total">Java - Note Total</span>
+            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
         </a>
         
         <a  class="All aws "
@@ -1031,6 +1031,14 @@
            data-tag="aws,iam,policy"
            data-author="" >
             <span class="post-title" title="AWS - IAM">AWS - IAM</span>
+            <span class="post-date" title="2020-01-30 18:00:26">2020/01/30</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_Cognito/"
+           data-tag="aws,cognito"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - Cognitor">AWS - LAB - Cognitor</span>
             <span class="post-date" title="2020-01-30 18:00:26">2020/01/30</span>
         </a>
         
@@ -1067,18 +1075,18 @@
         </a>
         
         <a  class="All aws "
-           href="/2020/01/AWS/AWS_LAB_ECS/"
-           data-tag="aws,ecs"
-           data-author="" >
-            <span class="post-title" title="AWS - LAB - ECS">AWS - LAB - ECS</span>
-            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
-        </a>
-        
-        <a  class="All aws "
            href="/2020/01/AWS/AWS_Design_For_Organizational_Complexity/"
            data-tag="aws"
            data-author="" >
             <span class="post-title" title="AWS - Design for organizational">AWS - Design for organizational</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Mount_EBS_to_EC2/"
+           data-tag="install,EBS"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Mount an EBS volume to EC2 Linux">Install Guide - Mount an EBS volume to EC2 Linux</span>
             <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
         </a>
         
@@ -1090,11 +1098,11 @@
             <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
         </a>
         
-        <a  class="All install_guide "
-           href="/2020/01/Install_Guide/Mount_EBS_to_EC2/"
-           data-tag="install,EBS"
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ECS/"
+           data-tag="aws,ecs"
            data-author="" >
-            <span class="post-title" title="Install Guide - Mount an EBS volume to EC2 Linux">Install Guide - Mount an EBS volume to EC2 Linux</span>
+            <span class="post-title" title="AWS - LAB - ECS">AWS - LAB - ECS</span>
             <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
         </a>
         
@@ -1114,19 +1122,19 @@
             <span class="post-date" title="2020-01-24 18:00:26">2020/01/24</span>
         </a>
         
-        <a  class="All install_guide "
-           href="/2020/01/Install_Guide/Install_Guide_Postgresql/"
-           data-tag="script,install,postgresql"
-           data-author="" >
-            <span class="post-title" title="Install Guide - Postgres SQL">Install Guide - Postgres SQL</span>
-            <span class="post-date" title="2020-01-22 18:00:26">2020/01/22</span>
-        </a>
-        
         <a  class="All linux "
            href="/2020/01/Linux/Linux_BashScript/"
            data-tag="script,install,bash"
            data-author="" >
             <span class="post-title" title="Linux - Bash Script Collection">Linux - Bash Script Collection</span>
+            <span class="post-date" title="2020-01-22 18:00:26">2020/01/22</span>
+        </a>
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Install_Guide_Postgresql/"
+           data-tag="script,install,postgresql"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Postgres SQL">Install Guide - Postgres SQL</span>
             <span class="post-date" title="2020-01-22 18:00:26">2020/01/22</span>
         </a>
         
@@ -1204,18 +1212,10 @@
         
         <a  class="All code_template "
            href="/2019/12/CodeTemplate/CodeTemplate_S3/"
-           data-tag="aws,s3,code template"
+           data-tag="code template,aws,s3"
            data-author="" >
             <span class="post-title" title="Code Template - AWS - S3">Code Template - AWS - S3</span>
             <span class="post-date" title="2019-12-27 18:00:26">2019/12/27</span>
-        </a>
-        
-        <a  class="All java jackson "
-           href="/2019/12/Java/JackSon/Jackson_Deserialize_Abstractclass/"
-           data-tag="java,serialize,jackson"
-           data-author="" >
-            <span class="post-title" title="Jackson - Deserialize Abstract class">Jackson - Deserialize Abstract class</span>
-            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
         </a>
         
         <a  class="All aws "
@@ -1223,6 +1223,14 @@
            data-tag="aws,evaluation logic"
            data-author="" >
             <span class="post-title" title="AWS - Policy Evaluation Logic">AWS - Policy Evaluation Logic</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        <a  class="All java jackson "
+           href="/2019/12/Java/JackSon/Jackson_Deserialize_Abstractclass/"
+           data-tag="java,serialize,jackson"
+           data-author="" >
+            <span class="post-title" title="Jackson - Deserialize Abstract class">Jackson - Deserialize Abstract class</span>
             <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
         </a>
         
@@ -1426,7 +1434,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-12-27 15:44:01'>2018-04-09 18:00</time>
+            Created At : <time class="date" title='Updated At: 2020-12-28 00:43:52'>2018-04-09 18:00</time>
         
     </div>
     <div class="article-meta">
