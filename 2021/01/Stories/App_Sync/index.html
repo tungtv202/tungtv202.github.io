@@ -1196,18 +1196,18 @@
         </a>
         
         <a  class="All java feign "
-           href="/2020/01/Java/FeignClient/Feign_MultipleConfig/"
-           data-tag="java,http client,feign"
-           data-author="" >
-            <span class="post-title" title="Feign Client - Multiple Configuration">Feign Client - Multiple Configuration</span>
-            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
-        </a>
-        
-        <a  class="All java feign "
            href="/2020/01/Java/FeignClient/Feign_BuilderExample/"
            data-tag="java,http client,feign"
            data-author="" >
             <span class="post-title" title="Feign Client - Client builder example">Feign Client - Client builder example</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/Feign_MultipleConfig/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Multiple Configuration">Feign Client - Multiple Configuration</span>
             <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
         </a>
         
@@ -1463,7 +1463,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-01-25 21:55:51'>2021-01-10 10:39</time>
+            Created At : <time class="date" title='Updated At: 2021-01-25 22:05:24'>2021-01-10 10:39</time>
         
     </div>
     <div class="article-meta">
@@ -1774,7 +1774,7 @@ public class WebConfig extends WebMvcConfigurationSupport &#123;
       if (this.getCreatedOn() == null) this.setCreatedOn(Util.getVNTime());
   &#125;</code></pre>
 </li>
-<li><p>Khai báo class Exception, kiểu Builder pattern, hạn chế việc mutable</p>
+<li><p>Khai báo class Exception, kiểu Builder pattern, hạn chế việc mutable          </p>
 <pre><code class="java"></code></pre>
 </li>
 </ul>
@@ -1834,10 +1834,12 @@ public static class Builder &#123;
     &#125;
 &#125;</code></pre>
 <p>}</p>
-<pre><code>- `SyncCoordinator` , chuyển toàn bộ các `handler` thực chất là các scheduler riêng rẽ, scan db để lấy các request sync, sang duy nhất 1 scheduler, scheduler `coordinator` này sẽ quét toàn bộ db, và quản lý chúng trên local memmory, để điều phối việc sync. 
+<pre><code>
+- `SyncCoordinator` , chuyển toàn bộ các `handler` thực chất là các scheduler riêng rẽ, scan db để lấy các request sync, sang duy nhất 1 scheduler, scheduler `coordinator` này sẽ quét toàn bộ db, và quản lý chúng trên local memmory, để điều phối việc sync. 
     - Nhược điểm hiện tại: đang dùng localmem =&gt; chưa thể scale được
     - Luôn phải suy nghĩ, và tính toán sao cho trong trường hợp SyncCoordinator này có lỗi, do việc quản lý mem, và điều phối không tốt, thì cũng không làm sai lệch dữ liệu đồng bộ. 
-- `ReTriggerTask` dùng để trigger, restart lại các job bị lỗi, hoặc bị treo. 
+- `ReTriggerTask` dùng để trigger, restart lại các job bị lỗi, hoặc bị treo.        
+
 ```java
 @Component
 @CommonsLog(topic = &quot;topic.operate&quot;)
@@ -1875,54 +1877,56 @@ public class ReTriggerTask implements CommandLineRunner &#123;
     &#125;
 &#125;</code></pre>
 <ul>
-<li><code>ExceptionHandlerAdvice</code> - advice controller<pre><code class="java"></code></pre>
-</li>
+<li><code>ExceptionHandlerAdvice</code> - advice controller          </li>
 </ul>
-<p>@ControllerAdvice(basePackages = “service.controller.frontend.api”)<br>public class ExceptionHandlerAdvice implements ProblemHandling &#123;<br>    private final StoreJPARepository storeJPARepository;</p>
-<pre><code>public ExceptionHandlerAdvice(StoreJPARepository storeJPARepository) &#123;
-    this.storeJPARepository = storeJPARepository;
-&#125;
+<pre><code class="java">
+@ControllerAdvice(basePackages = &quot;service.controller.frontend.api&quot;)
+public class ExceptionHandlerAdvice implements ProblemHandling &#123;
+    private final StoreJPARepository storeJPARepository;
 
-@ModelAttribute(value = &quot;store&quot;, binding = false)
-public Store addStore(@RequestHeader(value = &quot;X-App-StoreId&quot;, required = false) Integer storeIdHeader) &#123;
-    if (NumberUtils.isBlank(storeIdHeader)) &#123;
-        throw Problem.builder()
-                .withTitle(Status.BAD_REQUEST.getReasonPhrase())
-                .withStatus(Status.BAD_REQUEST)
-                .withDetail(&quot;Header &#39;X-App-StoreId&#39; is missing or invalid&quot;)
-                .build();
+    public ExceptionHandlerAdvice(StoreJPARepository storeJPARepository) &#123;
+        this.storeJPARepository = storeJPARepository;
     &#125;
-    val authentication = SecurityContextHolder.getContext().getAuthentication();
-    JwtUser u = (JwtUser) authentication.getPrincipal();
-    if (storeIdHeader != u.getId()) &#123;
+
+    @ModelAttribute(value = &quot;store&quot;, binding = false)
+    public Store addStore(@RequestHeader(value = &quot;X-App-StoreId&quot;, required = false) Integer storeIdHeader) &#123;
+        if (NumberUtils.isBlank(storeIdHeader)) &#123;
+            throw Problem.builder()
+                    .withTitle(Status.BAD_REQUEST.getReasonPhrase())
+                    .withStatus(Status.BAD_REQUEST)
+                    .withDetail(&quot;Header &#39;X-App-StoreId&#39; is missing or invalid&quot;)
+                    .build();
+        &#125;
+        val authentication = SecurityContextHolder.getContext().getAuthentication();
+        JwtUser u = (JwtUser) authentication.getPrincipal();
+        if (storeIdHeader != u.getId()) &#123;
+            throw Problem.builder()
+                    .withTitle(Status.FORBIDDEN.getReasonPhrase())
+                    .withStatus(Status.FORBIDDEN)
+                    .withDetail(&quot;This token have not permission for this store!&quot;)
+                    .build();
+        &#125;
+
+        var storeOp = storeJPARepository.findById(storeIdHeader);
+        if (storeOp.isEmpty()) &#123;
+            throw Problem.builder()
+                    .withTitle(Status.NOT_FOUND.getReasonPhrase())
+                    .withStatus(Status.NOT_FOUND)
+                    .withDetail(String.format(&quot;Store %s not found&quot;, storeIdHeader))
+                    .build();
+        &#125;
+        return storeOp.get();
+    &#125;
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public void handlerError() &#123;
         throw Problem.builder()
                 .withTitle(Status.FORBIDDEN.getReasonPhrase())
                 .withStatus(Status.FORBIDDEN)
-                .withDetail(&quot;This token have not permission for this store!&quot;)
+                .withDetail(&quot;Denied&quot;)
                 .build();
     &#125;
-
-    var storeOp = storeJPARepository.findById(storeIdHeader);
-    if (storeOp.isEmpty()) &#123;
-        throw Problem.builder()
-                .withTitle(Status.NOT_FOUND.getReasonPhrase())
-                .withStatus(Status.NOT_FOUND)
-                .withDetail(String.format(&quot;Store %s not found&quot;, storeIdHeader))
-                .build();
-    &#125;
-    return storeOp.get();
-&#125;
-
-@ExceptionHandler(AccessDeniedException.class)
-public void handlerError() &#123;
-    throw Problem.builder()
-            .withTitle(Status.FORBIDDEN.getReasonPhrase())
-            .withStatus(Status.FORBIDDEN)
-            .withDetail(&quot;Denied&quot;)
-            .build();
 &#125;</code></pre>
-<p>}</p>
-<pre><code></code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> via https://github.com/tungtv202/MyNote </span>
