@@ -1463,7 +1463,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-01-25 22:05:24'>2021-01-10 10:39</time>
+            Created At : <time class="date" title='Updated At: 2021-01-25 22:07:58'>2021-01-10 10:39</time>
         
     </div>
     <div class="article-meta">
@@ -1774,8 +1774,9 @@ public class WebConfig extends WebMvcConfigurationSupport &#123;
       if (this.getCreatedOn() == null) this.setCreatedOn(Util.getVNTime());
   &#125;</code></pre>
 </li>
-<li><p>Khai báo class Exception, kiểu Builder pattern, hạn chế việc mutable          </p>
-<pre><code class="java"></code></pre>
+</ul>
+<ul>
+<li>Khai báo class Exception, kiểu Builder pattern, hạn chế việc mutable                <pre><code class="java"></code></pre>
 </li>
 </ul>
 <p>public class SyncProductException extends RuntimeException &#123;</p>
@@ -1835,6 +1836,7 @@ public static class Builder &#123;
 &#125;</code></pre>
 <p>}</p>
 <pre><code>
+
 - `SyncCoordinator` , chuyển toàn bộ các `handler` thực chất là các scheduler riêng rẽ, scan db để lấy các request sync, sang duy nhất 1 scheduler, scheduler `coordinator` này sẽ quét toàn bộ db, và quản lý chúng trên local memmory, để điều phối việc sync. 
     - Nhược điểm hiện tại: đang dùng localmem =&gt; chưa thể scale được
     - Luôn phải suy nghĩ, và tính toán sao cho trong trường hợp SyncCoordinator này có lỗi, do việc quản lý mem, và điều phối không tốt, thì cũng không làm sai lệch dữ liệu đồng bộ. 
