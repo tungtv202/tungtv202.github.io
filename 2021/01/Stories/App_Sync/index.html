@@ -1116,18 +1116,18 @@
         </a>
         
         <a  class="All aws "
-           href="/2020/01/AWS/AWS_LAB_ECR/"
-           data-tag="aws,ecr"
-           data-author="" >
-            <span class="post-title" title="AWS - LAB - ECR">AWS - LAB - ECR</span>
-            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
-        </a>
-        
-        <a  class="All aws "
            href="/2020/01/AWS/AWS_LAB_ECS/"
            data-tag="aws,ecs"
            data-author="" >
             <span class="post-title" title="AWS - LAB - ECS">AWS - LAB - ECS</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ECR/"
+           data-tag="aws,ecr"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - ECR">AWS - LAB - ECR</span>
             <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
         </a>
         
@@ -1463,7 +1463,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-01-25 22:07:58'>2021-01-10 10:39</time>
+            Created At : <time class="date" title='Updated At: 2021-01-25 22:12:08'>2021-01-10 10:39</time>
         
     </div>
     <div class="article-meta">
@@ -1728,122 +1728,125 @@ public class WebConfig extends WebMvcConfigurationSupport &#123;
 &#125;</code></pre>
 </li>
 <li><p>Sử dụng <code>org.zalando.problem</code> để handler message lỗi cho api, cần khai báo ObjectMapper</p>
-<pre><code class="java">  @Bean(name = &#123;&quot;json&quot;&#125;)
-  public ObjectMapper json() &#123;
-      ObjectMapper objectMapper = new ObjectMapper();
-      objectMapper.disable(SerializationFeature.WRAP_ROOT_VALUE);
-      objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
-      objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-      objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-      objectMapper.configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true);
-      objectMapper.configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
-      objectMapper.setDateFormat(new StdDateFormat());
-      SimpleFilterProvider filters = new SimpleFilterProvider();
-      filters.addFilter(&quot;empty&quot;, SimpleBeanPropertyFilter.serializeAllExcept(new HashSet&lt;&gt;()));
-      filters.addFilter(&quot;field&quot;, SimpleBeanPropertyFilter.serializeAllExcept(new HashSet&lt;&gt;()));
-      objectMapper.setFilterProvider(filters);
-      objectMapper.registerModules(new ProblemModule().withStackTraces(false), new ConstraintViolationProblemModule());
-      return objectMapper;
-  &#125;</code></pre>
 </li>
-<li><p>Customize 1 problem</p>
+</ul>
+<pre><code class="java">    @Bean(name = &#123;&quot;json&quot;&#125;)
+    public ObjectMapper json() &#123;
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.disable(SerializationFeature.WRAP_ROOT_VALUE);
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.configure(DeserializationFeature.READ_ENUMS_USING_TO_STRING, true);
+        objectMapper.configure(SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+        objectMapper.setDateFormat(new StdDateFormat());
+        SimpleFilterProvider filters = new SimpleFilterProvider();
+        filters.addFilter(&quot;empty&quot;, SimpleBeanPropertyFilter.serializeAllExcept(new HashSet&lt;&gt;()));
+        filters.addFilter(&quot;field&quot;, SimpleBeanPropertyFilter.serializeAllExcept(new HashSet&lt;&gt;()));
+        objectMapper.setFilterProvider(filters);
+        objectMapper.registerModules(new ProblemModule().withStackTraces(false), new ConstraintViolationProblemModule());
+        return objectMapper;
+    &#125;</code></pre>
+<ul>
+<li>Customize 1 problem</li>
+</ul>
 <pre><code class="java">public class CallHttpProblem extends AbstractThrowableProblem &#123;
 
-  public CallHttpProblem(SourceType sourceType, FeignException exception) &#123;
-      super(null,
-              &quot;Call internal api has problem&quot;,
-              Status.FAILED_DEPENDENCY,
-              String.format(&quot;Call api to &#39;%s&#39; has problem&quot;, &quot;xxx&quot;),
-              null, null,
-              Stream.of(new String[][]&#123;
-                      &#123;&quot;dependency_status&quot;, String.valueOf(exception.status())&#125;,
-                      &#123;&quot;dependency_uri&quot;, Util.getPath(exception.request().url())&#125;,
-              &#125;).collect(Collectors.toMap(data -&gt; data[0], data -&gt; data[1]))
-      );
-  &#125;
+    public CallHttpProblem(SourceType sourceType, FeignException exception) &#123;
+        super(null,
+                &quot;Call internal api has problem&quot;,
+                Status.FAILED_DEPENDENCY,
+                String.format(&quot;Call api to &#39;%s&#39; has problem&quot;, &quot;xxx&quot;),
+                null, null,
+                Stream.of(new String[][]&#123;
+                        &#123;&quot;dependency_status&quot;, String.valueOf(exception.status())&#125;,
+                        &#123;&quot;dependency_uri&quot;, Util.getPath(exception.request().url())&#125;,
+                &#125;).collect(Collectors.toMap(data -&gt; data[0], data -&gt; data[1]))
+        );
+    &#125;
 &#125;</code></pre>
-</li>
-<li><p>Tại các class <code>Entity</code>, khai báo thêm 2 method sau, để khi update/create xuống db, không phải setter value</p>
-<pre><code class="java">  @PreUpdate
-  private void preUpdate() &#123;
-      this.modifiedOn = Util.getVNTime();
-  &#125;
-
-  @PrePersist
-  private void prePersist() &#123;
-      if (this.getCreatedOn() == null) this.setCreatedOn(Util.getVNTime());
-  &#125;</code></pre>
-</li>
-</ul>
 <ul>
-<li>Khai báo class Exception, kiểu Builder pattern, hạn chế việc mutable                <pre><code class="java"></code></pre>
-</li>
+<li>Tại các class <code>Entity</code>, khai báo thêm 2 method sau, để khi update/create xuống db, không phải setter value</li>
 </ul>
-<p>public class SyncProductException extends RuntimeException &#123;</p>
-<pre><code>private static final long serialVersionUID = 1L;
-@Getter
-private final SyncProductErrorType errorType;
-@Getter
-private FeignException feignException;
-@Getter
-private SourceType errorFrom;
+<pre><code class="java">    @PreUpdate
+    private void preUpdate() &#123;
+        this.modifiedOn = Util.getVNTime();
+    &#125;
 
-public SyncProductException(String message, SyncProductErrorType errorType, FeignException feignException,
-                            SourceType errorFrom) &#123;
-    super(message);
-    this.errorType = errorType;
-    this.feignException = feignException;
-    this.errorFrom = errorFrom;
-&#125;
+    @PrePersist
+    private void prePersist() &#123;
+        if (this.getCreatedOn() == null) this.setCreatedOn(Util.getVNTime());
+    &#125;</code></pre>
+<ul>
+<li>Khai báo class Exception, kiểu Builder pattern, hạn chế việc mutable  </li>
+</ul>
+<pre><code class="java">
+public class SyncProductException extends RuntimeException &#123;
 
-public SyncProductException(SyncProductErrorType errorType) &#123;
-    super(errorType.getExceptionMessage());
-    this.errorType = errorType;
-&#125;
-
-public static Builder builder() &#123;
-    return new Builder();
-&#125;
-
-public static class Builder &#123;
-    private SyncProductErrorType errorType;
-    private String message;
+    private static final long serialVersionUID = 1L;
+    @Getter
+    private final SyncProductErrorType errorType;
+    @Getter
     private FeignException feignException;
+    @Getter
     private SourceType errorFrom;
 
-
-    public Builder errorType(SyncProductErrorType errorType) &#123;
+    public SyncProductException(String message, SyncProductErrorType errorType, FeignException feignException,
+                                SourceType errorFrom) &#123;
+        super(message);
         this.errorType = errorType;
-        return this;
-    &#125;
-
-    public Builder message(String message) &#123;
-        this.message = message;
-        return this;
-    &#125;
-
-    public Builder feignException(FeignException feignException, SourceType errorFrom) &#123;
-        this.errorFrom = errorFrom;
         this.feignException = feignException;
-        return this;
+        this.errorFrom = errorFrom;
     &#125;
 
-    public SyncProductException build() &#123;
-        if (this.errorType == null) throw new IllegalArgumentException(&quot;errorType not null&quot;);
-        if (this.message == null) this.message = this.errorType.getExceptionMessage();
-        return new SyncProductException(this.message, this.errorType, this.feignException, this.errorFrom);
+    public SyncProductException(SyncProductErrorType errorType) &#123;
+        super(errorType.getExceptionMessage());
+        this.errorType = errorType;
+    &#125;
+
+    public static Builder builder() &#123;
+        return new Builder();
+    &#125;
+
+    public static class Builder &#123;
+        private SyncProductErrorType errorType;
+        private String message;
+        private FeignException feignException;
+        private SourceType errorFrom;
+
+
+        public Builder errorType(SyncProductErrorType errorType) &#123;
+            this.errorType = errorType;
+            return this;
+        &#125;
+
+        public Builder message(String message) &#123;
+            this.message = message;
+            return this;
+        &#125;
+
+        public Builder feignException(FeignException feignException, SourceType errorFrom) &#123;
+            this.errorFrom = errorFrom;
+            this.feignException = feignException;
+            return this;
+        &#125;
+
+        public SyncProductException build() &#123;
+            if (this.errorType == null) throw new IllegalArgumentException(&quot;errorType not null&quot;);
+            if (this.message == null) this.message = this.errorType.getExceptionMessage();
+            return new SyncProductException(this.message, this.errorType, this.feignException, this.errorFrom);
+        &#125;
     &#125;
 &#125;</code></pre>
-<p>}</p>
-<pre><code>
-
-- `SyncCoordinator` , chuyển toàn bộ các `handler` thực chất là các scheduler riêng rẽ, scan db để lấy các request sync, sang duy nhất 1 scheduler, scheduler `coordinator` này sẽ quét toàn bộ db, và quản lý chúng trên local memmory, để điều phối việc sync. 
-    - Nhược điểm hiện tại: đang dùng localmem =&gt; chưa thể scale được
-    - Luôn phải suy nghĩ, và tính toán sao cho trong trường hợp SyncCoordinator này có lỗi, do việc quản lý mem, và điều phối không tốt, thì cũng không làm sai lệch dữ liệu đồng bộ. 
-- `ReTriggerTask` dùng để trigger, restart lại các job bị lỗi, hoặc bị treo.        
-
-```java
-@Component
+<ul>
+<li>class <code>SyncCoordinator</code> , chuyển toàn bộ các <code>handler</code> thực chất là các scheduler riêng rẽ, scan db để lấy các request sync, sang duy nhất 1 scheduler, scheduler <code>coordinator</code> này sẽ quét toàn bộ db, và quản lý chúng trên local memmory, để điều phối việc sync. <ul>
+<li>Nhược điểm hiện tại: đang dùng localmem =&gt; chưa thể scale được</li>
+<li>Luôn phải suy nghĩ, và tính toán sao cho trong trường hợp SyncCoordinator này có lỗi, do việc quản lý mem, và điều phối không tốt, thì cũng không làm sai lệch dữ liệu đồng bộ. </li>
+</ul>
+</li>
+<li>class <code>ReTriggerTask</code> dùng để trigger, restart lại các job bị lỗi, hoặc bị treo.        </li>
+</ul>
+<pre><code class="java">@Component
 @CommonsLog(topic = &quot;topic.operate&quot;)
 public class ReTriggerTask implements CommandLineRunner &#123;
     public static final int FAIL_THRESHOLD = 10;
