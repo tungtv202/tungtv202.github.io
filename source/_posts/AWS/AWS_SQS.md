@@ -38,7 +38,7 @@ auMZc8ZRv37sIW2iJKq3M9MFx1YvV11A2x/KSbkJ0=
 - Body: payload của thông điệp.
 
 ## 3. Quick start trong Java
-### a. Tạo queue    
+### a. Tạo queue
 ```java
 AmazonSQS sqs = AmazonSQSClientBuilder.defaultClient();
 CreateQueueRequest create_request = new CreateQueueRequest(QUEUE_NAME)
