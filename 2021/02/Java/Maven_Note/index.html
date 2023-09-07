@@ -2224,7 +2224,7 @@
 <h2 id="Check-new-version-of-dependencies"><a href="#Check-new-version-of-dependencies" class="headerlink" title="Check new version of dependencies"></a>Check new version of dependencies</h2><pre><code class="bash">mvn org.codehaus.mojo:versions-maven-plugin:display-dependency-updates &quot;-Dmaven.version.ignore=.*-M.*,.*-alpha.*,.*-RC.*,.*beta.*,.*Alpha.*,.*SNAP.*&quot;
 </code></pre>
 <h2 id="Bash-install-maven"><a href="#Bash-install-maven" class="headerlink" title="Bash install maven"></a>Bash install maven</h2><pre><code>MAVEN_VERSION=3.9.4
-curl -Lf https://downloads.apache.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar -C /opt -xzv
+curl -Lf https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar -C /opt -xzv
 export M2_HOME=/opt/apache-maven-$MAVEN_VERSION
 ln -s $M2_HOME/bin/mvn /usr/bin/mvn
 </code></pre>
@@ -2241,7 +2241,7 @@ RUN apt-get install -y git wget unzip
 
 # Install Maven
 WORKDIR /root
-RUN curl -Lf https://downloads.apache.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar -C /opt -xzv
+RUN curl -Lf https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar -C /opt -xzv
 ENV M2_HOME /opt/apache-maven-$MAVEN_VERSION
 
 RUN ln -s $M2_HOME/bin/mvn /usr/bin/mvn
