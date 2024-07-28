@@ -1,0 +1,3048 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AWS - Note Total | Tung Explorer</title>
+  <meta name="keywords" content=" aws , note total ">
+  <meta name="description" content="AWS - Note Total | Tung Explorer">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="Understanding Fuzz TestingRecently, I learned about a new concept - Fuzz Testing. The main idea of fuzzing is to create unexpected inputs to check if the program handles exception cases correctly. Why">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Understanding Fuzz Testing">
+<meta property="og:url" content="http://example.com/2024/07/Java/FuzzTest/index.html">
+<meta property="og:site_name" content="Tung Explorer">
+<meta property="og:description" content="Understanding Fuzz TestingRecently, I learned about a new concept - Fuzz Testing. The main idea of fuzzing is to create unexpected inputs to check if the program handles exception cases correctly. Why">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-28T05:00:26.000Z">
+<meta property="article:modified_time" content="2024-07-28T05:00:26.000Z">
+<meta property="article:author" content="Tung Explorer">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="fuzz">
+<meta property="article:tag" content="testing">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/icon.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/rainbow.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/ahbp.gif"/>
+</a>
+<div class="author">
+    <span>Tung Explorer</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="github"
+               href="https://github.com/tungtv202"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="linkedin"
+               href="https://www.linkedin.com/in/tungtv202"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-linkedin"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:tungtv202@gmail.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(89)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="apache james">
+            
+            apache james
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="aws">
+            
+            aws
+            <small>(7)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="cicd_ops">
+            
+            cicd_ops
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="code_template">
+            
+            code_template
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="database">
+            
+            database
+            <small>(5)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="docker">
+            
+            docker
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="elasticsearch">
+            
+            elasticsearch
+            <small>(4)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="install_guide">
+            
+            install_guide
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="java">
+            <i class="fold iconfont icon-right"></i>
+            java
+            <small>(31)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="java&lt;---&gt;feign">
+            
+            feign
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="java&lt;---&gt;jackson">
+            
+            jackson
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="kafka">
+            
+            kafka
+            <small>(4)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="linux">
+            
+            linux
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="other">
+            
+            other
+            <small>(13)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="rabbitmq">
+            
+            rabbitmq
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="redis">
+            
+            redis
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="stories">
+            
+            stories
+            <small>(6)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="summary_book">
+            
+            summary_book
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="89">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="find hot key i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="TOC  w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="back"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="match cases"></i>
+            <i class="iconfont icon-tag" data-title="tag"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">---TOC---</div>
+            <i class="iconfont icon-list" data-title="all articles"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>adapter</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>algorithm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>apache james</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>api gateway</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>authen</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>authentication</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>auto scheduler</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>auto tool</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>autocomplete</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>aws</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>backup restore</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bash</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>basic</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bf</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bloom filter</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bridge</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cassandra</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>chartjs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>chat</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>chromedriver</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cicd</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>code template</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>command</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>completable future</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>concurrency</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>coordinator</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>crawl</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>database</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ddd</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>decorator</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>dependency</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>dependency injection</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>design pattern</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>diff</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>docker</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>domain driver design</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>durability</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>e-wallet</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>EBS</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ecr</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ecs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>elasticsearch</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>equal</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>EqualsVerifier</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>evaluation logic</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>false positive</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>feign</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fiber</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fshare</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>functional</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fuzz</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>gatling</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>gen code</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>GeneratedValue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>get link</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Google Translate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>graceful shutdown</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>grafana</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ha</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>hashcode</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>healthcheck</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>hibernate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>http client</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>iam</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>id provider</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>install</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>isolation</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jackson</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>javers</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jhipster</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jmeter</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jpa</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>junit</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jvm internal</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafka</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafka cli</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>KafkaListener</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>keycloak</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kong</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>krakend</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>leak</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>leak detect</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>lib-common</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>log</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>logback</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>maven</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>memory leak</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>metric</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mirror queue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mockito</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>momo</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mysql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>netty</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>nginx</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>note</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>note total</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>oauth2</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>object storage</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>observable</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>observer</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>oidc</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>partition</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>paseto</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>pattern</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>performance test</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>persistence</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>phantomreference</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>policy</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>project loom</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>prometheus</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>proxy</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>proxy chained</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>quartz</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>query sql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>quorum queue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>rabbitmq</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>rate limiting</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>reactive</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>reactor</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>rebalance</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>redis</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>redis cluster</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>redis sentinel</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>reflection</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>s3</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>script</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>search as you type</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>search contact</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>security</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>security token service</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>segment</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>selenium</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sentinel</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>serialize</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>session</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sharding</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>signed url</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>slo</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>snmp</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>spring</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>spring webflux</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sso</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>stompJs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>stories</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sts</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>superviosr</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sync</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>template</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>test</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>test tool</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>testing</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread local</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread safe</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>token</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>total</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>transaction</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>translate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>travian</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>unit test</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>use case</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>vagrant</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>virtual thread</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>volatile</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>web socket</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>webclient</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All java "
+           href="/2024/07/Java/FuzzTest/"
+           data-tag="java,fuzz,testing"
+           data-author="" >
+            <span class="post-title" title="Understanding Fuzz Testing">Understanding Fuzz Testing</span>
+            <span class="post-date" title="2024-07-28 12:00:26">2024/07/28</span>
+        </a>
+        
+        
+        <a  class="All redis "
+           href="/2024/07/Redis/RedisSentinelNote/"
+           data-tag="redis,redis sentinel,sentinel"
+           data-author="" >
+            <span class="post-title" title="Redis sentinel note">Redis sentinel note</span>
+            <span class="post-date" title="2024-07-28 12:00:26">2024/07/28</span>
+        </a>
+        
+        
+        <a  class="All redis "
+           href="/2024/04/Redis/RedisClusterNote/"
+           data-tag="redis,redis cluster"
+           data-author="" >
+            <span class="post-title" title="Redis cluster note">Redis cluster note</span>
+            <span class="post-date" title="2024-04-26 12:00:26">2024/04/26</span>
+        </a>
+        
+        
+        <a  class="All docker "
+           href="/2023/08/Docker/Docker_Healthcheck/"
+           data-tag="docker,healthcheck,graceful shutdown"
+           data-author="" >
+            <span class="post-title" title="Docker - Healthcheck &amp; Graceful Shutdown">Docker - Healthcheck &amp; Graceful Shutdown</span>
+            <span class="post-date" title="2023-08-04 18:00:26">2023/08/04</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2022/12/Java/Netty_In_Action/"
+           data-tag="java,netty"
+           data-author="" >
+            <span class="post-title" title="Netty In Action">Netty In Action</span>
+            <span class="post-date" title="2022-12-08 23:26:26">2022/12/08</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2022/05/Other/GatlingMavenSample/"
+           data-tag="maven,performance test,gatling"
+           data-author="" >
+            <span class="post-title" title="Gatling maven sample">Gatling maven sample</span>
+            <span class="post-date" title="2022-05-13 21:00:26">2022/05/13</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2022/04/Java/HowManyMaxThreadsInJava/"
+           data-tag="java,thread"
+           data-author="" >
+            <span class="post-title" title="Java - How many max threads we can create?">Java - How many max threads we can create?</span>
+            <span class="post-date" title="2022-04-19 22:00:26">2022/04/19</span>
+        </a>
+        
+        
+        <a  class="All elasticsearch "
+           href="/2022/04/Opensearch/Autocomplete_contact_feature/"
+           data-tag="elasticsearch,search contact,autocomplete"
+           data-author="" >
+            <span class="post-title" title="ElasticSearch - Contact Autocomplete Feature">ElasticSearch - Contact Autocomplete Feature</span>
+            <span class="post-date" title="2022-04-05 22:00:26">2022/04/05</span>
+        </a>
+        
+        
+        <a  class="All elasticsearch "
+           href="/2022/04/Other/Autocomplete_contact_feature/"
+           data-tag="elasticsearch,search contact,autocomplete"
+           data-author="" >
+            <span class="post-title" title="ElasticSearch - Contact autocomplete feature">ElasticSearch - Contact autocomplete feature</span>
+            <span class="post-date" title="2022-04-05 22:00:26">2022/04/05</span>
+        </a>
+        
+        
+        <a  class="All elasticsearch "
+           href="/2022/04/Opensearch/Search_as_you_type_ElasticSearch/"
+           data-tag="elasticsearch,autocomplete,search as you type"
+           data-author="" >
+            <span class="post-title" title="ElasticSearch - Search as you type">ElasticSearch - Search as you type</span>
+            <span class="post-date" title="2022-04-04 18:00:26">2022/04/04</span>
+        </a>
+        
+        
+        <a  class="All elasticsearch "
+           href="/2022/04/Other/Search_as_you_type_ElasticSearch/"
+           data-tag="elasticsearch,autocomplete,search as you type"
+           data-author="" >
+            <span class="post-title" title="ElasticSearch - Search as you type">ElasticSearch - Search as you type</span>
+            <span class="post-date" title="2022-04-04 18:00:26">2022/04/04</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2022/03/Java/Java_LeakDetect/"
+           data-tag="java,leak,leak detect,phantomreference"
+           data-author="" >
+            <span class="post-title" title="Java - Resource leak detect by PhantomReference">Java - Resource leak detect by PhantomReference</span>
+            <span class="post-date" title="2022-03-10 18:00:26">2022/03/10</span>
+        </a>
+        
+        
+        <a  class="All rabbitmq "
+           href="/2022/03/RabbitMQ/RabbitMQ_TestPerformance_Tool/"
+           data-tag="rabbitmq,test tool,performance test"
+           data-author="" >
+            <span class="post-title" title="Rabbitmq - Test performance tool">Rabbitmq - Test performance tool</span>
+            <span class="post-date" title="2022-03-05 13:05:01">2022/03/05</span>
+        </a>
+        
+        
+        <a  class="All apache james "
+           href="/2022/03/Other/ApacheJames/"
+           data-tag="apache james"
+           data-author="" >
+            <span class="post-title" title="Apache James - Note">Apache James - Note</span>
+            <span class="post-date" title="2022-03-05 13:05:01">2022/03/05</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2022/02/Other/RateLimitingAgorithm/"
+           data-tag="algorithm,rate limiting"
+           data-author="" >
+            <span class="post-title" title="Rate Limiting Algorithm">Rate Limiting Algorithm</span>
+            <span class="post-date" title="2022-02-14 12:00:26">2022/02/14</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2022/02/Java/ProxyChaine/"
+           data-tag="java,proxy,selenium,proxy chained"
+           data-author="" >
+            <span class="post-title" title="Java - Proxy chain">Java - Proxy chain</span>
+            <span class="post-date" title="2022-02-14 11:00:26">2022/02/14</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2022/01/Other/Oauth2_KrakenD_Keycloak_SSO_SLO/"
+           data-tag="sso,krakend,oauth2,keycloak,slo"
+           data-author="" >
+            <span class="post-title" title="Lab - KrakenD + Keycloak + SSO, SLO">Lab - KrakenD + Keycloak + SSO, SLO</span>
+            <span class="post-date" title="2022-01-09 15:31:26">2022/01/09</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2021/12/Other/Keycloak/"
+           data-tag="sso,oidc,id provider"
+           data-author="" >
+            <span class="post-title" title="Keycloak">Keycloak</span>
+            <span class="post-date" title="2021-12-08 21:00:26">2021/12/08</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2021/11/Other/KrakenD_API_Gateway/"
+           data-tag="krakend,kong,api gateway"
+           data-author="" >
+            <span class="post-title" title="KrakendD API Gateway">KrakendD API Gateway</span>
+            <span class="post-date" title="2021-11-25 18:00:26">2021/11/25</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2021/10/Stories/CrawlTravian_GameSupervisor/"
+           data-tag="selenium,crawl,travian,superviosr,chromedriver,chartjs"
+           data-author="" >
+            <span class="post-title" title="Web Game Supervisor">Web Game Supervisor</span>
+            <span class="post-date" title="2021-10-16 12:44:26">2021/10/16</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/09/Java/Spring/"
+           data-tag="java,spring"
+           data-author="" >
+            <span class="post-title" title="Spring Framework Note">Spring Framework Note</span>
+            <span class="post-date" title="2021-09-25 18:00:26">2021/09/25</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/09/Java/BuildDependencyInjection/"
+           data-tag="java,dependency,dependency injection,reflection"
+           data-author="" >
+            <span class="post-title" title="Build Dependency Injection">Build Dependency Injection</span>
+            <span class="post-date" title="2021-09-20 23:26:26">2021/09/20</span>
+        </a>
+        
+        
+        <a  class="All summary_book "
+           href="/2021/09/ReviewBooks/ProJavaClusteringAndScalability/"
+           data-tag="cassandra,rabbitmq,redis,mysql,chat"
+           data-author="" >
+            <span class="post-title" title="Java chat app - use Cassandra, MySQL, Redis, RabbitMQ">Java chat app - use Cassandra, MySQL, Redis, RabbitMQ</span>
+            <span class="post-date" title="2021-09-18 15:44:26">2021/09/18</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/08/Java/ProjectLoom/"
+           data-tag="java,concurrency,project loom,fiber,virtual thread"
+           data-author="" >
+            <span class="post-title" title="Java - Project Loom">Java - Project Loom</span>
+            <span class="post-date" title="2021-08-19 18:00:26">2021/08/19</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2021/08/Other/BloomFilter/"
+           data-tag="bloom filter,algorithm,false positive,bf"
+           data-author="" >
+            <span class="post-title" title="Bloom Filter">Bloom Filter</span>
+            <span class="post-date" title="2021-08-12 23:00:26">2021/08/12</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/08/Java/Java_Pattern/"
+           data-tag="command,java,pattern,design pattern,proxy,decorator,bridge,adapter,observer"
+           data-author="" >
+            <span class="post-title" title="Java - Design Pattern">Java - Design Pattern</span>
+            <span class="post-date" title="2021-08-04 00:05:26">2021/08/04</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2021/07/Database/Partition_Database/"
+           data-tag="sql,partition,sharding"
+           data-author="" >
+            <span class="post-title" title="Partition Database">Partition Database</span>
+            <span class="post-date" title="2021-07-31 18:00:26">2021/07/31</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/06/Java/EqualMethod/"
+           data-tag="java,equal,hashcode,EqualsVerifier"
+           data-author="" >
+            <span class="post-title" title="Java - Equal method">Java - Equal method</span>
+            <span class="post-date" title="2021-06-20 18:00:26">2021/06/20</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2021/04/Other/Functional_Pattern/"
+           data-tag="java,pattern,functional"
+           data-author="" >
+            <span class="post-title" title="Functional Pattern">Functional Pattern</span>
+            <span class="post-date" title="2021-04-25 18:00:26">2021/04/25</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2021/04/Database/Cassandra_Note/"
+           data-tag="cql,cassandra,database"
+           data-author="" >
+            <span class="post-title" title="Cassandra Note">Cassandra Note</span>
+            <span class="post-date" title="2021-04-11 12:04:26">2021/04/11</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2021/03/Database/Which_database_should_i_used/"
+           data-tag="database"
+           data-author="" >
+            <span class="post-title" title="Which database should i use">Which database should i use</span>
+            <span class="post-date" title="2021-03-17 18:00:26">2021/03/17</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/02/Java/Maven_Note/"
+           data-tag="java,maven,lib-common"
+           data-author="" >
+            <span class="post-title" title="Maven Note">Maven Note</span>
+            <span class="post-date" title="2021-02-08 18:00:26">2021/02/08</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/02/Java/reactive/Reactive_Reactor_Note/"
+           data-tag="java,reactive,reactor,spring webflux,observable"
+           data-author="" >
+            <span class="post-title" title="Reactive - Reactor Note">Reactive - Reactor Note</span>
+            <span class="post-date" title="2021-02-02 22:00:26">2021/02/02</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/01/Java/reactive/ProjectReactorExercise/"
+           data-tag="java,reactive,reactor,spring webflux,webclient"
+           data-author="" >
+            <span class="post-title" title="Reactive Programming - Reactor - DEMO 001">Reactive Programming - Reactor - DEMO 001</span>
+            <span class="post-date" title="2021-01-23 16:00:26">2021/01/23</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2021/01/Stories/App_Sync/"
+           data-tag="sync"
+           data-author="" >
+            <span class="post-title" title="Nhật ký cải tiến / xây mới ứng dụng Sync Data (via Rest API)">Nhật ký cải tiến / xây mới ứng dụng Sync Data (via Rest API)</span>
+            <span class="post-date" title="2021-01-10 10:39:26">2021/01/10</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2020/12/Stories/App_Backup_Restore/"
+           data-tag="backup restore"
+           data-author="" >
+            <span class="post-title" title="Nhật ký xây dựng app Backup &amp; Restore">Nhật ký xây dựng app Backup &amp; Restore</span>
+            <span class="post-date" title="2020-12-28 00:39:26">2020/12/28</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2020/12/Database/JPA_Persistance_note/"
+           data-tag="jpa,hibernate,persistence"
+           data-author="" >
+            <span class="post-title" title="JPA - Hibernate - Persistence Note">JPA - Hibernate - Persistence Note</span>
+            <span class="post-date" title="2020-12-27 13:47:26">2020/12/27</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2020/12/Database/Transaction_Isolation/"
+           data-tag="persistence,transaction,isolation,durability"
+           data-author="" >
+            <span class="post-title" title="Transaction - Isolation &amp; Durability">Transaction - Isolation &amp; Durability</span>
+            <span class="post-date" title="2020-12-20 18:00:26">2020/12/20</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2020/11/Stories/Ddos_Jmeter_ECS/"
+           data-tag="aws,ecs,jmeter,test"
+           data-author="" >
+            <span class="post-title" title="DDos, Stress test, distribution test với Jmeter, Docker, AWS ECS">DDos, Stress test, distribution test với Jmeter, Docker, AWS ECS</span>
+            <span class="post-date" title="2020-11-08 18:00:26">2020/11/08</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/09/Java/Concurrency/"
+           data-tag="java,concurrency,thread local,volatile,thread safe,completable future"
+           data-author="" >
+            <span class="post-title" title="Java - Concurrency">Java - Concurrency</span>
+            <span class="post-date" title="2020-09-30 18:00:26">2020/09/30</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/08/Java/JVM_Internal/"
+           data-tag="java,jvm internal"
+           data-author="" >
+            <span class="post-title" title="Java - JVM Internal">Java - JVM Internal</span>
+            <span class="post-date" title="2020-08-10 18:00:26">2020/08/10</span>
+        </a>
+        
+        
+        <a  class="All rabbitmq "
+           href="/2020/07/RabbitMQ/RabbitMQ_Build_HA_Cluster/"
+           data-tag="ha,rabbitmq,quorum queue,stories"
+           data-author="" >
+            <span class="post-title" title="Rabbitmq - Cluster High Availability">Rabbitmq - Cluster High Availability</span>
+            <span class="post-date" title="2020-07-26 18:00:26">2020/07/26</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/07/Java/SpringSecurity/"
+           data-tag="java,spring,security"
+           data-author="" >
+            <span class="post-title" title="Java - Spring Security">Java - Spring Security</span>
+            <span class="post-date" title="2020-07-18 18:00:26">2020/07/18</span>
+        </a>
+        
+        
+        <a  class="All kafka "
+           href="/2020/07/Kafka/Kafka_RebalanceProtocol/"
+           data-tag="kafka,rebalance,coordinator"
+           data-author="" >
+            <span class="post-title" title="Kafka - Rebalance Protocol">Kafka - Rebalance Protocol</span>
+            <span class="post-date" title="2020-07-13 18:00:26">2020/07/13</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2020/06/AWS/AWS_Note/"
+           data-tag="aws,note total"
+           data-author="" >
+            <span class="post-title" title="AWS - Note Total">AWS - Note Total</span>
+            <span class="post-date" title="2020-06-18 18:00:26">2020/06/18</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/06/Java/Logback/"
+           data-tag="log,logback"
+           data-author="" >
+            <span class="post-title" title="Java - Logback">Java - Logback</span>
+            <span class="post-date" title="2020-06-09 18:00:26">2020/06/09</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/06/Java/Quartz/"
+           data-tag="java,quartz,auto scheduler"
+           data-author="" >
+            <span class="post-title" title="Java - Implement Quartz">Java - Implement Quartz</span>
+            <span class="post-date" title="2020-06-03 18:00:26">2020/06/03</span>
+        </a>
+        
+        
+        <a  class="All rabbitmq "
+           href="/2020/05/RabbitMQ/RabbitMQ_Mirror/"
+           data-tag="ha,rabbitmq,mirror queue"
+           data-author="" >
+            <span class="post-title" title="Rabbitmq - Mirror Queue + Durable Message">Rabbitmq - Mirror Queue + Durable Message</span>
+            <span class="post-date" title="2020-05-18 18:00:26">2020/05/18</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/04/Java/Jhipster/"
+           data-tag="java,jhipster,auto tool,gen code"
+           data-author="" >
+            <span class="post-title" title="Java - Jhipster">Java - Jhipster</span>
+            <span class="post-date" title="2020-04-25 18:00:26">2020/04/25</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2020/04/Stories/BackupRestoreAthenaS3/"
+           data-tag="s3,query sql"
+           data-author="" >
+            <span class="post-title" title="Stories - Query SQL on S3">Stories - Query SQL on S3</span>
+            <span class="post-date" title="2020-04-20 18:00:26">2020/04/20</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2020/04/Other/Paseto/"
+           data-tag="token,paseto,authen"
+           data-author="" >
+            <span class="post-title" title="PASETO - Token base authentication">PASETO - Token base authentication</span>
+            <span class="post-date" title="2020-04-19 18:00:26">2020/04/19</span>
+        </a>
+        
+        
+        <a  class="All install_guide "
+           href="/2020/04/Install_Guide/Install_Config_Note/"
+           data-tag="note"
+           data-author="" >
+            <span class="post-title" title="Install &amp; Config Note">Install &amp; Config Note</span>
+            <span class="post-date" title="2020-04-01 18:00:26">2020/04/01</span>
+        </a>
+        
+        
+        <a  class="All code_template "
+           href="/2020/03/CodeTemplate/GoogleTranslateExmple/"
+           data-tag="code template,Google Translate,translate"
+           data-author="" >
+            <span class="post-title" title="Code Template - Google Translate">Code Template - Google Translate</span>
+            <span class="post-date" title="2020-03-10 18:00:26">2020/03/10</span>
+        </a>
+        
+        
+        <a  class="All cicd_ops "
+           href="/2020/02/Ops/CICD_FLow_Example/"
+           data-tag="cicd"
+           data-author="" >
+            <span class="post-title" title="CICD - Flow Example">CICD - Flow Example</span>
+            <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2020/02/Other/EWallet/"
+           data-tag="e-wallet,momo"
+           data-author="" >
+            <span class="post-title" title="E-Wallet Note">E-Wallet Note</span>
+            <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2020/02/Other/Bookmarks/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="My Bookmarks">My Bookmarks</span>
+            <span class="post-date" title="2020-02-19 18:00:26">2020/02/19</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2020/02/Other/Authentication_Topic/"
+           data-tag="authentication,basic,session,token"
+           data-author="" >
+            <span class="post-title" title="Authentication Topic">Authentication Topic</span>
+            <span class="post-date" title="2020-02-17 18:00:26">2020/02/17</span>
+        </a>
+        
+        
+        <a  class="All install_guide "
+           href="/2020/02/Install_Guide/Install_SNMP_Prometheus_Grafana/"
+           data-tag="script,install,snmp,prometheus,grafana"
+           data-author="" >
+            <span class="post-title" title="Install Guide - SNPM + Prometheus + Grafana">Install Guide - SNPM + Prometheus + Grafana</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2020/02/Stories/48h_inhouse_getLink_project/"
+           data-tag="stories,fshare,get link"
+           data-author="" >
+            <span class="post-title" title="Stories - Get Link Fshare">Stories - Get Link Fshare</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        
+        <a  class="All docker "
+           href="/2020/02/Docker/Docker_TemplateFile/"
+           data-tag="docker,template"
+           data-author="" >
+            <span class="post-title" title="Docker - Template File">Docker - Template File</span>
+            <span class="post-date" title="2020-02-10 18:00:26">2020/02/10</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/02/Java/Java_Code_Prometheus_Metric/"
+           data-tag="prometheus,java,metric"
+           data-author="" >
+            <span class="post-title" title="Java - Code Application expose Metric for Prometheus">Java - Code Application expose Metric for Prometheus</span>
+            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/02/Java/Java_Total/"
+           data-tag="note,java,KafkaListener"
+           data-author="" >
+            <span class="post-title" title="Java - Note Total">Java - Note Total</span>
+            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_IAM/"
+           data-tag="aws,iam,policy"
+           data-author="" >
+            <span class="post-title" title="AWS - IAM">AWS - IAM</span>
+            <span class="post-date" title="2020-01-30 18:00:26">2020/01/30</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_STS/"
+           data-tag="aws,sts,security token service"
+           data-author="" >
+            <span class="post-title" title="AWS - STS">AWS - STS</span>
+            <span class="post-date" title="2020-01-26 18:00:26">2020/01/26</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2020/01/Other/DDD_EventDrivenArchitecture/"
+           data-tag="ddd,domain driver design"
+           data-author="" >
+            <span class="post-title" title="Domain-Driven Design &amp; Event-Driven Architecture">Domain-Driven Design &amp; Event-Driven Architecture</span>
+            <span class="post-date" title="2020-01-26 18:00:26">2020/01/26</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ECS/"
+           data-tag="aws,ecs"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - ECS">AWS - LAB - ECS</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ECR/"
+           data-tag="aws,ecr"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - ECR">AWS - LAB - ECR</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Mount_EBS_to_EC2/"
+           data-tag="install,EBS"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Mount an EBS volume to EC2 Linux">Install Guide - Mount an EBS volume to EC2 Linux</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        
+        <a  class="All linux "
+           href="/2020/01/Linux/Linux_BashScript/"
+           data-tag="script,install,bash"
+           data-author="" >
+            <span class="post-title" title="Linux - Bash Script Collection">Linux - Bash Script Collection</span>
+            <span class="post-date" title="2020-01-22 18:00:26">2020/01/22</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/01/Java/SpringBoot_WebSocket_StompJS/"
+           data-tag="java,spring,web socket,stompJs"
+           data-author="" >
+            <span class="post-title" title="Java - Spring web Socket + StompJS">Java - Spring web Socket + StompJS</span>
+            <span class="post-date" title="2020-01-15 18:00:26">2020/01/15</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/01/Java/Javers_Diff/"
+           data-tag="java,javers,diff"
+           data-author="" >
+            <span class="post-title" title="Java - Javers Diff">Java - Javers Diff</span>
+            <span class="post-date" title="2020-01-13 18:00:26">2020/01/13</span>
+        </a>
+        
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/FeignClient_CustomizeByBean/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Customize Feign By Bean">Feign Client - Customize Feign By Bean</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/Feign_BuilderExample/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Client builder example">Feign Client - Client builder example</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/Feign_MultipleConfig/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Multiple Configuration">Feign Client - Multiple Configuration</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        
+        <a  class="All kafka "
+           href="/2020/01/Kafka/Kafka_Command/"
+           data-tag="command,kafka,kafka cli"
+           data-author="" >
+            <span class="post-title" title="Kafka - CLI Command">Kafka - CLI Command</span>
+            <span class="post-date" title="2020-01-03 18:00:26">2020/01/03</span>
+        </a>
+        
+        
+        <a  class="All kafka "
+           href="/2020/01/Kafka/Kafka_UseCase/"
+           data-tag="kafka,use case"
+           data-author="" >
+            <span class="post-title" title="Kafka - Use case">Kafka - Use case</span>
+            <span class="post-date" title="2020-01-02 18:00:26">2020/01/02</span>
+        </a>
+        
+        
+        <a  class="All cicd_ops "
+           href="/2020/01/Ops/VagrantFile_Template/"
+           data-tag="template,vagrant"
+           data-author="" >
+            <span class="post-title" title="Ops - Vagrant Template">Ops - Vagrant Template</span>
+            <span class="post-date" title="2020-01-01 18:00:26">2020/01/01</span>
+        </a>
+        
+        
+        <a  class="All kafka "
+           href="/2019/12/Kafka/Kafka_Note/"
+           data-tag="kafka,segment,total"
+           data-author="" >
+            <span class="post-title" title="Kafka - Note">Kafka - Note</span>
+            <span class="post-date" title="2019-12-31 18:00:26">2019/12/31</span>
+        </a>
+        
+        
+        <a  class="All code_template "
+           href="/2019/12/CodeTemplate/CodeTemplate_S3/"
+           data-tag="aws,s3,code template"
+           data-author="" >
+            <span class="post-title" title="Code Template - AWS - S3">Code Template - AWS - S3</span>
+            <span class="post-date" title="2019-12-27 18:00:26">2019/12/27</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2019/12/AWS/AWS_PolicyEvaluationLogic/"
+           data-tag="aws,evaluation logic"
+           data-author="" >
+            <span class="post-title" title="AWS - Policy Evaluation Logic">AWS - Policy Evaluation Logic</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        
+        <a  class="All java jackson "
+           href="/2019/12/Java/JackSon/Jackson_Deserialize_Abstractclass/"
+           data-tag="java,serialize,jackson"
+           data-author="" >
+            <span class="post-title" title="Jackson - Deserialize Abstract class">Jackson - Deserialize Abstract class</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        
+        <a  class="All java jackson "
+           href="/2019/12/Java/JackSon/Jackson/"
+           data-tag="java,serialize,jackson"
+           data-author="" >
+            <span class="post-title" title="Jackson - Note">Jackson - Note</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        
+        <a  class="All docker "
+           href="/2019/12/Docker/Docker_Command/"
+           data-tag="docker,command,script,install"
+           data-author="" >
+            <span class="post-title" title="Docker - Command">Docker - Command</span>
+            <span class="post-date" title="2019-12-03 18:00:26">2019/12/03</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2019/05/AWS/AWS_LAB_S3/"
+           data-tag="aws,s3,object storage"
+           data-author="" >
+            <span class="post-title" title="AWS - S3">AWS - S3</span>
+            <span class="post-date" title="2019-05-17 18:00:26">2019/05/17</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2019/05/Other/Signed_URL/"
+           data-tag="s3,object storage,signed url"
+           data-author="" >
+            <span class="post-title" title="Signed URL">Signed URL</span>
+            <span class="post-date" title="2019-05-12 18:00:26">2019/05/12</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2019/03/Java/MemoryLeak/"
+           data-tag="java,memory leak"
+           data-author="" >
+            <span class="post-title" title="Java - Memory Leak">Java - Memory Leak</span>
+            <span class="post-date" title="2019-03-17 18:00:26">2019/03/17</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2019/02/Other/Nginx_ConfigExample/"
+           data-tag="template,nginx"
+           data-author="" >
+            <span class="post-title" title="Nginx - Config example">Nginx - Config example</span>
+            <span class="post-date" title="2019-02-11 18:00:26">2019/02/11</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2018/10/Java/JPA_GeneratedValue/"
+           data-tag="jpa,java,GeneratedValue"
+           data-author="" >
+            <span class="post-title" title="Java - Annotation @GeneratedValue trong JPA">Java - Annotation @GeneratedValue trong JPA</span>
+            <span class="post-date" title="2018-10-12 18:00:26">2018/10/12</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2018/10/Java/Junit_Test/"
+           data-tag="java,junit,mockito,unit test"
+           data-author="" >
+            <span class="post-title" title="Java - Junit Test">Java - Junit Test</span>
+            <span class="post-date" title="2018-10-12 18:00:26">2018/10/12</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="full screen  s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-AWS/AWS_Note" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">AWS - Note Total</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="aws">aws</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">aws</a>
+            
+            <a class="color1">note total</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2020-06-18 18:00:26'>2020-06-18 18:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+            Updated At : <time class="date" title='Updated At: 2020-06-18 18:00:26'>2020-06-18 18:00</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <!-- <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span> -->
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AWS-ElasticCache"><span class="toc-text">AWS ElasticCache</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-Su-khac-biet-giua-Memcached-voi-Redis"><span class="toc-text">1.1 Sự khác biệt giữa Memcached với Redis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-Scaling"><span class="toc-text">1.2 Scaling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-Khi-co-node-loi-ElastiCache-lam-gi"><span class="toc-text">1.3 Khi có node lỗi, ElastiCache làm gì?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-ElastiCache-backup-va-recovery-data-the-nao"><span class="toc-text">1.4 ElastiCache backup và recovery data thế nào?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-Access-Control"><span class="toc-text">1.5 Access Control</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Amazon-Route-53"><span class="toc-text">Amazon Route 53</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#chuc-nang-chinh"><span class="toc-text">chức năng chính</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tinh-nang"><span class="toc-text">Tính năng</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-Cac-Routing-policy"><span class="toc-text">2.3 Các Routing policy:</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AWS-Lambda"><span class="toc-text">AWS Lambda</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Use-case"><span class="toc-text">Use case</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DynamoDB"><span class="toc-text">DynamoDB</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EC2"><span class="toc-text">EC2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#EC2-Enhanced-Networking"><span class="toc-text">EC2 Enhanced Networking</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EC2-Bootstrapping"><span class="toc-text">EC2 Bootstrapping</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EC2-Placement-Groups"><span class="toc-text">EC2 - Placement Groups</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EC2-Bastion-Host"><span class="toc-text">EC2 - Bastion Host</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EC2-Spot-instances"><span class="toc-text">EC2 - Spot instances</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EC2-Rerserved-Instances"><span class="toc-text">EC2 - Rerserved Instances</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EC2-IAM-Roles"><span class="toc-text">EC2 - IAM Roles</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EC2-Charge"><span class="toc-text">EC2 - Charge</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Error"><span class="toc-text">Error</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Elastic-Network-Interface"><span class="toc-text">Elastic Network Interface</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RDS"><span class="toc-text">RDS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#S3"><span class="toc-text">S3</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Encrypt"><span class="toc-text">Encrypt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Performance"><span class="toc-text">Performance</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S3-Cross-Region-Replication"><span class="toc-text">S3 Cross Region Replication</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S3-Cross-Region-Replication-1"><span class="toc-text">S3 Cross Region Replication</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S3-Versioning"><span class="toc-text">S3 Versioning</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S3-Transfer-Acceleration"><span class="toc-text">S3 Transfer Acceleration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S3-Intelligent-Tiering"><span class="toc-text">S3 Intelligent-Tiering</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Storage-Gateway"><span class="toc-text">Storage Gateway</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Snowball"><span class="toc-text">Snowball</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VPC"><span class="toc-text">VPC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Security"><span class="toc-text">1. Security</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Security-groups-vs-Network-ACLs"><span class="toc-text">Security groups vs Network ACLs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Security-groups"><span class="toc-text">Security groups</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NACL"><span class="toc-text">NACL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-VPC-peering"><span class="toc-text">2. VPC peering</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-AWS-Direct-Connect"><span class="toc-text">3. AWS Direct Connect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Virtual-Private-Gateway"><span class="toc-text">4. Virtual Private Gateway</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Configuration"><span class="toc-text">5. Configuration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-VPC-CIDR-Block"><span class="toc-text">6. VPC CIDR Block</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-VPC-Folow-log"><span class="toc-text">7. VPC Folow log</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-Nat-gateway"><span class="toc-text">8. Nat gateway</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VPC-Endpoint"><span class="toc-text">VPC Endpoint</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ELB"><span class="toc-text">ELB</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Cac-cach-de-monitoring-ELB"><span class="toc-text">1. Các cách để monitoring ELB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Config"><span class="toc-text">2. Config</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Type"><span class="toc-text">3. Type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-ELB-Proxy-Protocol"><span class="toc-text">4. ELB - Proxy Protocol</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-ELB-Sticky-sessions"><span class="toc-text">5. ELB - Sticky sessions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Connection-Draining"><span class="toc-text">6. Connection Draining</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-SNI-and-ELB"><span class="toc-text">7. SNI and ELB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-ELB-Pre-Warming"><span class="toc-text">8. ELB-Pre-Warming</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Kinesis"><span class="toc-text">Kinesis</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SQS"><span class="toc-text">SQS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SWF"><span class="toc-text">SWF</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SWF-Domains"><span class="toc-text">SWF Domains</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SWF-Actors"><span class="toc-text">SWF Actors</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cloudwatch"><span class="toc-text">Cloudwatch</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Auto-Scaling"><span class="toc-text">Auto Scaling</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Developer-Tools"><span class="toc-text">Developer Tools</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lon-xon"><span class="toc-text">Lộn xộn</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FSx-vs-EFS"><span class="toc-text">FSx vs EFS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Some-topic"><span class="toc-text">Some topic</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="AWS-ElasticCache"><a href="#AWS-ElasticCache" class="headerlink" title="AWS ElasticCache"></a>AWS ElasticCache</h1><p>&#x2F;&#x2F; Dịch vụ cung cấp Redis, NameCached trên AWS</p>
+<h2 id="1-1-Su-khac-biet-giua-Memcached-voi-Redis"><a href="#1-1-Su-khac-biet-giua-Memcached-voi-Redis" class="headerlink" title="1.1 Sự khác biệt giữa Memcached với Redis"></a>1.1 Sự khác biệt giữa Memcached với Redis</h2><p>3 khác biệt cơ bản</p>
+<ul>
+<li>Memcached thì cung cấp dữ liệu dạng key&#x2F;value đơn giản hơn. Đơn giản chỉ là chuỗi string hoặc binary data. Trong khi<br>Redis thì phức tạp hơn, nó còn có set, lists, zset, hash… dữ liệu có nhiều loại hơn, có tổ chức hơn, có sort, có rank.</li>
+<li>Memcached thì không hỗ trợ persis data (dữ liệu không được save, không được snapshoot, 1 khi đã mất là mất). Trong khi<br>Redis thì có cơ chế backup, có cơ chế snapshoot và lưu vào disk, có thể tạo ra 1 cluster Redis mới bằng việc khởi tạo<br>từ bản snapshoot được lưu.</li>
+<li>Memcached thì có thể dựng nhiều node (trong sách thấy ghi là tối đa 20 node) để tạo thành 1 cluster. Còn Redis thì mỗi<br>1 cluster là 1 single node. Nhưng nhiều cluster thì có thể group lại thành 1 nhóm (Redis replication group).</li>
+</ul>
+<h2 id="1-2-Scaling"><a href="#1-2-Scaling" class="headerlink" title="1.2 Scaling"></a>1.2 Scaling</h2><p>ElasticCache cho phép việc scaling theo chiều ngang.<br>Bị hạn chế scaling theo chiều dọc.</p>
+<h2 id="1-3-Khi-co-node-loi-ElastiCache-lam-gi"><a href="#1-3-Khi-co-node-loi-ElastiCache-lam-gi" class="headerlink" title="1.3 Khi có node lỗi, ElastiCache làm gì?"></a>1.3 Khi có node lỗi, ElastiCache làm gì?</h2><p>Nó tự phát hiện ra lỗi, khi có lỗi, nó sẽ thay thế và tự thêm mới 1 cluster. Trong suốt thời gian này, truy vấn sẽ được<br>gửi tới database &#x3D;&gt; database sẽ bị tăng lưu lượng.<br>Riêng với ElastiCache chạy Redis, có 1 tính năng của Amazon là Multi-AZ replication group, nếu tính năng này được bật,<br>thì:</p>
+<ul>
+<li>Khi primary node bị lỗi &#x3D;&gt; read replica sẽ được tự động đẩy lên làm primary</li>
+<li>Node lỗi &#x3D;&gt; sẽ tự động được thay thế bởi 1 node mới. Vậy primary node là gì? Read replica node là gì? Primary node đó<br>là node chạy Redis với đủ quyền read lẫn write, còn read replica thì chỉ có quyền read, 1 con primary có thể có tới 5<br>con read replica, mục đích để san sẻ tải.<br><img src="https://images.viblo.asia/d6e4b83d-c326-4ad2-a2a6-51473680d636.jpg" alt="EC"></li>
+</ul>
+<p>ElastiCache có kết hợp với DNS của Amazon, để khi node mới thay thế node lỗi, thì node mới sẽ có IP, policy của node cũ<br>luôn, ứng dụng của developer sẽ được chạy thông suốt, mà developer không phải config lại cái gì. Lưu ý: việc sao chép<br>data giữa các cluster là không đồng bộ và sẽ mất 1 khoảng thời gian delay.</p>
+<h2 id="1-4-ElastiCache-backup-va-recovery-data-the-nao"><a href="#1-4-ElastiCache-backup-va-recovery-data-the-nao" class="headerlink" title="1.4 ElastiCache backup và recovery data thế nào?"></a>1.4 ElastiCache backup và recovery data thế nào?</h2><p>Với Memcached thì không hỗ trợ tính năng này, khi tạo mới 1 Memcached cluster, thì sẽ luôn là empty data.<br>Với Redis, ElastiCache cung cấp cửa sổ để developer cấu hình lịch định kỳ để tạo các bản snapshot, các file backup này<br>được lưu trữ trong S3. Các bản snapshots thực hiện thủ công manual, sẽ được lưu trữ mãi mãi, cho tới khi bạn xóa nó.</p>
+<h2 id="1-5-Access-Control"><a href="#1-5-Access-Control" class="headerlink" title="1.5 Access Control"></a>1.5 Access Control</h2><p>Về việc cấp quyền access, thì ElastiCache dựa theo NETWORK. Nghĩa là nó dựa vào địa chỉ IP, subnetmask để xây dựng lên<br>các chính sách network, việc access sẽ dựa vào security groups này.<br>Có thể hạn chế xâm nhập vào bằng cách cấu hình trong ACL (Acess List) .<br>Về việc manage, sử dụng service IAM, AWS Identity của Amazon để định nghĩa các chính sách cho các AWS User.</p>
+<h1 id="Amazon-Route-53"><a href="#Amazon-Route-53" class="headerlink" title="Amazon Route 53"></a>Amazon Route 53</h1><p>Là một dịch vụ tên miền DNS</p>
+<h2 id="chuc-nang-chinh"><a href="#chuc-nang-chinh" class="headerlink" title="chức năng chính"></a>chức năng chính</h2><ul>
+<li>Register domain names</li>
+<li>Route internet traffic to the resources for your domain</li>
+<li>Check the health of your resources</li>
+</ul>
+<h2 id="Tinh-nang"><a href="#Tinh-nang" class="headerlink" title="Tính năng"></a>Tính năng</h2><ul>
+<li>Kết nối hiệu quả với EC2, S3, ELB, Cloudfront</li>
+<li>Using Traffic Flow to Route DNS Traffic: Có thể sử dụng để redirect traffic, định tuyến enduser tới endpoint tốt nhất<br>dựa theo: geoproximity, latency, health, and other considerations</li>
+<li>DNS failover: Route 53 tự động phát hiện sự cố của website và redirect truy cập user tới 1 locations khác. Khi bật<br>tính năng này, thì Route 53 sẽ thành 1 helth checking agent, để giám sát tính “availabale” của các endpoint. (Cần tạo<br>policy healcheck, sau đó vào hostzone add record A primary và secondary). Điểm khác biệt với ELB?</li>
+<li>Private DNS for Amazon VPC (A private hosted zone) dùng để làm DNS private cho các service trong cùng 1 VPC.</li>
+<li>Domain Name Registration: trả tiền để thuê tên miền</li>
+</ul>
+<h2 id="2-3-Cac-Routing-policy"><a href="#2-3-Cac-Routing-policy" class="headerlink" title="2.3 Các Routing policy:"></a>2.3 Các Routing policy:</h2><ul>
+<li>Simple routing policy: dùng cho 1 resource, định tuyến domain tới server</li>
+<li>Failover routing policy: dùng để định tuyến traffic khi có server bị deactive, nó sẽ redirect tới server active (DNS<br>Failover)</li>
+<li>Geolocation routing policy: định tuyến theo vị trí địa lý</li>
+<li>Geoproximity routing policy : định tuyến theo vị trí tài nguyên của mình, tùy ý</li>
+<li>Latency routing policy: được sử dụng với Multi Region, dùng để định tuyến tới region có đệ trễ thấp nhất</li>
+<li>Multivalue answer routing policy: định tuyến random, kết quả trả về là 1 trong 8 record của DNS</li>
+<li>Weighted routing policy: định tuyến truy cập tới các server theo hệ số khác nhau mà mình config</li>
+</ul>
+<h1 id="AWS-Lambda"><a href="#AWS-Lambda" class="headerlink" title="AWS Lambda"></a>AWS Lambda</h1><p>Sự khác biệt giữa EC2 và Lambda là gì?</p>
+<ul>
+<li>Lambda là serverless (không có các tài nguyên như RAM, CPU, Disk…), còn EC2 thì ngược lại, nó là server.</li>
+</ul>
+<p>Lambda có công dụng gì?</p>
+<ul>
+<li>Lambda chỉ để chạy các đoạn code đã được developer lập trình. Nghĩa là sẽ không thể cài đặt được software, library,<br>tool của bên thứ 3 như vẫn hay thường cài trên 1 server truyền thống. Có vẻ giống với hosting của php…</li>
+</ul>
+<p>Lambda support những ngôn ngữ gì?</p>
+<ul>
+<li>Hiện tại thì: Node.js (JavaScript), Python, Java (Java 8 compatible), C# (.NET Core).</li>
+</ul>
+<p>Một vài điểm nổi bật của Lambda</p>
+<ul>
+<li>Không phải lo lắng về việc scale server, vì nó là serverless.</li>
+<li>Nó tận dụng được hệ thống Infra của AWS, nên có thể xem là không cần quan tâm tới các tài nguyên vật lý cho ứng dụng.</li>
+<li>Cách giới hạn scale của Lambda là setup giới hạn hóa đơn thanh toán</li>
+<li>Khi deploy code trên Lambda nếu code không chạy, thì sẽ không bị mất tiền</li>
+<li>Code sau khi được deploy lêm Lambda, tùy thuộc vào traffic, và effort của request mà tính tiền.</li>
+<li>Cần phải tính toán về RAM và khai báo cho ứng dụng trước khi chạy. Việc tính toán CPU là tự động.</li>
+<li>Lambda sử dụng BeanStalk (1 dịch vụ khác của AWS) để deploy code. Và code được lưu trữ ở S3</li>
+</ul>
+<h2 id="Use-case"><a href="#Use-case" class="headerlink" title="Use case"></a>Use case</h2><ul>
+<li>combo kết hợp Lambda + API Gateway</li>
+</ul>
+<h1 id="DynamoDB"><a href="#DynamoDB" class="headerlink" title="DynamoDB"></a>DynamoDB</h1><ul>
+<li>Dynamic DB: 10 000 beyond</li>
+<li>Stored on SSD storage</li>
+</ul>
+<h1 id="EC2"><a href="#EC2" class="headerlink" title="EC2"></a>EC2</h1><h2 id="EC2-Enhanced-Networking"><a href="#EC2-Enhanced-Networking" class="headerlink" title="EC2 Enhanced Networking"></a>EC2 Enhanced Networking</h2><ul>
+<li>Lợi ích của SR-I&#x2F;OV :<ul>
+<li>Higher Packet per Second (PPS) performance (inter-instance)</li>
+<li>Lower inter-instance latencies</li>
+<li>Very low network jitter</li>
+</ul>
+</li>
+<li>Enhanced networking requirements:<ul>
+<li>Instances be launched from an HVM AMI (not PV)</li>
+<li>Is only supported in a VPC</li>
+</ul>
+</li>
+<li>Enhanced networking is not suppored on all EC2 instances</li>
+<li>Enhanced networking does NOT cost extra</li>
+<li>Enhanced networking can be enabled on Instance-store backed or EBS-backed EC2 instances</li>
+</ul>
+<h2 id="EC2-Bootstrapping"><a href="#EC2-Bootstrapping" class="headerlink" title="EC2 Bootstrapping"></a>EC2 Bootstrapping</h2><ul>
+<li>Là user data</li>
+<li>Pass script chạy sau khi EC2 instance launched (ví dụ như script sau khi chạy thì update OS, run shell script…).</li>
+</ul>
+<h2 id="EC2-Placement-Groups"><a href="#EC2-Placement-Groups" class="headerlink" title="EC2 - Placement Groups"></a>EC2 - Placement Groups</h2><ul>
+<li>Là một tính năng cho phép các EC2 liên quan có thể kết nối với nhau với băng thông cao, độ trễ thấp, trong cùng 1 AZ (<br>cả 3 loại đều cùng 1AZ)</li>
+<li>Yêu cầu cùng 1 AZ</li>
+<li>Có thể sử dụng Enhanced networking instances trong Placement groups</li>
+<li>There are only specific instance type which can be launched inside the placement group</li>
+<li>We cannot move existing instance into placement group, in such case we need to create an AMI of instance and launch<br>new instance from that AMI inside the p group</li>
+<li>Maximum network throughput traffic between two instance in placement group is limited by the slower of the two<br>instance</li>
+<li>Có 3 type tạo placementGroup: cluster, partition, spread.<ul>
+<li>Cluster: cho performance về network cao nhất (do bố trí vật lý gần nhau) &#x3D;&gt; Chỉ triển trong cùng 1 AZ</li>
+<li>spread: là một nhóm các instances được đặt trên phần cứng cơ bản riêng biệt, có thể trải rộng trên nhiều AZ. (phù<br>hợp hệ thống nhỏ nhưng thích HA)</li>
+<li>partition: độc lập. Có thể có tối đa 7 partitions cho mỗi Availability Zone và có thể trải rộng trên nhiều<br>Availability Zones trong cùng một Region.<br>(phù hợp hệ thống lớn cần HA)</li>
+</ul>
+</li>
+<li>The name that we specify for placement group must be unique across your AWS account.</li>
+<li>AWS recommends instances with same type to be launched within a placement group</li>
+<li>We cannot merge placement groups</li>
+<li>Đi kèm với Instance support Enhance Networking. (tức là chỉ instance HVM ?)</li>
+</ul>
+<h2 id="EC2-Bastion-Host"><a href="#EC2-Bastion-Host" class="headerlink" title="EC2 - Bastion Host"></a>EC2 - Bastion Host</h2><ul>
+<li>1 Computer được cấu hình đặc biệt, thuộc miền external&#x2F; public (DMZ) hoặc bên ngoài firewall, hoạt động như một server<br>trung gian, cho phép bạn connect vào các Instance nằm trong Private Subnet</li>
+<li>Trường hợp Instance bị terminated, nhưng Auto Scaling Group đang launches, thì Elastic IP sẽ được đính lên cho<br>instances mới</li>
+</ul>
+<h2 id="EC2-Spot-instances"><a href="#EC2-Spot-instances" class="headerlink" title="EC2 - Spot instances"></a>EC2 - Spot instances</h2><ul>
+<li>Đấu thầu để được chạy instances (các tài nguyên mà AWS đang dư thừa), giá rẻ hơn Instances on-demaind rất nhiều. Tuy<br>nhiên khi nào có người khác trả giá cao hơn giá mình thầu, thì instance đó sẽ bị terminated</li>
+<li>Spot instance không đảm bảo luôn luôn khả dụng, nhưng giá rẻ</li>
+</ul>
+<h2 id="EC2-Rerserved-Instances"><a href="#EC2-Rerserved-Instances" class="headerlink" title="EC2 - Rerserved Instances"></a>EC2 - Rerserved Instances</h2><ul>
+<li>Là Instances on-demand, nhưng có thuê bao, trả trước sẽ có giá rẻ hơn. Ví dụ đảm bảo dùng trong 12 tháng.</li>
+<li>They can be used to launch AS Group instances or standalone ones</li>
+<li>Có thể Reversed theo lịch, ví dụ thuê instance sẽ được chạy auto scale vào 1 ngày hàng tuần…</li>
+</ul>
+<h2 id="EC2-IAM-Roles"><a href="#EC2-IAM-Roles" class="headerlink" title="EC2 - IAM Roles"></a>EC2 - IAM Roles</h2><ul>
+<li>Gán quyền để application access read&#x2F;write S3, SQS, DynamoDB, SNS…</li>
+<li>Default IAM Roles cho phép EC2 instances access vào các service khác</li>
+<li>You can add the IAM role while the instance is running</li>
+</ul>
+<h2 id="EC2-Charge"><a href="#EC2-Charge" class="headerlink" title="EC2 - Charge"></a>EC2 - Charge</h2><ul>
+<li>Được tính tiền từ lúc bắt đầu boot ec2 (không phải là sau khi instand đã start xong). Tới lúc shutdown hoàn toàn</li>
+<li>Mỗi lần bật tắt instance, sẽ bị tính tiền tối thiểu cho 1 tiếng. Ví dụ trong 10 phút, bật tắt instance 2 lần, thì bị<br>tính tiền 2 tiếng sử dụng.</li>
+</ul>
+<h2 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h2><ul>
+<li><p>Một vài lỗi khiến EC2 bị terminate khi launch:</p>
+<ul>
+<li>AMI thiếu 1 số part</li>
+<li>Limit volume EBS</li>
+<li>Bản snapshot EBS bị lỗi</li>
+</ul>
+</li>
+<li><p>Để tìm lỗi termination:</p>
+<ul>
+<li>From Console: Go to Instances (select the instance) -&gt; Description tab -&gt; State Transition reason</li>
+<li>From CLI use the “describe-instance command</li>
+</ul>
+</li>
+<li><p>Lỗi: Insufficient Instance Capacity : aws hết tài nguyên, đợi, hoặc reserved instances</p>
+</li>
+</ul>
+<h1 id="Elastic-Network-Interface"><a href="#Elastic-Network-Interface" class="headerlink" title="Elastic Network Interface"></a>Elastic Network Interface</h1><ul>
+<li>Là card mạng ảo, được đính vào EC2 (vd: eth0, eth1…)</li>
+<li>Khi EC2 bị terminated &#x3D;&gt; Nếu ENI tạo bằng console thì cũng terminate theo, nếu tạo bằng command line thì không bị<br>terminated</li>
+<li>Có thể được cấu hình khi: instance running, stopped, launched</li>
+<li>1 ENI chỉ được cho 1 Insntace, nhưng 1 instance có thể attached nhiều ENI</li>
+<li>Subnet có thể khác nhau nhưng phải chung VPC, chung AZ</li>
+<li>Instance type khác nhau thì sẽ có số ENIs có thể đính vào khác nhau</li>
+</ul>
+<h1 id="RDS"><a href="#RDS" class="headerlink" title="RDS"></a>RDS</h1><ul>
+<li><p>DB instance class maximum size: 6TB</p>
+</li>
+<li><p>Service cung cấp hệ quản trị SQL: MySQL, PostgreSQL…</p>
+</li>
+<li><p>HA luôn được implies Multi-AZ</p>
+</li>
+<li><p>Read Replicas có thể được sử dụng để scale READ performance, tuy nhiên</p>
+<ul>
+<li>Không thể với WRITE</li>
+<li>Có sự bất đồng bộ giữa các node</li>
+</ul>
+</li>
+<li><p>AWS quản lý fully managed service, tức là dev không thể can thiệp được vào OS, instance chạy RDS &#x3D;&gt; chỉ access được<br>vào RDS enginer</p>
+</li>
+<li><p>Primary và standby có thể khác AZs (nhưng phải cùng chung region)</p>
+</li>
+<li><p>Không nên sử dụng IP address làm point để kết nối, mà nên sử dụng endpoint</p>
+</li>
+<li><p>Có thể sử dụng CloudWatch Alarm để monitor metric, và alarm</p>
+</li>
+<li><p>CloudTrail để logs all AWS RDS API</p>
+</li>
+<li><p>Có thể read replica (được với MySQL, MariaDB, PostgreSQL (MyMaPo) )</p>
+</li>
+<li><p>Quá trình scale, hay chuyển giao primary-standby sẽ <code>mất vài phút</code></p>
+</li>
+<li><p>Khi chạy Multi-AZ RDS thì chế độ backups và snapshots sẽ được tự động chạy</p>
+</li>
+<li><p>Không thể read&#x2F;write tới Standby RDS DB instance</p>
+</li>
+<li><p>Tất cả RDS db engines đều có thể có dung lượng lưu trữ lên &gt; 6GB, trừ MS SQL</p>
+</li>
+<li><p>MS SQL DB engine can have storage capacity up to 4TB</p>
+</li>
+<li><p>Không thể giảm size của RDS sau khi chạy, chỉ có thể tăng</p>
+</li>
+<li><p>Amazon RDS Provisioned IOPS Storage được dùng để tăng performance (ứng dụng nào yêu cầu I&#x2F;O cao, thì nên dùng )</p>
+</li>
+<li><p>Việc upgrade version RDS có 2 loại</p>
+<ul>
+<li>Major version Upgrades - admin phải upgrade manual, cant revert</li>
+<li>Minor version Upgrades</li>
+</ul>
+</li>
+<li><p>Không thể restore 1 bản snapshot tới 1 instance đã tồn tại DB (cần tạo mới, và restore vô cái mới)</p>
+</li>
+<li><p>Không thể thay đổi Storage type (magnetic, Provisioned IOPS, General purpose) trong suốt quá trình restore thực thi</p>
+</li>
+<li><p>Nếu set retention period &#x3D; 0, tương đương tắt chế độ automatic backups.</p>
+</li>
+<li><p>Khi bạn restore 1 DB instance, chỉ có các tham số mặc định và Security groups đã được liên kết mới có thể restore</p>
+</li>
+<li><p>Sau lưu tự động hiện tại chỉ support InnoDB , MySQL (không support cho MyISAM)</p>
+</li>
+<li><p>Tính năng khôi phục theo thời gian Point-In-Time chỉ được hỗ trợ cho MySQL, InnoDB</p>
+</li>
+<li><p>InnoDB có vẻ là chiến lược của AWS</p>
+</li>
+<li><p>Aurora là RDS mà tự động HA tới 3 AZ</p>
+</li>
+<li><p>Encrypting existing RDS is not currently supported</p>
+</li>
+<li><p>Achieved using asynchronous replication</p>
+</li>
+</ul>
+<h1 id="S3"><a href="#S3" class="headerlink" title="S3"></a>S3</h1><ul>
+<li>S3 Versioning once enabled, versioning cannot be disabled, only suspended</li>
+</ul>
+<h2 id="Encrypt"><a href="#Encrypt" class="headerlink" title="Encrypt"></a>Encrypt</h2><ul>
+<li>Có 2 cách để mã hóa dữ liệu được lưu trữ trên S3 buckets<ul>
+<li>Client side encryption (được mã hóa dưới client, trước khi upload lên S3)</li>
+<li>Server Side Encryption (SSE)<ul>
+<li>Data được mã hóa bởi S3 trước khi storage disks của S3</li>
+<li>Data được giải mã khi bạn download nó</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Tại bất kỳ thời điểm nào, cũng chỉ có thể áp dụng 1 loại mã hóa</li>
+<li>Tùy thuộc vào cách quản lý khóa mã hóa, có 3 loại SSE<ul>
+<li>SSE-S3: S3 quản lý encryption keys</li>
+<li>SSE-KMS: sử dụng KM keys</li>
+<li>SSE-C: Client cung cấp keys</li>
+</ul>
+</li>
+<li>Glacier: chỉ có thể read</li>
+</ul>
+<h2 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h2><ul>
+<li><p>Nếu bucket có lượng truy cập dưới 100 PUT&#x2F;LIST&#x2F;DELETE cho mỗi giây, hoặc dưới 800 GET request mỗi giây, thì không cần<br>phải cấu hình gì cho S3 để nâng performance cả</p>
+</li>
+<li><p>Ngược lại:</p>
+<ul>
+<li>Random prefix để chúng được lưu vào các phân vùng khác nhau (hình như version mới nhất thì không cần phải random<br>nữa, mà S3 tự động performance)</li>
+<li>Sử dụng CloudFront để phân phối tải tới S3</li>
+</ul>
+</li>
+<li><p>Versioning is disable default</p>
+</li>
+<li><p>Bạn có thể truy suất data từ Glacier theo nhiều cách</p>
+<ul>
+<li>Expedited: 1-5 mts<ul>
+<li>More expensive</li>
+<li>Use for urgent requests only</li>
+</ul>
+</li>
+<li>Standard: 3-5 Hrs<ul>
+<li>Less expensive than Expedited</li>
+<li>You get 10GB data retrieval free&#x2F; month</li>
+</ul>
+</li>
+<li>Bulk retrieval: 5-12 Hrs<ul>
+<li>Cheapest</li>
+<li>Use to retrieve large amounts up to Petabytes in a day</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="S3-Cross-Region-Replication"><a href="#S3-Cross-Region-Replication" class="headerlink" title="S3 Cross Region Replication"></a>S3 Cross Region Replication</h2><ul>
+<li><p>AWS sẽ không replicate dữ liệu ra ngoài region, nó chỉ sao chép trong nhiều facilities (AZ) (nhưng có feature cross<br>region)</p>
+</li>
+<li><p>Mặc định, tất cả objects sẽ gán quyền private, và chỉ có owner mới có thể access</p>
+</li>
+<li><p>Để chia sẻ object bạn có 2 cách</p>
+<ul>
+<li>Set quyền object public</li>
+<li>Tạo pre-signed URL</li>
+</ul>
+</li>
+<li><p>bucket</p>
+<ul>
+<li>global name, unique across all AWS accounts</li>
+</ul>
+</li>
+<li><p>object</p>
+<ul>
+<li>0 bytes - 5 TB</li>
+<li>Dung lượng lớn nhất cho 1 PUT request upload là 5GB (nếu dung lượng lớn hơn 100MB, cân nhắc nên sử dụng Multipart<br>Upload)</li>
+</ul>
+</li>
+<li><p>Data tự động được replicated trong 1 region</p>
+</li>
+<li><p>Security</p>
+<ul>
+<li>ACL</li>
+<li>BucketPolicies<ul>
+<li>IP address range</li>
+<li>AWS account</li>
+<li>Objects with a specific prefix</li>
+</ul>
+</li>
+<li>Encryption</li>
+</ul>
+</li>
+<li><p>Có thể xài kèm Athena để query SQL trên S3 (dạng sheet)</p>
+</li>
+<li><p>Signed URL</p>
+</li>
+<li><p>Có chức năng Restric Viewer</p>
+</li>
+<li><p>Từ Standard sang IA phải ít nhất 30 ngày, nhưng từ Standard sang Glacier thì whenever</p>
+</li>
+</ul>
+<h2 id="S3-Cross-Region-Replication-1"><a href="#S3-Cross-Region-Replication-1" class="headerlink" title="S3 Cross Region Replication"></a>S3 Cross Region Replication</h2><ul>
+<li>Versioning must be enabled on both the source and destination buckets</li>
+<li>Files in an existing bucket are not replicated automatically, all new and updated files will be replicated<br>automatically</li>
+</ul>
+<h2 id="S3-Versioning"><a href="#S3-Versioning" class="headerlink" title="S3 Versioning"></a>S3 Versioning</h2><ul>
+<li>Tốn tiền hơn, 1 object có thể có nhiều version khác nhau,</li>
+<li>Cách để vào mỗi version là url có thêm 1 parameter <code>versionId=xxx</code></li>
+<li>Xóa logic là chỉ đánh dấu delete marker</li>
+<li>Xóa vĩnh viễn thì không khôi phục được</li>
+</ul>
+<h2 id="S3-Transfer-Acceleration"><a href="#S3-Transfer-Acceleration" class="headerlink" title="S3 Transfer Acceleration"></a>S3 Transfer Acceleration</h2><ul>
+<li>Khi upload object, sử dụng 1 endpoint khác với endpoint trực tiếp. Lúc đó aws sẽ route traffic sao cho upload được đưa<br>tới <code>edgate location</code> để có tốc độ cao nhất</li>
+<li>Có nét tương đồng với CloudFront, nhưng có lẽ Cloudfront hợp cho việc download hơn. Theo khuyến cáo thì khi data nhiều<br>tới GB,TB thì nên sử dụng S3 Transfer Acceleration</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/36882595/are-there-any-difference-between-amazon-cloudfront-and-amazon-s3-transfer-accele/36927340">https://stackoverflow.com/questions/36882595/are-there-any-difference-between-amazon-cloudfront-and-amazon-s3-transfer-accele/36927340</a></li>
+</ul>
+<h2 id="S3-Intelligent-Tiering"><a href="#S3-Intelligent-Tiering" class="headerlink" title="S3 Intelligent-Tiering"></a>S3 Intelligent-Tiering</h2><ul>
+<li>Object được lưu đồng thời trên cả 2 tier. 1 cho frequent, 1 cho infrequent, sau 1 khoảng thời gian aws theo dõi, nó sẽ<br>tự động move các object ít truy cập về tier infrequent. Và ngược lại. (không tốn phí, nhưng tốn fee trước đó)</li>
+</ul>
+<h1 id="Storage-Gateway"><a href="#Storage-Gateway" class="headerlink" title="Storage Gateway"></a>Storage Gateway</h1><ul>
+<li>dùng cho hệ thống lai (on premises vs on demand)</li>
+<li>hay đi kèm vs NFS (base on S3) (ngoài ra có VolumeGateway (base on EBS)…)</li>
+<li>Import to S3 or Export from S3</li>
+<li>Snowball<ul>
+<li>80TB, no compute</li>
+</ul>
+</li>
+<li>Snowball Edge<ul>
+<li>100TB, has compute</li>
+</ul>
+</li>
+<li>Snowmobile<ul>
+<li>100PB, semi-truck</li>
+</ul>
+</li>
+<li>Type:<ul>
+<li>File Gateway: NFS or SMB</li>
+<li>Volume Gateway:<ul>
+<li>Stored: EBS - 1GB-16TB</li>
+<li>Cached: S3 - 1GB- 32GB</li>
+</ul>
+</li>
+<li>Tape Gateway</li>
+</ul>
+</li>
+</ul>
+<h1 id="Snowball"><a href="#Snowball" class="headerlink" title="Snowball"></a>Snowball</h1><ul>
+<li>Là thiết bị vật lý. Nó như 1 cái máy tính có tích hợp ổ cứng di động, ship về on premiss, xong copy data vào nó, rồi<br>ship về data center của Amazon, để copy lại. Dùng trong case mà data migrate rất rất lớn. Mà việc upload tốn nhiều<br>thời gian.</li>
+<li>Snowball support mã hóa KMS, nên không lo về security.</li>
+<li>Khi nào snowball ship về amazon xong, nhân viên sẽ upload data từ snowball vào bucket khách hàng, khi thành công sẽ có<br>SNS</li>
+<li>Snowball là giải pháp vận chuyển dữ liệu ở cấp độ petabyte sử dụng các thiết bị được thiết kế bảo mật để truyền lượng<br>dữ liệu lớn vào và ra khỏi Đám mây AWS.</li>
+<li>Snowball can:<ul>
+<li>import to S3</li>
+<li>export from S3</li>
+</ul>
+</li>
+</ul>
+<h1 id="VPC"><a href="#VPC" class="headerlink" title="VPC"></a>VPC</h1><h2 id="1-Security"><a href="#1-Security" class="headerlink" title="1. Security"></a>1. Security</h2><h3 id="Security-groups-vs-Network-ACLs"><a href="#Security-groups-vs-Network-ACLs" class="headerlink" title="Security groups vs Network ACLs"></a>Security groups vs Network ACLs</h3><table>
+<thead>
+<tr>
+<th>Security groups</th>
+<th>Network ACLs</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>instance level</td>
+<td>subnet level</td>
+</tr>
+<tr>
+<td>stateful</td>
+<td>stateless</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Security groups STATEFUL: nếu đồng ý cho phép chiều đi vào, thì chiều đi ra cũng sẽ được đồng ý, ngược lại</li>
+<li>Network ACL STATELESS: Nếu có rule đồng ý cho kết nối tới port 22 đi vào, thì cũng phải có rule cho phép đi ra</li>
+</ul>
+<h3 id="Security-groups"><a href="#Security-groups" class="headerlink" title="Security groups"></a>Security groups</h3><ul>
+<li>stateful</li>
+<li>Có thể sử dụng Security Group names như 1 khai báo “source” hoặc “destination” cho 1 Security Group khác</li>
+<li>Chỉ có rule allow (không thể khai báo rule deny, nếu không khai báo allow thì mặc định traffic là deny)</li>
+<li>Default là deny tất cả traffic inbound, và allow tất cả traffic outbound</li>
+</ul>
+<h3 id="NACL"><a href="#NACL" class="headerlink" title="NACL"></a>NACL</h3><ul>
+<li>stateless</li>
+<li>supports allow rules and deny rules</li>
+<li>Hình như là default allow all cho EC2 cùng subnet</li>
+<li>You can associate network ACL with multiple subnets, however subnet can only associate with one ACL at a time</li>
+</ul>
+<h2 id="2-VPC-peering"><a href="#2-VPC-peering" class="headerlink" title="2. VPC peering"></a>2. VPC peering</h2><ul>
+<li>Dùng để kết nối giữa các VPCs. Ví dụ: kết nối các EC2 ở các Region khác nhau (kể cả khác Account)</li>
+<li>Hạn chế:<ul>
+<li>không thể định tuyến gói tin từ VPC B tới VPC C thông qua VPC A</li>
+<li>không thể khởi tạo, nếu như có sự trùng lặp, conflict CIDR blocks giữa các VPC (ví dụ: cùng chung dải mảng<br>10.0.0.0&#x2F;16)</li>
+<li>giữa 2 VPC, tại cùng 1 time, chỉ có thể có duy nhất 1 VPC peering</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-AWS-Direct-Connect"><a href="#3-AWS-Direct-Connect" class="headerlink" title="3. AWS Direct Connect"></a>3. AWS Direct Connect</h2><ul>
+<li>AWS cung cấp 1 số địa điểm (office vật lý) để khách hàng có thể tới trực tiếp cắm dây mạng vào để kết nối tới hệ thống<br>của AWS. &#x3D;&gt; giảm chi phí truyền tải băng thông trên internet .</li>
+<li>Use case:<ul>
+<li>Thao tác với bộ dữ liệu lớn</li>
+<li>Nguồn cấp dữ liệu theo thời gian thực</li>
+<li>Môi trường lai</li>
+</ul>
+</li>
+<li>Chỉ cung cấp ở 1 số địa điểm vật lý nhất định trên toàn thế giới</li>
+</ul>
+<h2 id="4-Virtual-Private-Gateway"><a href="#4-Virtual-Private-Gateway" class="headerlink" title="4. Virtual Private Gateway"></a>4. Virtual Private Gateway</h2><h2 id="5-Configuration"><a href="#5-Configuration" class="headerlink" title="5. Configuration"></a>5. Configuration</h2><ul>
+<li>Khi config VPC sử dụng VPC wizard và khai báo VPN-Only and VPN access implies (tức chỉ có VPN mới truy cập vào được).<br>Sẽ có các thông số sau:<ul>
+<li>Không có public subnet</li>
+<li>Không có NAT instance&#x2F;gateway</li>
+<li>Tạo 1 Virtual Private Gateway (không có EIP)</li>
+<li>Tạo 1 VPN connection</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-VPC-CIDR-Block"><a href="#6-VPC-CIDR-Block" class="headerlink" title="6. VPC CIDR Block"></a>6. VPC CIDR Block</h2><ul>
+<li>Không thể thay đổi size CIDR Block sau khi tạo. Nếu muốn tăng size thì tạo 1 VPC mới (cần thiết kế cẩn thận từ đầu)</li>
+</ul>
+<h3 id="7-VPC-Folow-log"><a href="#7-VPC-Folow-log" class="headerlink" title="7. VPC Folow log"></a>7. VPC Folow log</h3><ul>
+<li>Nếu VPC Peering đang được bật, và chủ peering là Account khác, thì không thể bật <code>flow logs</code></li>
+<li>cannot tag a flow log</li>
+<li>after flow log is created, you canot change its configuration</li>
+<li>(1 số IP đặc biệt, DHCP) sẽ không được monitor</li>
+</ul>
+<h3 id="8-Nat-gateway"><a href="#8-Nat-gateway" class="headerlink" title="8. Nat gateway"></a>8. Nat gateway</h3><ul>
+<li>1 cải tiến của Nat Instance</li>
+</ul>
+<h3 id="VPC-Endpoint"><a href="#VPC-Endpoint" class="headerlink" title="VPC Endpoint"></a>VPC Endpoint</h3><ul>
+<li>Không có VPCEndpoint cho RDS</li>
+<li>Chỉ có S3 và dynamodb là có Gateway VPC endpoitn</li>
+<li>còn lại là Interface VPC endpoint</li>
+</ul>
+<h1 id="ELB"><a href="#ELB" class="headerlink" title="ELB"></a>ELB</h1><ul>
+<li>ELB có thể chạy khác Region được, nhưng cần phải có Route 53</li>
+<li>Phân phối traffic cho các EC2 ở nhiều AZ</li>
+<li>Sticky sessions</li>
+<li>X-Forwarded-For:<ul>
+<li>get client IP address</li>
+<li>get previous Request IP Address</li>
+<li>get Load Balancer IP Address</li>
+</ul>
+</li>
+<li>Trả về <code>504</code> nếu EC2 không có response</li>
+<li>không có IPv4</li>
+</ul>
+<h2 id="1-Cac-cach-de-monitoring-ELB"><a href="#1-Cac-cach-de-monitoring-ELB" class="headerlink" title="1. Các cách để monitoring ELB"></a>1. Các cách để monitoring ELB</h2><ul>
+<li>AWS Cloud Watch:<ul>
+<li>ELB gửi ELB metric tới Cloud Watch mỗi 1 phút</li>
+<li>ELB gửi metric mỗi khi có request tới ELB</li>
+<li>Có thể config triger SNS notification khi ELB đạt tới 1 ngưỡng nào đó</li>
+</ul>
+</li>
+<li>Access Logs:<ul>
+<li>Default tắt</li>
+<li>Có thể config chọn S3 lưu trữ log</li>
+<li>Có thể có được các thông tin như requester, thời gian request, IP request, loại request…</li>
+<li>Sẽ không bị charged thêm tiền nếu đã trả tiền cho S3</li>
+</ul>
+</li>
+<li>AWS Cloud Trail<ul>
+<li>Để capture all API calls tới ELB</li>
+<li>Có thể lưu trữ log trên S3</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-Config"><a href="#2-Config" class="headerlink" title="2. Config"></a>2. Config</h2><ul>
+<li>Nếu không có config đặc biệt, ELB sẽ sử dụng config của ELB gần nhất để define</li>
+<li>Để cho phép Backend EC2 (Web layer) biết được thông tin chi tiết của Originator&#x2F; requester (ví dụ: source IP address,<br>port…) bạn có thể:<ul>
+<li>Enable Proxy Protocol for TCP&#x2F;SSL Layer 4 listeners as supported on the ELB</li>
+<li>Enable X-Forewaded-For headers for HTTP&#x2F;HTTPS listeners on the ELB</li>
+</ul>
+</li>
+<li>Mặc định ELB được bật để load balancer giữa các AZ</li>
+<li>The ELB hỗ trợ các SSL protocols:<ul>
+<li>TLS 1.0, TLS 1.1, TLS 1.2, SSL 3.0</li>
+<li>It does not support TLS 1.3 or SSL 2.0 (which is deprecated)</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-Type"><a href="#3-Type" class="headerlink" title="3. Type"></a>3. Type</h2><ul>
+<li>ALB &#x3D;&gt; layer 7 of OSI</li>
+<li>NLB &#x3D;&gt; Layer 4 of OSI</li>
+<li>CLB &#x3D;&gt; layer 7 mix 4</li>
+</ul>
+<h2 id="4-ELB-Proxy-Protocol"><a href="#4-ELB-Proxy-Protocol" class="headerlink" title="4. ELB - Proxy Protocol"></a>4. ELB - Proxy Protocol</h2><ul>
+<li>Trước khi bật tính năng Proxy Protocal thì cần chắc chắn rằng trước Load Balancer chưa có proxy server</li>
+</ul>
+<h2 id="5-ELB-Sticky-sessions"><a href="#5-ELB-Sticky-sessions" class="headerlink" title="5. ELB - Sticky sessions"></a>5. ELB - Sticky sessions</h2><ul>
+<li>Trường hợp BE instance bị chết, ELB sẽ định tuyến traffic tới 1 instance mới, khỏe mạnh, và sticky session trên<br>instance mới. (kể cả khi instance cũ đã khỏe lại)</li>
+<li>For ELB, duration based, cookie stickiness</li>
+</ul>
+<h2 id="6-Connection-Draining"><a href="#6-Connection-Draining" class="headerlink" title="6. Connection Draining"></a>6. Connection Draining</h2><ul>
+<li>Mặc định ELB sẽ check helth của EC2, nếu check lỗi, sẽ đưa EC2 ra <code>out of service</code>, có thể sẽ khởi tạo 1 EC2 khác thay<br>thế. Tuy nhiên trong 1 số trường hợp, EC2 được admin chủ động maintaince gì đó (ví dụ để update, upgrade) dẫn tới<br>việc “unhelth”, thì ELB sẽ tạm ignore case này, trong khoảng thời gian này</li>
+<li>Is disabled by default</li>
+<li>Default, wait 300 seconds</li>
+</ul>
+<h2 id="7-SNI-and-ELB"><a href="#7-SNI-and-ELB" class="headerlink" title="7. SNI and ELB"></a>7. SNI and ELB</h2><ul>
+<li>Server Name Indication (SNI) là một phần mở rộng của giao thức mạng máy tính TLS . Nó cho phép một máy chủ có thể sử<br>dụng nhiều chứng chỉ SSL cho nhiều tên miền trên cùng một địa chỉ IP mạng WAN. Nó giống như việc sử dụng https cho<br>nhiều tên miền cùng sử dụng chung một địa chỉ IP để tiết kiệm</li>
+<li>Elastic Load Balancing không hỗ trợ Server Name Indication (SNI) &#x3D;&gt; cần tìm giải pháp</li>
+<li>X-Forwarded-For is supported with HTTP&#x2F;HTTPS listeners only</li>
+<li>Proxy protocol is supported with TCP&#x2F;SSL listeners only</li>
+</ul>
+<h2 id="8-ELB-Pre-Warming"><a href="#8-ELB-Pre-Warming" class="headerlink" title="8. ELB-Pre-Warming"></a>8. ELB-Pre-Warming</h2><p>ELB Scaling:</p>
+<ul>
+<li>Thời gian để ELB phát hiện được việc tăng traffic là khoảng 1-7p</li>
+<li>ELB không được thiết kế để queue requests</li>
+<li>Trả về lỗi 503, nếu ELB không thể handle được request</li>
+<li>Nếu traffic có thể tăng quá nhanh, hơn 50%, thì cần contact AWS để pre-warm</li>
+<li>Khi ELB scales, nó sẽ update DNS record với danh sách IP mới</li>
+<li>Để chắc chắn clients đang có sự gia tăng về capacity, ELB sẽ gửi TTL tới DNS Record mỗi 60s</li>
+</ul>
+<h1 id="Kinesis"><a href="#Kinesis" class="headerlink" title="Kinesis"></a>Kinesis</h1><ul>
+<li>Kinesis Stream<ul>
+<li>data stored for 24 hours by default</li>
+<li>data stored in shards</li>
+<li>data consumers (ec2 instances) turn shards into data to analyze</li>
+<li>5 transactions per second for reads, maximum total rate of 2 MB&#x2F;second up to 1,000 records for writes</li>
+</ul>
+</li>
+<li>Kinesis Firehose<ul>
+<li>Automated</li>
+<li>no dealing with shards</li>
+</ul>
+</li>
+<li>Kinesis Analytics<ul>
+<li>Way of analyzing data in Kinesis using SQL-like queries</li>
+</ul>
+</li>
+</ul>
+<h1 id="SQS"><a href="#SQS" class="headerlink" title="SQS"></a>SQS</h1><ul>
+<li><p>messages are 256KB in size</p>
+</li>
+<li><p>kept 1 minute to 14 days, default 4 days</p>
+</li>
+<li><p>Visibility Timeout</p>
+<ul>
+<li>if job is not processed within timeout time, message becomes visible again</li>
+<li>if message is processed within that time, message is deleted</li>
+<li>maximum invisible time is 12 hours</li>
+</ul>
+</li>
+<li><p>Standard Queues</p>
+<ul>
+<li>nearly-unlimited number of transactions per second</li>
+<li>guarantee message is delivered at least once</li>
+<li>more than one could be delivered out of order</li>
+</ul>
+</li>
+<li><p>FIFO Queues</p>
+<ul>
+<li>messages sent and received in order they arrive</li>
+<li>delivered once and remains available until consumer processes and deletes it</li>
+<li>SQS FIFO, chỉ có 1 process được access</li>
+</ul>
+</li>
+</ul>
+<h1 id="SWF"><a href="#SWF" class="headerlink" title="SWF"></a>SWF</h1><ul>
+<li>Task is assigned only once and is never duplicated</li>
+<li>assigns tasks and monitors progress</li>
+<li>workers&#x2F;deciders don’t track execution state, run independently, and scale quickly</li>
+<li>parameters described in JSON</li>
+<li>maximum workflow is 1 year, always measured in seconds</li>
+</ul>
+<h2 id="SWF-Domains"><a href="#SWF-Domains" class="headerlink" title="SWF Domains"></a>SWF Domains</h2><ul>
+<li>workflow, activity types, workflow execution all scoped to a Domain</li>
+<li>Domains isolate set of types, executions, and task lists from others in same account</li>
+</ul>
+<h2 id="SWF-Actors"><a href="#SWF-Actors" class="headerlink" title="SWF Actors"></a>SWF Actors</h2><ul>
+<li><p>SWF Workflow Starters</p>
+<ul>
+<li>application to start&#x2F;initiate workflow</li>
+<li>could be website or mobile app, for example</li>
+</ul>
+</li>
+<li><p>SWF Decider</p>
+<ul>
+<li>program that controls coordination of tasks</li>
+<li>task ordering, concurrency, scheduling according to application logic</li>
+</ul>
+</li>
+<li><p>SWF Workers</p>
+<ul>
+<li>program&#x2F;person that interacts with SWF</li>
+<li>gets task</li>
+<li>process receives tasks</li>
+<li>returns result</li>
+</ul>
+</li>
+</ul>
+<h1 id="Cloudwatch"><a href="#Cloudwatch" class="headerlink" title="Cloudwatch"></a>Cloudwatch</h1><ul>
+<li>Có Cloudwatch Agent</li>
+<li>Ko monitor được RAM (instance window monitor hạn chế hơn instance linux)</li>
+<li>Standard Monitoring &#x3D; 5 minutes</li>
+<li>Detailed Monitoring &#x3D; 1 Minute (mất nhiều fee hơn)</li>
+</ul>
+<h1 id="Auto-Scaling"><a href="#Auto-Scaling" class="headerlink" title="Auto Scaling"></a>Auto Scaling</h1><ul>
+<li>Simple Scaling - Ví dụ khi CPU tới 1 ngưỡng nào đó thì scaling</li>
+<li>Step Scaling - Ví dụ: khi có 2 instance, thì CPU tới ngưỡng X sẽ kickoff, nhưng khi 3 instance thì tới ngưỡng Y mới<br>kickoff</li>
+<li>Target Tracking Scaling - so complex</li>
+</ul>
+<h1 id="Developer-Tools"><a href="#Developer-Tools" class="headerlink" title="Developer Tools"></a>Developer Tools</h1><ul>
+<li>CodeStar - Project managing of code for developers</li>
+<li>CodeCommit - Place to store code (source control), private git repository</li>
+<li>CodeBuild - Compiles, tests code and build packages ready for deployment</li>
+<li>CodeDeploy - Deployment services that will deploy applications to EC2, Lambda, on-premise</li>
+<li>CodePipeline - Continuous Delivery to Model&#x2F;Visualize&#x2F;Automate steps for software release</li>
+<li>X-Ray - Used to debug&#x2F;analyze serverless applications by showing traces</li>
+<li>Cloud9 - IDE Environment to develop code inside AWS consol</li>
+</ul>
+<h1 id="Lon-xon"><a href="#Lon-xon" class="headerlink" title="Lộn xộn"></a>Lộn xộn</h1><ul>
+<li><p>Elastic Beanstalk có thể tự động hóa deploy, tự tạo instance, ELB, VPC</p>
+</li>
+<li><p>Mặc định mỗi tài khoản AWS sẽ giới hạn 5IP Elastic</p>
+</li>
+<li><p>Provisioned IOPS SSD at least 4GB in size</p>
+</li>
+<li><p>AWS Import&#x2F;Export : không thể export from Glacier</p>
+</li>
+<li><p>Microsoft SQL: max 10GB per DB</p>
+</li>
+<li><p>Key pair are used only for EC2 and CloudFront</p>
+</li>
+<li><p>AWS Cloudformation sẽ rollback lại toàn bộ các service đã tạo, nếu có 1 service bị lỗi</p>
+</li>
+<li><p>Federated Storage Engine: ???</p>
+</li>
+<li><p>Oracle database: Oracle Data Pump</p>
+</li>
+<li><p>AWS STS - giống access key + secret key nhưng mà có time expired đi kèm</p>
+</li>
+<li><p>Với dịch vụ EC2, aws bắt đầu tính tiền khi EC2 được khởi tạo ở boot sequence, và kết thúc khi Instant shutdown</p>
+</li>
+<li><p>Có thể acces với EC2, sử dụng SOAP protocol</p>
+</li>
+<li><p>OpsWorks - Similar to elastic beanstalk, used to automate configuration of environments (convered in Sysops Admin<br>test)</p>
+</li>
+<li><p>Data Pipeline - Way of moving data between different AWS services</p>
+</li>
+<li><p>Glue - Used for ETL (extract, transform, load), glue is optimized to achieve this</p>
+</li>
+<li><p>WAF - Web Application Firewall (7-layer firewall), monitoring application layer</p>
+</li>
+<li><p>Shield - DDoS Mitigation</p>
+</li>
+<li><p>GameLift - Service to help develop game services in AWS</p>
+</li>
+<li><p>CDN - Edge Locations are not just read only, you can write to them, too</p>
+</li>
+<li><p>Muốn share snapshot của Redshift cluster sang 1 region khác, thì cần BẬT <code>enable cross-Region snapshots.</code></p>
+</li>
+<li><p>General Purpose (SSD) Storage - This storage type is optimized for I&#x2F;O-intensive transactional (OLTP) database<br>workloads</p>
+</li>
+<li><p>Provisioned IOPS SSD cũng support OLTP, performance cao hơn</p>
+</li>
+<li><p>HDD st1 hợp cho log-processing, nhưng throughput từ 250-500</p>
+</li>
+<li><p>AWS Trusted Advisor phân tích môi trường AWS của bạn và đưa ra khuyến nghị về phương pháp thực hành tốt nhất theo năm<br>hạng, 1 kiểu như thư ký ảo</p>
+</li>
+<li><p>không sử dụng Redshift như 1 OLTP Database, nó chỉ nên dùng như OLAP Database</p>
+</li>
+<li><p>Cloudwatch cannot remove EC2 instance from rotation but Route53 health check can do this</p>
+</li>
+<li><p>With Amazon Kinesis Data Analytics for SQL Applications, you can process and analyze streaming data using standard SQL</p>
+</li>
+<li><p>data in 8 KB chunks &#x3D;&#x3D;&gt; NoSQL DB</p>
+</li>
+<li><p>AWS Config - tool analyzes account resources and provides a detailed inventory of changes over time</p>
+</li>
+<li><p>Khi design subnet, nhớ chú ý yếu tố nhân 2, vì để đảm bảo HA, thì mỗi AZ nên có 1 subnet</p>
+</li>
+<li><p>Redshift có thể config độ ưu tiên cho mỗi query riêng biệt được?</p>
+</li>
+<li><p>EFS does not support security groups.</p>
+</li>
+<li><p>(Use an Amazon SNS topic to fan out the data to the SQS queue in addition to a Lambda function that records the data<br>to an S3 bucket.</p>
+</li>
+<li><p>Sử dụng AWS Organizations có thể set policy như IAM được, nhưng trong 1 số case, thao tác IAM tốn nhiều effort hơn</p>
+</li>
+<li><p>AWS Batch is not to be confused for AWS Backup.</p>
+</li>
+<li><p>AWS Batch plans, schedules, and executes your batch computing workloads using Amazon EC2 and Spot Instances and its<br>not used to take backups. AWS Backup can perform backups.</p>
+</li>
+<li><p>Nếu tạo Nat Gateway dùng chung cho 2 AZ, thì case AZ đang chạy Nat gateway down, sẽ làm cho AZ còn lại cũng không có<br>NatGateway dùng</p>
+</li>
+<li><p>Aurora allows its read replicas to be easily promoted to the master and typically only has 100ms of replication lag</p>
+</li>
+<li><p>AWS Premium support: Basic, Developer, Business, Enterprise</p>
+</li>
+<li><p>3 level support của AWS : Enterprise, Business, Developer (không có gói Free Tier)</p>
+</li>
+<li><p>RDS supports SOAP only through HTTPS (not HTTP)</p>
+</li>
+<li><p>Create the IAM roles with cross account access</p>
+</li>
+<li><p>“Domain” refer to in Amazon SWF : A Collection of related workflows</p>
+</li>
+<li><p>AWS CloudFormation : Json-formatted</p>
+</li>
+<li><p>Document aws ghi rằng khi EC2 stop, thì data trên ec2 instance cũng mất đi. (chưa kiểm duyệt lại được, vì test thì<br>thấy vẫn lưu bình thường???)</p>
+</li>
+<li><p>Amazon’s Redshift uses which block size for its columnar storage:  1024KB &#x2F; 1 MB</p>
+</li>
+<li><p>Với các app mobile cần authentication để truy cập vào db như DynamoDB &#x3D;&gt; Nên sử dụng Web Identity Federation, cụ thể<br>app sẽ call tới bên thứ 3 để xác thực user (Google, Facebook, Amazon…), để nhận token, sử dụng này để pass service<br>AWS STS. AWS STS sẽ cung cấp 1 temporary AWS access credential. Được quyền như IAM Role, accesss vào AWS Resource (<br>trong case này là DynamoDB)</p>
+</li>
+<li><p>Mỗi tài khoản AWS gồm:</p>
+<ul>
+<li>AWS Account ID: such as <code>123456789012</code>. Dùng trong case ARN</li>
+<li>Canonical User ID : such as <code>79a59df900b949e55d96a1e698fbacedfd6e09d98eacf8f8d5218e7cd47ef2be</code>. Root user và IAM<br>user sẽ cùng chung 1 <code>canonical user</code>. Được dùng trong case <code>cross-account access</code>.</li>
+</ul>
+</li>
+<li><p>1 Public subnet trong 1 VPC được định nghĩa là trong bảng định tuyến của nó, có ít nhất 1 route IGW</p>
+</li>
+<li><p>Khi nào nên chọn Provisioned IOPS trên Standard RDS?</p>
+<ul>
+<li>Khi cần db OLTP</li>
+</ul>
+</li>
+<li><p>Để lấy thông tin metadata của ec2, <code>curl http://169.254.169.254/latest/meta-data</code> (lưu ý 169.254.169.254 là địa chỉ IP<br>cố định, không phải thay đổi)</p>
+</li>
+<li><p>AWS Direct Connect: 1Gbps - 10Gbps</p>
+</li>
+<li><p>The maximum size of an Amazon EBS snapshot is 1TB</p>
+</li>
+<li><p>Provisioned IOPS sẽ được charge phí ngay cả khi không dùng, mỗi tháng</p>
+</li>
+<li><p>Storage size increments of at least 10%</p>
+</li>
+<li><p>Muốn bắn mail khi Instance được start&#x2F;terminate khi chạy Auto Scaling thì phải config (nó không tự gửi mail)</p>
+</li>
+<li><p>Cần phải shutdown EC2 trước khi tạo snapshot</p>
+</li>
+<li><p>Route 53 không thể tạo hosted zone for a top-level domain</p>
+</li>
+<li><p>Không thể tạo IAM account giống nhau để login vào các AWS Account khác nhau</p>
+</li>
+<li><p>RDS không hỗ trợ giảm size db, nhưng với Dynamo DB (NOSQL) thì có support cả tăng và giảm</p>
+</li>
+<li><p>SQS không support priority queue</p>
+</li>
+<li><p>Security group sẽ merge các policy conflict lại với nhau (cái nào to hơn xài cái đó, ví dụ có 2 cái, 1 cái chỉ cho<br>phép vào port 80 với IP xxx, và 1 cái cho phép vào port 80 với mọi IP, thì kết quả cuối sẽ là cho phép all)</p>
+</li>
+<li><p>AWS using SQS to store the message from mobile apps, and using AWS Mobile Push to send offers to mobile apps.</p>
+</li>
+<li><p>EC2 sẽ không bị terminate nếu tính năng “terminate protection” đang được enabled. Chế độ Auto Scaling, khi scale-in sẽ<br>không thể terminate được instance</p>
+</li>
+<li><p>AuTO Scaling support Manual scaling, và Dynamic Scaling</p>
+</li>
+<li><p>Trong một Region, thì việc user sử dụng AZ khác nhau không giảm được latency. AZ mục đích chính để fault toleration<br>hoặc HA</p>
+</li>
+<li><p>EBS Magnetic: 1 loại ổ đĩa HDD</p>
+</li>
+<li><p>Amazon Redshift: 1 service phục vụ data warehouse,lưu data theo dạng COLUMNAR</p>
+</li>
+<li><p>Cross-account: account sau khi đăng nhập, có thể switch sang role khác của 1 tài khoản khác, mà không cần phải<br>login&#x2F;logout đăng nhập tài khoản đó.</p>
+</li>
+<li><p>Danh sách các subscriber của SNS</p>
+<ul>
+<li>Lambda</li>
+<li>SQS</li>
+<li>HTTP&#x2F;S</li>
+<li>Email</li>
+<li>SMS</li>
+</ul>
+</li>
+<li><p>CloudFront được dùng để distribution origin cho các service sau:</p>
+<ul>
+<li>S3</li>
+<li>ELB</li>
+<li>MediaPackage Origins</li>
+<li>MediaStore Containers</li>
+</ul>
+</li>
+<li><p>CloudFront support cho cả static và dynamic content trên global</p>
+</li>
+<li><p>AWS KMS : chỉ mã hóa với khóa đối xứng symetric key</p>
+</li>
+<li><p>Vì DynamoDB chỉ lưu được giới hạn data, nên có thể kết hợp với sử dụng S3 để lưu trữ, và DynamoDB sẽ lưu trữ vị trí<br>trỏ tới S3</p>
+</li>
+<li><p>DynamoDB không hỗ trợ TRANSACTION giữa S3 và DynamoDB</p>
+</li>
+<li><p>S3 giới hạn độ dài của object identifiers</p>
+</li>
+<li><p>Consolidated billing (Thanh toán tổng hợp): usecase 1 tài khoản master tạo ra organization và mời các tài khoản khác<br>invite vào organization này. Khi đó tài khoản master là Paying account, sẽ thực hiện thanh toán toàn bộ chi phí của<br>các tài khoản khác. Các tài khoản khác được invite, và không phải trả tiền là Linked Account</p>
+</li>
+<li><p>General Purpose SSD (gp2):<br>(Min: 1 GiB, Max: 16384 GiB)<br>IOPS 300 &#x2F; 3000</p>
+</li>
+<li><p>Provisioned IOPS SSD (io1)<br>(Min: 4 GiB, Max: 16384 GiB)<br>(Min: 100 IOPS, Max: 64000 IOPS)</p>
+</li>
+</ul>
+<h1 id="FSx-vs-EFS"><a href="#FSx-vs-EFS" class="headerlink" title="FSx vs EFS"></a>FSx vs EFS</h1><ul>
+<li>Có vẻ FSX được thiết kế chuyên cho window server</li>
+<li>1 số case sau nên dùng FSX</li>
+</ul>
+<pre><code class="Home">Windows line-of-business applications.
+Web servers and content management systems built on Windows and deeply integrated with the Windows Server ecosystem.
+Windows app dev environments, notably Visual Studio.
+Media workflows.
+Windows data analytics, such as Power BI, the SQL Server data platform, Sisense or other third-party applications.
+</code></pre>
+<ul>
+<li>Fsx Có 2 loại:<ul>
+<li>Cho window server. (dùng như kiểu share directory)</li>
+<li>Cho Lustre</li>
+</ul>
+</li>
+</ul>
+<h1 id="Some-topic"><a href="#Some-topic" class="headerlink" title="Some topic"></a>Some topic</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/vi/premiumsupport/knowledge-center/migrate-nat-instance-gateway/">https://aws.amazon.com/vi/premiumsupport/knowledge-center/migrate-nat-instance-gateway/</a></li>
+<li><a target="_blank" rel="noopener" href="https://acloud.guru/forums/aws-csa-2019/discussion/-LbnjIbr3jdqQdRSRa7s/VPC%20Endpoint%20Interface%20vs%20Gateway">https://acloud.guru/forums/aws-csa-2019/discussion/-LbnjIbr3jdqQdRSRa7s/VPC%20Endpoint%20Interface%20vs%20Gateway</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.treasuredata.com/blog/2016/02/10/whats-the-difference-between-aws-redshift-aurora/">https://blog.treasuredata.com/blog/2016/02/10/whats-the-difference-between-aws-redshift-aurora/</a></li>
+<li><a target="_blank" rel="noopener" href="https://hevodata.com/blog/amazon-redshift-vs-aurora/">https://hevodata.com/blog/amazon-redshift-vs-aurora/</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.to/garyker/aws-classic-load-balancer-vs-application-load-balancer-12m0">https://dev.to/garyker/aws-classic-load-balancer-vs-application-load-balancer-12m0</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/awesome-cloud/aws-difference-between-ebs-and-instance-store-f030c4407387">https://medium.com/awesome-cloud/aws-difference-between-ebs-and-instance-store-f030c4407387</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-monitoring-using-cloudwatch.html">https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-monitoring-using-cloudwatch.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/vpc/latest/userguide/egress-only-internet-gateway.html">https://docs.aws.amazon.com/vpc/latest/userguide/egress-only-internet-gateway.html</a></li>
+</ul>
+
+      
+       <hr><span id="github_link" style="font-style: italic;color: gray;">via https://github.com/tungtv202/MyNote/tree/master/</span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    © 2019-2023 Tung Explorer
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="full-screen  s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+        /* 渲染*/
+        function HTMLDecode(text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        if (window.mermaid){
+            window.mermaid = null
+        }
+        $.getScript("//cdn.jsdelivr.net/npm/mermaid@8.4.2/dist/mermaid.min.js", function () {
+            var mermaidOptions = JSON.parse(HTMLDecode("{&#34;theme&#34;:&#34;default&#34;,&#34;startOnLoad&#34;:true,&#34;flowchart&#34;:{&#34;useMaxWidth&#34;:false,&#34;htmlLabels&#34;:true}}"))
+            if (window.mermaid) {
+                mermaid.initialize(mermaidOptions)
+                mermaid.contentLoaded()
+            }
+             var s = document.getElementById("github_link");
+             var currentContent = s.textContent;
+             s.textContent = currentContent+window.location.pathname.substring(9).slice(0, -1) + '.md';
+        })
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 572px;
+    }
+    .nav.fullscreen {
+        margin-left: -572px;
+    }
+    .nav-left {
+        width: 150px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 542px;
+        }
+        .nav.fullscreen {
+            margin-left: -542px;
+        }
+        .nav-left {
+            width: 150px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 542px;
+            margin-left: -542px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #fbf4a8;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

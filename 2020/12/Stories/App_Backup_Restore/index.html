@@ -1,0 +1,2511 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Nhật ký xây dựng app Backup &amp; Restore | Tung Explorer</title>
+  <meta name="keywords" content=" backup restore ">
+  <meta name="description" content="Nhật ký xây dựng app Backup &amp; Restore | Tung Explorer">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="Understanding Fuzz TestingRecently, I learned about a new concept - Fuzz Testing. The main idea of fuzzing is to create unexpected inputs to check if the program handles exception cases correctly. Why">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Understanding Fuzz Testing">
+<meta property="og:url" content="http://example.com/2024/07/Java/FuzzTest/index.html">
+<meta property="og:site_name" content="Tung Explorer">
+<meta property="og:description" content="Understanding Fuzz TestingRecently, I learned about a new concept - Fuzz Testing. The main idea of fuzzing is to create unexpected inputs to check if the program handles exception cases correctly. Why">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-28T05:00:26.000Z">
+<meta property="article:modified_time" content="2024-07-28T05:00:26.000Z">
+<meta property="article:author" content="Tung Explorer">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="fuzz">
+<meta property="article:tag" content="testing">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/icon.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/rainbow.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/ahbp.gif"/>
+</a>
+<div class="author">
+    <span>Tung Explorer</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="github"
+               href="https://github.com/tungtv202"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="linkedin"
+               href="https://www.linkedin.com/in/tungtv202"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-linkedin"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:tungtv202@gmail.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(89)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="apache james">
+            
+            apache james
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="aws">
+            
+            aws
+            <small>(7)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="cicd_ops">
+            
+            cicd_ops
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="code_template">
+            
+            code_template
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="database">
+            
+            database
+            <small>(5)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="docker">
+            
+            docker
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="elasticsearch">
+            
+            elasticsearch
+            <small>(4)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="install_guide">
+            
+            install_guide
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="java">
+            <i class="fold iconfont icon-right"></i>
+            java
+            <small>(31)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="java&lt;---&gt;feign">
+            
+            feign
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="java&lt;---&gt;jackson">
+            
+            jackson
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="kafka">
+            
+            kafka
+            <small>(4)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="linux">
+            
+            linux
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="other">
+            
+            other
+            <small>(13)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="rabbitmq">
+            
+            rabbitmq
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="redis">
+            
+            redis
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="stories">
+            
+            stories
+            <small>(6)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="summary_book">
+            
+            summary_book
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="89">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="find hot key i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="TOC  w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="back"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="match cases"></i>
+            <i class="iconfont icon-tag" data-title="tag"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">---TOC---</div>
+            <i class="iconfont icon-list" data-title="all articles"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>adapter</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>algorithm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>apache james</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>api gateway</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>authen</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>authentication</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>auto scheduler</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>auto tool</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>autocomplete</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>aws</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>backup restore</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bash</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>basic</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bf</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bloom filter</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bridge</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cassandra</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>chartjs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>chat</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>chromedriver</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cicd</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>code template</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>command</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>completable future</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>concurrency</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>coordinator</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>crawl</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>database</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ddd</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>decorator</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>dependency</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>dependency injection</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>design pattern</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>diff</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>docker</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>domain driver design</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>durability</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>e-wallet</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>EBS</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ecr</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ecs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>elasticsearch</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>equal</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>EqualsVerifier</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>evaluation logic</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>false positive</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>feign</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fiber</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fshare</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>functional</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fuzz</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>gatling</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>gen code</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>GeneratedValue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>get link</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Google Translate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>graceful shutdown</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>grafana</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ha</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>hashcode</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>healthcheck</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>hibernate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>http client</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>iam</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>id provider</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>install</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>isolation</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jackson</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>javers</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jhipster</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jmeter</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jpa</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>junit</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jvm internal</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafka</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafka cli</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>KafkaListener</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>keycloak</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kong</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>krakend</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>leak</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>leak detect</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>lib-common</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>log</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>logback</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>maven</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>memory leak</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>metric</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mirror queue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mockito</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>momo</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mysql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>netty</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>nginx</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>note</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>note total</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>oauth2</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>object storage</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>observable</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>observer</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>oidc</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>partition</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>paseto</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>pattern</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>performance test</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>persistence</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>phantomreference</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>policy</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>project loom</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>prometheus</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>proxy</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>proxy chained</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>quartz</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>query sql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>quorum queue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>rabbitmq</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>rate limiting</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>reactive</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>reactor</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>rebalance</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>redis</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>redis cluster</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>redis sentinel</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>reflection</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>s3</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>script</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>search as you type</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>search contact</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>security</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>security token service</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>segment</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>selenium</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sentinel</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>serialize</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>session</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sharding</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>signed url</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>slo</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>snmp</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>spring</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>spring webflux</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sso</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>stompJs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>stories</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sts</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>superviosr</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sync</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>template</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>test</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>test tool</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>testing</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread local</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread safe</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>token</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>total</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>transaction</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>translate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>travian</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>unit test</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>use case</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>vagrant</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>virtual thread</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>volatile</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>web socket</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>webclient</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All java "
+           href="/2024/07/Java/FuzzTest/"
+           data-tag="java,fuzz,testing"
+           data-author="" >
+            <span class="post-title" title="Understanding Fuzz Testing">Understanding Fuzz Testing</span>
+            <span class="post-date" title="2024-07-28 12:00:26">2024/07/28</span>
+        </a>
+        
+        
+        <a  class="All redis "
+           href="/2024/07/Redis/RedisSentinelNote/"
+           data-tag="redis,redis sentinel,sentinel"
+           data-author="" >
+            <span class="post-title" title="Redis sentinel note">Redis sentinel note</span>
+            <span class="post-date" title="2024-07-28 12:00:26">2024/07/28</span>
+        </a>
+        
+        
+        <a  class="All redis "
+           href="/2024/04/Redis/RedisClusterNote/"
+           data-tag="redis,redis cluster"
+           data-author="" >
+            <span class="post-title" title="Redis cluster note">Redis cluster note</span>
+            <span class="post-date" title="2024-04-26 12:00:26">2024/04/26</span>
+        </a>
+        
+        
+        <a  class="All docker "
+           href="/2023/08/Docker/Docker_Healthcheck/"
+           data-tag="docker,healthcheck,graceful shutdown"
+           data-author="" >
+            <span class="post-title" title="Docker - Healthcheck &amp; Graceful Shutdown">Docker - Healthcheck &amp; Graceful Shutdown</span>
+            <span class="post-date" title="2023-08-04 18:00:26">2023/08/04</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2022/12/Java/Netty_In_Action/"
+           data-tag="java,netty"
+           data-author="" >
+            <span class="post-title" title="Netty In Action">Netty In Action</span>
+            <span class="post-date" title="2022-12-08 23:26:26">2022/12/08</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2022/05/Other/GatlingMavenSample/"
+           data-tag="maven,performance test,gatling"
+           data-author="" >
+            <span class="post-title" title="Gatling maven sample">Gatling maven sample</span>
+            <span class="post-date" title="2022-05-13 21:00:26">2022/05/13</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2022/04/Java/HowManyMaxThreadsInJava/"
+           data-tag="java,thread"
+           data-author="" >
+            <span class="post-title" title="Java - How many max threads we can create?">Java - How many max threads we can create?</span>
+            <span class="post-date" title="2022-04-19 22:00:26">2022/04/19</span>
+        </a>
+        
+        
+        <a  class="All elasticsearch "
+           href="/2022/04/Opensearch/Autocomplete_contact_feature/"
+           data-tag="elasticsearch,search contact,autocomplete"
+           data-author="" >
+            <span class="post-title" title="ElasticSearch - Contact Autocomplete Feature">ElasticSearch - Contact Autocomplete Feature</span>
+            <span class="post-date" title="2022-04-05 22:00:26">2022/04/05</span>
+        </a>
+        
+        
+        <a  class="All elasticsearch "
+           href="/2022/04/Other/Autocomplete_contact_feature/"
+           data-tag="elasticsearch,search contact,autocomplete"
+           data-author="" >
+            <span class="post-title" title="ElasticSearch - Contact autocomplete feature">ElasticSearch - Contact autocomplete feature</span>
+            <span class="post-date" title="2022-04-05 22:00:26">2022/04/05</span>
+        </a>
+        
+        
+        <a  class="All elasticsearch "
+           href="/2022/04/Opensearch/Search_as_you_type_ElasticSearch/"
+           data-tag="elasticsearch,autocomplete,search as you type"
+           data-author="" >
+            <span class="post-title" title="ElasticSearch - Search as you type">ElasticSearch - Search as you type</span>
+            <span class="post-date" title="2022-04-04 18:00:26">2022/04/04</span>
+        </a>
+        
+        
+        <a  class="All elasticsearch "
+           href="/2022/04/Other/Search_as_you_type_ElasticSearch/"
+           data-tag="elasticsearch,autocomplete,search as you type"
+           data-author="" >
+            <span class="post-title" title="ElasticSearch - Search as you type">ElasticSearch - Search as you type</span>
+            <span class="post-date" title="2022-04-04 18:00:26">2022/04/04</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2022/03/Java/Java_LeakDetect/"
+           data-tag="java,leak,leak detect,phantomreference"
+           data-author="" >
+            <span class="post-title" title="Java - Resource leak detect by PhantomReference">Java - Resource leak detect by PhantomReference</span>
+            <span class="post-date" title="2022-03-10 18:00:26">2022/03/10</span>
+        </a>
+        
+        
+        <a  class="All rabbitmq "
+           href="/2022/03/RabbitMQ/RabbitMQ_TestPerformance_Tool/"
+           data-tag="rabbitmq,test tool,performance test"
+           data-author="" >
+            <span class="post-title" title="Rabbitmq - Test performance tool">Rabbitmq - Test performance tool</span>
+            <span class="post-date" title="2022-03-05 13:05:01">2022/03/05</span>
+        </a>
+        
+        
+        <a  class="All apache james "
+           href="/2022/03/Other/ApacheJames/"
+           data-tag="apache james"
+           data-author="" >
+            <span class="post-title" title="Apache James - Note">Apache James - Note</span>
+            <span class="post-date" title="2022-03-05 13:05:01">2022/03/05</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2022/02/Other/RateLimitingAgorithm/"
+           data-tag="algorithm,rate limiting"
+           data-author="" >
+            <span class="post-title" title="Rate Limiting Algorithm">Rate Limiting Algorithm</span>
+            <span class="post-date" title="2022-02-14 12:00:26">2022/02/14</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2022/02/Java/ProxyChaine/"
+           data-tag="java,proxy,selenium,proxy chained"
+           data-author="" >
+            <span class="post-title" title="Java - Proxy chain">Java - Proxy chain</span>
+            <span class="post-date" title="2022-02-14 11:00:26">2022/02/14</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2022/01/Other/Oauth2_KrakenD_Keycloak_SSO_SLO/"
+           data-tag="sso,krakend,oauth2,keycloak,slo"
+           data-author="" >
+            <span class="post-title" title="Lab - KrakenD + Keycloak + SSO, SLO">Lab - KrakenD + Keycloak + SSO, SLO</span>
+            <span class="post-date" title="2022-01-09 15:31:26">2022/01/09</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2021/12/Other/Keycloak/"
+           data-tag="sso,oidc,id provider"
+           data-author="" >
+            <span class="post-title" title="Keycloak">Keycloak</span>
+            <span class="post-date" title="2021-12-08 21:00:26">2021/12/08</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2021/11/Other/KrakenD_API_Gateway/"
+           data-tag="krakend,kong,api gateway"
+           data-author="" >
+            <span class="post-title" title="KrakendD API Gateway">KrakendD API Gateway</span>
+            <span class="post-date" title="2021-11-25 18:00:26">2021/11/25</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2021/10/Stories/CrawlTravian_GameSupervisor/"
+           data-tag="selenium,crawl,travian,superviosr,chromedriver,chartjs"
+           data-author="" >
+            <span class="post-title" title="Web Game Supervisor">Web Game Supervisor</span>
+            <span class="post-date" title="2021-10-16 12:44:26">2021/10/16</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/09/Java/Spring/"
+           data-tag="java,spring"
+           data-author="" >
+            <span class="post-title" title="Spring Framework Note">Spring Framework Note</span>
+            <span class="post-date" title="2021-09-25 18:00:26">2021/09/25</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/09/Java/BuildDependencyInjection/"
+           data-tag="java,dependency,dependency injection,reflection"
+           data-author="" >
+            <span class="post-title" title="Build Dependency Injection">Build Dependency Injection</span>
+            <span class="post-date" title="2021-09-20 23:26:26">2021/09/20</span>
+        </a>
+        
+        
+        <a  class="All summary_book "
+           href="/2021/09/ReviewBooks/ProJavaClusteringAndScalability/"
+           data-tag="cassandra,rabbitmq,redis,mysql,chat"
+           data-author="" >
+            <span class="post-title" title="Java chat app - use Cassandra, MySQL, Redis, RabbitMQ">Java chat app - use Cassandra, MySQL, Redis, RabbitMQ</span>
+            <span class="post-date" title="2021-09-18 15:44:26">2021/09/18</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/08/Java/ProjectLoom/"
+           data-tag="java,concurrency,project loom,fiber,virtual thread"
+           data-author="" >
+            <span class="post-title" title="Java - Project Loom">Java - Project Loom</span>
+            <span class="post-date" title="2021-08-19 18:00:26">2021/08/19</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2021/08/Other/BloomFilter/"
+           data-tag="bloom filter,algorithm,false positive,bf"
+           data-author="" >
+            <span class="post-title" title="Bloom Filter">Bloom Filter</span>
+            <span class="post-date" title="2021-08-12 23:00:26">2021/08/12</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/08/Java/Java_Pattern/"
+           data-tag="command,java,pattern,design pattern,proxy,decorator,bridge,adapter,observer"
+           data-author="" >
+            <span class="post-title" title="Java - Design Pattern">Java - Design Pattern</span>
+            <span class="post-date" title="2021-08-04 00:05:26">2021/08/04</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2021/07/Database/Partition_Database/"
+           data-tag="sql,partition,sharding"
+           data-author="" >
+            <span class="post-title" title="Partition Database">Partition Database</span>
+            <span class="post-date" title="2021-07-31 18:00:26">2021/07/31</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/06/Java/EqualMethod/"
+           data-tag="java,equal,hashcode,EqualsVerifier"
+           data-author="" >
+            <span class="post-title" title="Java - Equal method">Java - Equal method</span>
+            <span class="post-date" title="2021-06-20 18:00:26">2021/06/20</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2021/04/Other/Functional_Pattern/"
+           data-tag="java,pattern,functional"
+           data-author="" >
+            <span class="post-title" title="Functional Pattern">Functional Pattern</span>
+            <span class="post-date" title="2021-04-25 18:00:26">2021/04/25</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2021/04/Database/Cassandra_Note/"
+           data-tag="cql,cassandra,database"
+           data-author="" >
+            <span class="post-title" title="Cassandra Note">Cassandra Note</span>
+            <span class="post-date" title="2021-04-11 12:04:26">2021/04/11</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2021/03/Database/Which_database_should_i_used/"
+           data-tag="database"
+           data-author="" >
+            <span class="post-title" title="Which database should i use">Which database should i use</span>
+            <span class="post-date" title="2021-03-17 18:00:26">2021/03/17</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/02/Java/Maven_Note/"
+           data-tag="java,maven,lib-common"
+           data-author="" >
+            <span class="post-title" title="Maven Note">Maven Note</span>
+            <span class="post-date" title="2021-02-08 18:00:26">2021/02/08</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/02/Java/reactive/Reactive_Reactor_Note/"
+           data-tag="java,reactive,reactor,spring webflux,observable"
+           data-author="" >
+            <span class="post-title" title="Reactive - Reactor Note">Reactive - Reactor Note</span>
+            <span class="post-date" title="2021-02-02 22:00:26">2021/02/02</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/01/Java/reactive/ProjectReactorExercise/"
+           data-tag="java,reactive,reactor,spring webflux,webclient"
+           data-author="" >
+            <span class="post-title" title="Reactive Programming - Reactor - DEMO 001">Reactive Programming - Reactor - DEMO 001</span>
+            <span class="post-date" title="2021-01-23 16:00:26">2021/01/23</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2021/01/Stories/App_Sync/"
+           data-tag="sync"
+           data-author="" >
+            <span class="post-title" title="Nhật ký cải tiến / xây mới ứng dụng Sync Data (via Rest API)">Nhật ký cải tiến / xây mới ứng dụng Sync Data (via Rest API)</span>
+            <span class="post-date" title="2021-01-10 10:39:26">2021/01/10</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2020/12/Stories/App_Backup_Restore/"
+           data-tag="backup restore"
+           data-author="" >
+            <span class="post-title" title="Nhật ký xây dựng app Backup &amp; Restore">Nhật ký xây dựng app Backup &amp; Restore</span>
+            <span class="post-date" title="2020-12-28 00:39:26">2020/12/28</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2020/12/Database/JPA_Persistance_note/"
+           data-tag="jpa,hibernate,persistence"
+           data-author="" >
+            <span class="post-title" title="JPA - Hibernate - Persistence Note">JPA - Hibernate - Persistence Note</span>
+            <span class="post-date" title="2020-12-27 13:47:26">2020/12/27</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2020/12/Database/Transaction_Isolation/"
+           data-tag="persistence,transaction,isolation,durability"
+           data-author="" >
+            <span class="post-title" title="Transaction - Isolation &amp; Durability">Transaction - Isolation &amp; Durability</span>
+            <span class="post-date" title="2020-12-20 18:00:26">2020/12/20</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2020/11/Stories/Ddos_Jmeter_ECS/"
+           data-tag="aws,ecs,jmeter,test"
+           data-author="" >
+            <span class="post-title" title="DDos, Stress test, distribution test với Jmeter, Docker, AWS ECS">DDos, Stress test, distribution test với Jmeter, Docker, AWS ECS</span>
+            <span class="post-date" title="2020-11-08 18:00:26">2020/11/08</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/09/Java/Concurrency/"
+           data-tag="java,concurrency,thread local,volatile,thread safe,completable future"
+           data-author="" >
+            <span class="post-title" title="Java - Concurrency">Java - Concurrency</span>
+            <span class="post-date" title="2020-09-30 18:00:26">2020/09/30</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/08/Java/JVM_Internal/"
+           data-tag="java,jvm internal"
+           data-author="" >
+            <span class="post-title" title="Java - JVM Internal">Java - JVM Internal</span>
+            <span class="post-date" title="2020-08-10 18:00:26">2020/08/10</span>
+        </a>
+        
+        
+        <a  class="All rabbitmq "
+           href="/2020/07/RabbitMQ/RabbitMQ_Build_HA_Cluster/"
+           data-tag="ha,rabbitmq,quorum queue,stories"
+           data-author="" >
+            <span class="post-title" title="Rabbitmq - Cluster High Availability">Rabbitmq - Cluster High Availability</span>
+            <span class="post-date" title="2020-07-26 18:00:26">2020/07/26</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/07/Java/SpringSecurity/"
+           data-tag="java,spring,security"
+           data-author="" >
+            <span class="post-title" title="Java - Spring Security">Java - Spring Security</span>
+            <span class="post-date" title="2020-07-18 18:00:26">2020/07/18</span>
+        </a>
+        
+        
+        <a  class="All kafka "
+           href="/2020/07/Kafka/Kafka_RebalanceProtocol/"
+           data-tag="kafka,rebalance,coordinator"
+           data-author="" >
+            <span class="post-title" title="Kafka - Rebalance Protocol">Kafka - Rebalance Protocol</span>
+            <span class="post-date" title="2020-07-13 18:00:26">2020/07/13</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2020/06/AWS/AWS_Note/"
+           data-tag="aws,note total"
+           data-author="" >
+            <span class="post-title" title="AWS - Note Total">AWS - Note Total</span>
+            <span class="post-date" title="2020-06-18 18:00:26">2020/06/18</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/06/Java/Logback/"
+           data-tag="log,logback"
+           data-author="" >
+            <span class="post-title" title="Java - Logback">Java - Logback</span>
+            <span class="post-date" title="2020-06-09 18:00:26">2020/06/09</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/06/Java/Quartz/"
+           data-tag="java,quartz,auto scheduler"
+           data-author="" >
+            <span class="post-title" title="Java - Implement Quartz">Java - Implement Quartz</span>
+            <span class="post-date" title="2020-06-03 18:00:26">2020/06/03</span>
+        </a>
+        
+        
+        <a  class="All rabbitmq "
+           href="/2020/05/RabbitMQ/RabbitMQ_Mirror/"
+           data-tag="ha,rabbitmq,mirror queue"
+           data-author="" >
+            <span class="post-title" title="Rabbitmq - Mirror Queue + Durable Message">Rabbitmq - Mirror Queue + Durable Message</span>
+            <span class="post-date" title="2020-05-18 18:00:26">2020/05/18</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/04/Java/Jhipster/"
+           data-tag="java,jhipster,auto tool,gen code"
+           data-author="" >
+            <span class="post-title" title="Java - Jhipster">Java - Jhipster</span>
+            <span class="post-date" title="2020-04-25 18:00:26">2020/04/25</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2020/04/Stories/BackupRestoreAthenaS3/"
+           data-tag="s3,query sql"
+           data-author="" >
+            <span class="post-title" title="Stories - Query SQL on S3">Stories - Query SQL on S3</span>
+            <span class="post-date" title="2020-04-20 18:00:26">2020/04/20</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2020/04/Other/Paseto/"
+           data-tag="token,paseto,authen"
+           data-author="" >
+            <span class="post-title" title="PASETO - Token base authentication">PASETO - Token base authentication</span>
+            <span class="post-date" title="2020-04-19 18:00:26">2020/04/19</span>
+        </a>
+        
+        
+        <a  class="All install_guide "
+           href="/2020/04/Install_Guide/Install_Config_Note/"
+           data-tag="note"
+           data-author="" >
+            <span class="post-title" title="Install &amp; Config Note">Install &amp; Config Note</span>
+            <span class="post-date" title="2020-04-01 18:00:26">2020/04/01</span>
+        </a>
+        
+        
+        <a  class="All code_template "
+           href="/2020/03/CodeTemplate/GoogleTranslateExmple/"
+           data-tag="code template,Google Translate,translate"
+           data-author="" >
+            <span class="post-title" title="Code Template - Google Translate">Code Template - Google Translate</span>
+            <span class="post-date" title="2020-03-10 18:00:26">2020/03/10</span>
+        </a>
+        
+        
+        <a  class="All cicd_ops "
+           href="/2020/02/Ops/CICD_FLow_Example/"
+           data-tag="cicd"
+           data-author="" >
+            <span class="post-title" title="CICD - Flow Example">CICD - Flow Example</span>
+            <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2020/02/Other/EWallet/"
+           data-tag="e-wallet,momo"
+           data-author="" >
+            <span class="post-title" title="E-Wallet Note">E-Wallet Note</span>
+            <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
+        </a>
+        
+        
+        <a  class="All "
+           href="/2020/02/Other/Bookmarks/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="My Bookmarks">My Bookmarks</span>
+            <span class="post-date" title="2020-02-19 18:00:26">2020/02/19</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2020/02/Other/Authentication_Topic/"
+           data-tag="authentication,basic,session,token"
+           data-author="" >
+            <span class="post-title" title="Authentication Topic">Authentication Topic</span>
+            <span class="post-date" title="2020-02-17 18:00:26">2020/02/17</span>
+        </a>
+        
+        
+        <a  class="All install_guide "
+           href="/2020/02/Install_Guide/Install_SNMP_Prometheus_Grafana/"
+           data-tag="script,install,snmp,prometheus,grafana"
+           data-author="" >
+            <span class="post-title" title="Install Guide - SNPM + Prometheus + Grafana">Install Guide - SNPM + Prometheus + Grafana</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2020/02/Stories/48h_inhouse_getLink_project/"
+           data-tag="stories,fshare,get link"
+           data-author="" >
+            <span class="post-title" title="Stories - Get Link Fshare">Stories - Get Link Fshare</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        
+        <a  class="All docker "
+           href="/2020/02/Docker/Docker_TemplateFile/"
+           data-tag="docker,template"
+           data-author="" >
+            <span class="post-title" title="Docker - Template File">Docker - Template File</span>
+            <span class="post-date" title="2020-02-10 18:00:26">2020/02/10</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/02/Java/Java_Code_Prometheus_Metric/"
+           data-tag="prometheus,java,metric"
+           data-author="" >
+            <span class="post-title" title="Java - Code Application expose Metric for Prometheus">Java - Code Application expose Metric for Prometheus</span>
+            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/02/Java/Java_Total/"
+           data-tag="note,java,KafkaListener"
+           data-author="" >
+            <span class="post-title" title="Java - Note Total">Java - Note Total</span>
+            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_IAM/"
+           data-tag="aws,iam,policy"
+           data-author="" >
+            <span class="post-title" title="AWS - IAM">AWS - IAM</span>
+            <span class="post-date" title="2020-01-30 18:00:26">2020/01/30</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_STS/"
+           data-tag="aws,sts,security token service"
+           data-author="" >
+            <span class="post-title" title="AWS - STS">AWS - STS</span>
+            <span class="post-date" title="2020-01-26 18:00:26">2020/01/26</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2020/01/Other/DDD_EventDrivenArchitecture/"
+           data-tag="ddd,domain driver design"
+           data-author="" >
+            <span class="post-title" title="Domain-Driven Design &amp; Event-Driven Architecture">Domain-Driven Design &amp; Event-Driven Architecture</span>
+            <span class="post-date" title="2020-01-26 18:00:26">2020/01/26</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ECS/"
+           data-tag="aws,ecs"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - ECS">AWS - LAB - ECS</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ECR/"
+           data-tag="aws,ecr"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - ECR">AWS - LAB - ECR</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Mount_EBS_to_EC2/"
+           data-tag="install,EBS"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Mount an EBS volume to EC2 Linux">Install Guide - Mount an EBS volume to EC2 Linux</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        
+        <a  class="All linux "
+           href="/2020/01/Linux/Linux_BashScript/"
+           data-tag="script,install,bash"
+           data-author="" >
+            <span class="post-title" title="Linux - Bash Script Collection">Linux - Bash Script Collection</span>
+            <span class="post-date" title="2020-01-22 18:00:26">2020/01/22</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/01/Java/SpringBoot_WebSocket_StompJS/"
+           data-tag="java,spring,web socket,stompJs"
+           data-author="" >
+            <span class="post-title" title="Java - Spring web Socket + StompJS">Java - Spring web Socket + StompJS</span>
+            <span class="post-date" title="2020-01-15 18:00:26">2020/01/15</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/01/Java/Javers_Diff/"
+           data-tag="java,javers,diff"
+           data-author="" >
+            <span class="post-title" title="Java - Javers Diff">Java - Javers Diff</span>
+            <span class="post-date" title="2020-01-13 18:00:26">2020/01/13</span>
+        </a>
+        
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/FeignClient_CustomizeByBean/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Customize Feign By Bean">Feign Client - Customize Feign By Bean</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/Feign_BuilderExample/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Client builder example">Feign Client - Client builder example</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/Feign_MultipleConfig/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Multiple Configuration">Feign Client - Multiple Configuration</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        
+        <a  class="All kafka "
+           href="/2020/01/Kafka/Kafka_Command/"
+           data-tag="command,kafka,kafka cli"
+           data-author="" >
+            <span class="post-title" title="Kafka - CLI Command">Kafka - CLI Command</span>
+            <span class="post-date" title="2020-01-03 18:00:26">2020/01/03</span>
+        </a>
+        
+        
+        <a  class="All kafka "
+           href="/2020/01/Kafka/Kafka_UseCase/"
+           data-tag="kafka,use case"
+           data-author="" >
+            <span class="post-title" title="Kafka - Use case">Kafka - Use case</span>
+            <span class="post-date" title="2020-01-02 18:00:26">2020/01/02</span>
+        </a>
+        
+        
+        <a  class="All cicd_ops "
+           href="/2020/01/Ops/VagrantFile_Template/"
+           data-tag="template,vagrant"
+           data-author="" >
+            <span class="post-title" title="Ops - Vagrant Template">Ops - Vagrant Template</span>
+            <span class="post-date" title="2020-01-01 18:00:26">2020/01/01</span>
+        </a>
+        
+        
+        <a  class="All kafka "
+           href="/2019/12/Kafka/Kafka_Note/"
+           data-tag="kafka,segment,total"
+           data-author="" >
+            <span class="post-title" title="Kafka - Note">Kafka - Note</span>
+            <span class="post-date" title="2019-12-31 18:00:26">2019/12/31</span>
+        </a>
+        
+        
+        <a  class="All code_template "
+           href="/2019/12/CodeTemplate/CodeTemplate_S3/"
+           data-tag="aws,s3,code template"
+           data-author="" >
+            <span class="post-title" title="Code Template - AWS - S3">Code Template - AWS - S3</span>
+            <span class="post-date" title="2019-12-27 18:00:26">2019/12/27</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2019/12/AWS/AWS_PolicyEvaluationLogic/"
+           data-tag="aws,evaluation logic"
+           data-author="" >
+            <span class="post-title" title="AWS - Policy Evaluation Logic">AWS - Policy Evaluation Logic</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        
+        <a  class="All java jackson "
+           href="/2019/12/Java/JackSon/Jackson_Deserialize_Abstractclass/"
+           data-tag="java,serialize,jackson"
+           data-author="" >
+            <span class="post-title" title="Jackson - Deserialize Abstract class">Jackson - Deserialize Abstract class</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        
+        <a  class="All java jackson "
+           href="/2019/12/Java/JackSon/Jackson/"
+           data-tag="java,serialize,jackson"
+           data-author="" >
+            <span class="post-title" title="Jackson - Note">Jackson - Note</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        
+        <a  class="All docker "
+           href="/2019/12/Docker/Docker_Command/"
+           data-tag="docker,command,script,install"
+           data-author="" >
+            <span class="post-title" title="Docker - Command">Docker - Command</span>
+            <span class="post-date" title="2019-12-03 18:00:26">2019/12/03</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2019/05/AWS/AWS_LAB_S3/"
+           data-tag="aws,s3,object storage"
+           data-author="" >
+            <span class="post-title" title="AWS - S3">AWS - S3</span>
+            <span class="post-date" title="2019-05-17 18:00:26">2019/05/17</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2019/05/Other/Signed_URL/"
+           data-tag="s3,object storage,signed url"
+           data-author="" >
+            <span class="post-title" title="Signed URL">Signed URL</span>
+            <span class="post-date" title="2019-05-12 18:00:26">2019/05/12</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2019/03/Java/MemoryLeak/"
+           data-tag="java,memory leak"
+           data-author="" >
+            <span class="post-title" title="Java - Memory Leak">Java - Memory Leak</span>
+            <span class="post-date" title="2019-03-17 18:00:26">2019/03/17</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2019/02/Other/Nginx_ConfigExample/"
+           data-tag="template,nginx"
+           data-author="" >
+            <span class="post-title" title="Nginx - Config example">Nginx - Config example</span>
+            <span class="post-date" title="2019-02-11 18:00:26">2019/02/11</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2018/10/Java/JPA_GeneratedValue/"
+           data-tag="jpa,java,GeneratedValue"
+           data-author="" >
+            <span class="post-title" title="Java - Annotation @GeneratedValue trong JPA">Java - Annotation @GeneratedValue trong JPA</span>
+            <span class="post-date" title="2018-10-12 18:00:26">2018/10/12</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2018/10/Java/Junit_Test/"
+           data-tag="java,junit,mockito,unit test"
+           data-author="" >
+            <span class="post-title" title="Java - Junit Test">Java - Junit Test</span>
+            <span class="post-date" title="2018-10-12 18:00:26">2018/10/12</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="full screen  s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-Stories/App_Backup_Restore" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">Nhật ký xây dựng app Backup &amp; Restore</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="stories">stories</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color5">backup restore</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2020-12-28 00:39:26'>2020-12-28 00:39</time>
+        
+    </div>
+    <div class="article-meta">
+        
+            Updated At : <time class="date" title='Updated At: 2020-12-28 00:39:26'>2020-12-28 00:39</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <!-- <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span> -->
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Bai-toan"><span class="toc-text">Bài toán</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Mot-so-dac-thu-ky-thuat"><span class="toc-text">Một số đặc thù kỹ thuật</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Thiet-ke"><span class="toc-text">Thiết kế</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#10-06-2020"><span class="toc-text">10&#x2F;06&#x2F;2020</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Database"><span class="toc-text">Database</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-06-2020"><span class="toc-text">16&#x2F;06&#x2F;2020</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#01-07-2020"><span class="toc-text">01&#x2F;07&#x2F;2020</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#07-07-2020"><span class="toc-text">07&#x2F;07&#x2F;2020</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-07-2020"><span class="toc-text">12&#x2F;07&#x2F;2020</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-07-2020"><span class="toc-text">13&#x2F;07&#x2F;2020</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#03-08-2020"><span class="toc-text">03&#x2F;08&#x2F;2020</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#31-08-2020-Diff"><span class="toc-text">31&#x2F;08&#x2F;2020 - Diff</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-09-2020"><span class="toc-text">14&#x2F;09&#x2F;2020</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#08-10-2020"><span class="toc-text">08&#x2F;10&#x2F;2020</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Bai-toan"><a href="#Bai-toan" class="headerlink" title="Bài toán"></a>Bài toán</h1><ul>
+<li>Xây dựng ứng dụng phục vụ việc sao lưu &amp; khôi phục dữ liệu.</li>
+<li>Đối tượng cần sao lưu: dữ liệu của khách hàng được chứa trên hệ thống X. Việc lấy dữ liệu (backup) &amp; chỉnh sửa dữ<br>liệu (restore) được thực hiện qua Restful API</li>
+<li>Người thực hiện thao tác ứng dụng: khách hàng của hệ thống X</li>
+<li>Format dữ liệu khi lấy từ hệ thống X về: <code>json</code></li>
+<li>Mỗi khách hàng chủ động lịch định kỳ <code>sao lưu </code> và tự <code>khôi phục</code> khi khách hàng muốn</li>
+</ul>
+<h2 id="Mot-so-dac-thu-ky-thuat"><a href="#Mot-so-dac-thu-ky-thuat" class="headerlink" title="Một số đặc thù kỹ thuật"></a>Một số đặc thù kỹ thuật</h2><ul>
+<li>Authen&#x2F;author tới hệ thống X là <code>oauth</code>. App sao lưu cần xin quyền trước.</li>
+<li>App tự động backup dữ liệu theo lịch cấu hình của từng khách hàng. Hoặc thực hiện backup dữ liệu ngay lập tức khi<br>khách hàng request.</li>
+</ul>
+<h1 id="Thiet-ke"><a href="#Thiet-ke" class="headerlink" title="Thiết kế"></a>Thiết kế</h1><h2 id="10-06-2020"><a href="#10-06-2020" class="headerlink" title="10&#x2F;06&#x2F;2020"></a>10&#x2F;06&#x2F;2020</h2><ul>
+<li>Sử dụng <code>OpenFeign</code> (FeignClient) để wrap việc call http api từ App tới hệ thống X. Vì api get data tới hệ thống X có<br>giới hạn số record trả về trên 1 request. mình quyết định viết ra 1 method parallel gồm 2 bước chính:<ul>
+<li>call api lần thứ 1 để lấy ra total record &#x3D;&gt; tính toán ra tổng số M request api cần call để có thể lấy được hết dữ<br>liệu.</li>
+<li>Sử dụng <code>CompletableFuture</code> cho chạy song song M request cùng lúc</li>
+</ul>
+</li>
+</ul>
+<pre><code class="java">//code example
+public ProductList getAllProduct(int storeId, String createdOnMax) throws ExecutionException, InterruptedException &#123;
+        final var totalProductResult = productClient.getTotalCount(storeId, createdOnMax, authen);
+        final var totalProduct = totalProductResult.getCount();
+
+        final int totalPage = (int) Math.ceil((double) totalProduct / Constants.BACKUP_CLIENT_LIMIT);
+
+        List&lt;CompletableFuture&lt;ProductList&gt;&gt; listAsync = new ArrayList&lt;&gt;();
+        for (int i = 1; i &lt;= totalPage; i++) &#123;
+            listAsync.add(clientAsyncGetProduct(storeId, i, createdOnMax));
+        &#125;
+        CompletableFuture&lt;Void&gt; allAsync = CompletableFuture
+                .allOf(listAsync.toArray(new CompletableFuture[listAsync.size()]));
+
+        CompletableFuture&lt;List&lt;ProductList&gt;&gt; allClientAsync = allAsync.thenApply(v -&gt; &#123;
+            return listAsync.stream().map(CompletableFuture::join)
+                    .collect(Collectors.toList());
+        &#125;).exceptionally(ex -&gt; &#123;
+            try &#123;
+                throw new Exception(ex.getMessage());
+            &#125; catch (Exception e) &#123;
+                e.printStackTrace();
+            &#125;
+            return null;
+        &#125;);
+
+        var resultList = allClientAsync.get();
+        var result = new ProductList();
+        resultList.forEach(result::addAll);
+        return result;
+    &#125;
+</code></pre>
+<ul>
+<li>Queue: sử dụng Kafka (sau này mình đã chuyển sang RabbitMQ). Lý do ban đầu chọn Kafka đơn giản chỉ vì t nghĩ cần 1 hệ<br>thống message queue để chạy job backup&#x2F;restore. Nên là thằng nào cũng được. Nhưng vì sau này hiểu sâu hơn về cơ chế<br>hoạt động Kafka, mình nhận ra t việc lựa chọn nó là không phù hợp. Về cơ bản tư tưởng mình sử dụng 3 queue:<ul>
+<li>queue cho việc backup auto</li>
+<li>queue cho việc backup manual</li>
+<li>queue cho việc restore</li>
+</ul>
+</li>
+<li>Backup mình tách ra làm 2 queue, đơn giản chỉ là muốn các queue mà người dùng request sẽ có 1 kênh riêng, có ưu tiên<br>hơn. Sau này chuyển sang rabbitMQ thì rabbitmq có hỗ trợ priority, tuy nhiên do kiến trúc code cũ, nên mình vẫn giữ<br>việc độc lập này.</li>
+<li>Nơi lưu trữ dữ liệu backup: AWS S3. Ban đầu mình có suy nghĩ tới việc backup dữ liệu sang 1 database rdbms khác. Tuy<br>nhiên ban đầu bài toán là muốn dữ liệu được lưu trữ ở 1 nơi nào đó <code>an toàn </code> hơn. Đã gọi là backup&#x2F;restore thì nó<br>được dùng cho case nguy hiểm rồi. Với cả mình cũng chưa thấy được lợi ích gì nổi bật hơn giữa việc lựa chọn S3 hay<br>Rdbms. Mình dự định file backup sẽ là 1 file data gì đó (csv, excel, json…), nếu sau này kiểu khách hàng cần<br>download file thì cũng tiện hơn. Cuối cùng mình chốt sử dụng file csv. Một phần cũng vì ban đầu tìm hiểu thấy S3 hỗ<br>trợ query select trực tiếp từ file csv. (cho tới thời điểm hiện tại thì cũng chưa khai thác được tính năng này)<ul>
+<li>Khi sử dụng S3, mình cũng áp dụng parallel giống như <code>OpenFeign</code> bên trên.</li>
+<li>S3 không hỗ trợ việc copy object 1 cách <code>bulk/batch</code>. Nên phải request từng object 1. Và thêm 1 cái dở là nếu<br>request quá nhanh thì sẽ bị AWS chặn lại. &#x3D;&gt; hơi tù.</li>
+</ul>
+</li>
+<li>Quartz: để phục vụ cho mục đích là mỗi khách hàng tự cấu hình lịch backup data của họ, mình sử dụng Quartz. Nếu như mà<br>tất cả khách hàng đều có lịch backup giống nhau, mình sẽ sử dụng Spring schedule, hoặc cronjob, nó sẽ đơn giản hơn rất<br>nhiều. Để implement quartz phức tạp hơn, nó có database riêng. Thậm chí với bài toán hệ thống lớn, có thể sẽ phải<br>thiết kế 1 cluster riêng cho nó với nhiều node. Quartz này mình sử dụng loại schedule là <code>cron Expression</code>.</li>
+<li>OpenCSV: mỗi file backup sẽ được lưu trữ trong file csv. Vì sợ dữ liệu sẽ bị lỗi unicode, nên mình quyết định encode<br>base64 thông tin json, trước khi lưu vào csv.</li>
+</ul>
+<pre><code class="java">@Getter
+@Setter
+@AllArgsConstructor
+public class BackupCsv &#123;
+
+    @CsvBindByName(column = &quot;NO&quot;)
+    public int rowNo;
+
+    @CsvBindByName(column = &quot;OBJECT_ID&quot;)
+    public int objectId;
+
+    @CsvBindByName(column = &quot;DATA&quot;)
+    public String data;
+
+    public BackupCsv() &#123;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h3><ul>
+<li><code>BackupLogs</code><br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/BackupLogs.png" alt="BackupLogs"></li>
+<li><code>BackupLogDetails</code><br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/BackupLogDetails.JPG" alt="BackupLogDetails"><br>Mình tách độc lập ra 2 bảng. BackupLogs lưu trữ thông tin tổng của 1 <code>request</code> backup. Nó chứa thông tin tên của bản<br>backup, nguồn gốc, status tổng… Trong khi bảng <code>detail</code>, sẽ chứa chi tiết từng hạng mục backup riêng (product,<br>collection, customer…vvv). Queue được thiết kế sử dụng cho layer detail này.(tới thời điểm hiện tại, mình nghĩ có<br>thể queue thiết kế ở layer BackupLog cũng được)</li>
+<li><code>Media</code><br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/Media.JPG" alt="Media"></li>
+<li><code>MediaDependencyLogs</code><br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/MediaDependencyLogs.JPG" alt="MediaDependencyLogs"><br>Có 1 vấn đề đặt ra là dữ liệu khi được lưu trữ trên CloudStorage, thì mình nên giảm tỉ lệ việc duplicated dữ liệu. Ví<br>dụ khi backup data product, và product P111, có chứa thông tin link ảnh cdn media. Vậy ngày hôm nay khi backup dữ<br>liệu, ngoài việc backup các thông tin cơ bản trong json, thì mình cũng cần backup thêm cả dữ liệu file media kia nữa.<br>Vậy nếu ngày mai backup data tiếp, việc lại thực hiện backup file media 1 lần nữa là không cần thiết. Vì file cdn ảnh<br>không hề thay đổi. Việc duplicated dữ liệu file media này sẽ tốn thêm rất nhiều cost storage. Vì thế nên 2 table:<br>Media, MediaDependencyLogs ra đời, mục đích để lưu lại các metadata này.</li>
+<li><code>RestoreLogs</code><br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/RestoreLog.JPG" alt="RestoreLogs"></li>
+<li><code>RestoreLogDetails</code><br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/RestoreLogDetails.JPG" alt="RestoreLogDetails"></li>
+<li><code>RestoreErrorLogs</code><br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/RestoreErrorLogs.JPG" alt="RestoreErrorLogs"><br>Tương tự như chiều Backup, thì chiều Restore các table cũng được thiết kế tương ứng. Việc restore này tương đối nguy<br>hiểm, vì có thể sẽ làm sai lệch dữ liệu của khách hàng không như ý muốn. Nên với mỗi lệnh Restore, sẽ cần thực hiện<br>lệnh backup toàn bộ data trước đó. (column <code>BackupLogIdDisasterHelper</code>). Và có thêm table <code>RestoreErrorLogs</code> để rõ<br>ràng hơn trong việc xác định lỗi.</li>
+</ul>
+<h2 id="16-06-2020"><a href="#16-06-2020" class="headerlink" title="16&#x2F;06&#x2F;2020"></a>16&#x2F;06&#x2F;2020</h2><ul>
+<li>App gồm 2 phần, frontend giao diện, và service. 2 phần này chạy độc lập với nhau. Cũng không có lý do gì đặc biệt cho<br>lựa chọn này. Frontend sử dụng reactjs. Service dùng java. 2 thành phần này được container độc lập. Vậy nên bài toán<br>cần 1 cơ chế authen từ reactjs (client) tới service. &#x3D;&gt; Quyết định lựa chọn sử dụng JWT</li>
+<li>Vậy việc cấp token jwt diễn ra như thế nào?<ul>
+<li>Đầu tiên user cần login vào hệ thống X. Từ hệ thống X user truy cập vào app. Giữa hệ thống X và app có 1 cơ chế<br>authen riêng. là <code>oauth</code>. 2 bên đã trao đổi vs nhau 1 secretkey trước đấy. Khi hệ thống X redirect về app sẽ<br>truyền theo thông tin, kèm hmac. App sẽ dùng secretkey để validate thông tin. Và redirect về reactjs kèm theo<br>token jwt.</li>
+<li>Reacjts dùng jwt lưu vào session&#x2F;local storage của browser, và sử dụng nó để call tới service lấy thông tin.</li>
+</ul>
+</li>
+</ul>
+<h2 id="01-07-2020"><a href="#01-07-2020" class="headerlink" title="01&#x2F;07&#x2F;2020"></a>01&#x2F;07&#x2F;2020</h2><ul>
+<li>Bộ Garbage Cleaner ra đời. Lấy ý tưởng từ bộ GC của java. Mình đặt tên class cũng là <code>GarbageCleanerStrategy</code>. Bộ GC<br>của mình này có nhiệm vụ là dọn dẹp dữ liệu trên hệ thống cloud storage (s3). Như đã đề cập, mình sử dụng 2<br>table <code>Media</code> và <code>MediaDependencyLogs</code> để lưu metadata các dữ liệu file media trên json. Vậy bài toán là khi file<br>media không còn được <code>reference</code> tới bất kỳ bản backupLog nào nữa. Thì mình cần phải xóa chúng đi trên S3.<ul>
+<li>Với các file backup với origin&#x3D;AUTO, MANUAL sẽ có “chiến lược” khác với file backup có origin&#x3D;BEFORE_RESTORE</li>
+<li>cần đảm bảo transaction tuyệt đối ở đây. Chỉ khi nào file media trên cloudstorage bị xóa thành công, thì mới thực<br>hiện update db tương ứng.</li>
+<li>Bộ GC này chạy async, và độc lập. Được trigger khi có 1 backupLog bị xóa.</li>
+</ul>
+</li>
+</ul>
+<h2 id="07-07-2020"><a href="#07-07-2020" class="headerlink" title="07&#x2F;07&#x2F;2020"></a>07&#x2F;07&#x2F;2020</h2><ul>
+<li>Vấn đề đặt ra khi user trên hệ thống X không còn <code>active</code> nữa. Nhưng job backup của user này theo quartz vẫn chạy định<br>kỳ, dẫn tới việc backup dữ liệu là vô nghĩa. &#x3D;&gt; cần có cơ chế để hủy job backup. Rất may là hệ thống X có hỗ trợ sẵn<br>điều này. Chỉ cần đăng ký webhook với hệ thống X. và lắng nghe chúng. Khi có webhook từ hệ thống X gửi tới App và báo<br>user đã bị inactive, thì cấu hình cron job trên quartz của user đó sẽ bị hủy bỏ.<ul>
+<li>Hiện tại thì chưa có cơ chế xóa toàn bộ dữ liệu liên quan nếu user inactive. (chưa xác định được thực sự khi nào<br>cần xóa)</li>
+<li>việc lắng nghe webhook này là 1 giải pháp mình thấy có độ tin tưởng không được tuyệt đối. Về lâu dài, sẽ dẫn tới<br>sự thiếu nhất quán dữ liệu giữa App và X</li>
+<li>bổ sung thêm việc handler lỗi khi app call API tới hệ thống X mà gặp lỗi. Ví dụ lỗi 401, thì cũng sẽ trigger việc<br>hủy chạy quartz.</li>
+</ul>
+</li>
+</ul>
+<h2 id="12-07-2020"><a href="#12-07-2020" class="headerlink" title="12&#x2F;07&#x2F;2020"></a>12&#x2F;07&#x2F;2020</h2><ul>
+<li>Implement Redis: phía client cần biết được progress (%) của tiến trình backup&#x2F;restore. Mình quyết định tích hợp Redis<br>cho feature này. Với mỗi task backup&#x2F;restore dữ liệu. Mình tự đặt ra quy ước, khi hoàn thành xong 1 phần nào đó, thì<br>sẽ append kết quả vào redis. Đồng thời viết ra 1 api controller, để client call vào đó lấy progress statistic. Khi<br>client call vào api, thì tầng service sẽ get value từ redis và trả về cho client.<ul>
+<li>Client lấy thông tin progress này bằng cách interval call api. Điều này làm mình không hài lòng lắm. Mình muốn<br>implement socket. Nhưng tới h vẫn chưa có effort làm.</li>
+<li>Việc get value từ redis sẽ giúp giảm tải tới hệ thống hơn</li>
+</ul>
+</li>
+</ul>
+<h2 id="13-07-2020"><a href="#13-07-2020" class="headerlink" title="13&#x2F;07&#x2F;2020"></a>13&#x2F;07&#x2F;2020</h2><ul>
+<li>Big refactor: chuyển từ Kafka sang RabbitMQ. Sau quá trình tìm hiểu và thực tế sử dụng, nhận thấy kafka không hợp với<br>case của mình.<ul>
+<li>Khi các job chạy bị lâu tốn nhiều thời gian, kafka client bắt đầu throw ra lỗi, hoặc log báo là message được<br>rebalance sang consumer khác. Điều này thực sự không phải là vấn đề chính của quyết định chuyển sang RabbitMQ.<br>Nhưng để handler nó, mình thấy tốn nhiều công sức tìm hiểu, và cuối cùng vẫn không tự tin rằng đã control được nó.<br>Nhưng về lý thuyết thì mình chỉ cần commit msg cho kafka ngay khi nhận được msg thôi. Chứ không cần phải đợi chạy<br>xong job mới commit msg. Mình không có ý định sử dụng queue retry gì nhiều hơn ở đây. Đã thất bại việc chạy job là<br>thất bại, Muốn retry thì con người phải manual lại nó. Mình cũng đã có các table để log lại các job rồi. Nên không<br>mong đợi gì nhiều hơn ở Kafka nữa</li>
+<li>Khi chạy job, việc sử dụng kafka bị hạn chế việc scale. Giả sử mình sử dụng 10 partition cho 1 topic. Vậy thì mình<br>chỉ có thể scale tối đa 10 consumer cùng lúc. Đây là lý do chính</li>
+</ul>
+</li>
+</ul>
+<h2 id="03-08-2020"><a href="#03-08-2020" class="headerlink" title="03&#x2F;08&#x2F;2020"></a>03&#x2F;08&#x2F;2020</h2><ul>
+<li>Leaky Bucket: việc call api từ App tới hệ thống X bị hạn chế. Hệ thống X chỉ cho phép call N api trong khoảng X giây.<br>&#x3D;&gt; Nếu việc backup&#x2F;restore mà mình cho call api paralell quá nhanh, thì sẽ gặp lỗi ở đây.<ul>
+<li>Sử dụng thư việc Xsync để intercepter và synchonize việc sleep request.</li>
+</ul>
+<pre><code class="xml">        &lt;dependency&gt;
+            &lt;groupId&gt;com.antkorwin&lt;/groupId&gt;
+            &lt;artifactId&gt;xsync&lt;/artifactId&gt;
+            &lt;version&gt;1.1&lt;/version&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<ul>
+<li>Đây là 1 giải pháp không triệt để. Hiện tại app chỉ chạy vs 1 instance. Nhưng nếu scale lên, thì cần có 1 middle<br>trung gian cho việc này. Ví dụ 1 proxy riêng. Hoặc là dùng redis để counter.</li>
+<li>Cũng may do việc sử dụng OpenFeign, nên interceptor tương đối nhẹ nhàng hơn.</li>
+</ul>
+<pre><code class="java"> public void timeWaitLimit(String storeAlias) &#123;
+    xSync.execute(storeAlias, () -&gt; &#123;
+        LeakyBucketModel model = BucketLeakyStatic.get(storeAlias);
+        if (model == null) &#123;
+            BucketLeakyStatic.put(storeAlias, new LeakyBucketModel(bucketSize));
+        &#125; else &#123;
+            if (model.getAllowCounter() &lt;= 0) &#123;
+                try &#123;
+                    TimeUnit.MILLISECONDS.sleep(1200);
+                &#125; catch (InterruptedException e) &#123;
+                    e.printStackTrace();
+                &#125;
+                int diffSecond = (int) TimeUnit.SECONDS.convert(Util.getUTC().getTime() - model.getModifiedTime(), TimeUnit.MILLISECONDS);
+                int reNewCounter = Math.min(diffSecond * drainRate, bucketSize);
+                model.reInitCounter(reNewCounter);
+            &#125;
+            model.decrementCounter();
+        &#125;
+    &#125;);
+&#125;
+</code></pre>
+</li>
+</ul>
+<h2 id="31-08-2020-Diff"><a href="#31-08-2020-Diff" class="headerlink" title="31&#x2F;08&#x2F;2020 - Diff"></a>31&#x2F;08&#x2F;2020 - Diff</h2><ul>
+<li>Check Diff: Một nghiệp vụ lớn có sự thay đổi. Trước đây thì khi restore, flow là chỉ cần user lựa chọn bản backup và<br>submit. Hệ thống sẽ tự động restore. Và báo kết quả cuối cho user. Giờ thay đổi, sẽ cần thêm 1 bước user confirm nữa.<br>User lựa chọn bản backuplog -&gt; app tính toán ra dữ liệu hiện tại có thay đổi gì so với dữ liệu từ bản backup log, hiên<br>thị sự thay đổi cho user &#x3D;&gt; user tích chọn từng đối tượng có sự thay đổi và submit chỉ restore chúng &#x3D;&gt; app thực hiện<br>restore và trả về kết quả</li>
+<li>Thiết kế lại database<ul>
+<li><code>DiffRequests</code><br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/DiffRequests.JPG" alt="DiffRequests"></li>
+<li><code>DiffRequestDetails</code><br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/DiffRequestDetails.JPG" alt="DiffRequestDetails"><br>Tương tự như Backup và Restore, Diff Request cũng được thiết kế tương ứng.</li>
+<li><code>Diffs</code><br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/stories/backup_restore/Diff.JPG" alt="Diffs"><br>Bảng Diffs log lại chi tiết sự thay đổi của bản backup với dữ liệu hiện tại. Chi tiết tới từng đối tượng backup.</li>
+</ul>
+</li>
+<li>Check Diff cũng có queue riêng để thực hiện</li>
+<li>Bắt đầu xuất hiện sự phức tạp trong follow. Các job đều được trigger bởi queue. Nhưng lại cần đảm bảo sao cho thứ tự<br>backup-diff-restore được đúng follow.<ul>
+<li>Với case trước khi restore lại cần backup trước 1 bản, lại càng phức tạp</li>
+<li>Một sự phối hợp giữa publisher&#x2F;subscriber và thông tin trong column database để giải quyết việc trigger mọi thứ<br>được đúng flow</li>
+</ul>
+</li>
+<li>Sử dụng <code>org.javers.core.diff</code> để check</li>
+</ul>
+<h2 id="14-09-2020"><a href="#14-09-2020" class="headerlink" title="14&#x2F;09&#x2F;2020"></a>14&#x2F;09&#x2F;2020</h2><ul>
+<li>Compress data: dữ liệu được backup trong file csv và upload lên S3. Ban đầu được đánh giá là dữ liệu này chiếm ít tài<br>nguyên. Vì chủ yếu là plaintext. Dữ liệu tốn chủ yếu ở media file. Nhưng khi test với data trên live production, 1<br>file backup có thể hơn 100MB. Nhu cầu nén file ra đời.<ul>
+<li>File sau khi được call api collect về, sẽ được nén gzip lại.</li>
+<li>Toàn bộ việc nén file này thực hiện trên local mem, mà không đẩy ra hard disk. Vì sau khi test và đánh giá thấy<br>việc đẩy ra hard disk là không cần thiết. Việc thực hiện trực tiếp trên local memory vẫn đáp ứng được.</li>
+<li>Kết quả việc nén gzip thực sự hiệu quả, file 100MB được nén xuống chỉ còn ~7MB.</li>
+<li>Vì compress&#x2F;decompress đều được thực hiện trên local memmory, nên không có sự chênh lệch tốc độ cho phần này<br>nhiều. Thậm chí còn nhanh hơn, do time cho việc upload&#x2F;download file nhanh hơn.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="java">public static byte[] gzipCompress(byte[] input) &#123;
+        try &#123;
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            InputStream inputStream = new ByteArrayInputStream(input);
+            GZIPOutputStream gzipOS = new GZIPOutputStream(outputStream);
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = inputStream.read(buffer)) != -1) &#123;
+                gzipOS.write(buffer, 0, len);
+            &#125;
+            gzipOS.close();
+            inputStream.close();
+            outputStream.close();
+            return outputStream.toByteArray();
+        &#125; catch (Exception ex) &#123;
+            throw new RuntimeException(ex);
+        &#125;
+    &#125;
+
+    public static byte[] gzipDecompress(byte[] input) &#123;
+        try &#123;
+            GZIPInputStream gis = new GZIPInputStream(new ByteArrayInputStream(input));
+            ByteArrayOutputStream fos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = gis.read(buffer)) != -1) &#123;
+                fos.write(buffer, 0, len);
+            &#125;
+            //close resources
+            fos.close();
+            gis.close();
+            return fos.toByteArray();
+        &#125; catch (Exception e) &#123;
+            throw new RuntimeException(e);
+        &#125;
+    &#125;
+
+    public static byte[] convertS3ObjectToBytes(S3Object s3Object) &#123;
+        byte[] data = null;
+        try &#123;
+            S3ObjectInputStream stream = s3Object.getObjectContent();
+            BufferedInputStream bis = new BufferedInputStream(stream);
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            while (true) &#123;
+                int r = bis.read(buffer);
+                if (r == -1) break;
+                out.write(buffer, 0, r);
+            &#125;
+            out.flush();
+            return out.toByteArray();
+        &#125; catch (AmazonS3Exception ex) &#123;
+            if (!StringUtils.equals(&quot;NoSuchKey&quot;, ex.getErrorCode())) &#123;
+                ex.printStackTrace();
+            &#125;
+        &#125; catch (Exception e) &#123;
+            e.printStackTrace();
+        &#125;
+        return data;
+    &#125;
+</code></pre>
+<h2 id="08-10-2020"><a href="#08-10-2020" class="headerlink" title="08&#x2F;10&#x2F;2020"></a>08&#x2F;10&#x2F;2020</h2><ul>
+<li>Confirm when remove backup: Thêm nghiệp vụ mới. Vì hệ thống X không control được user có thể truy cập được vào app.<br>Nguy cơ việc 2 user cùng có thể xem được bản backup, nhưng chỉ user owner mới có thể thực hiện xóa. Còn user được ủy<br>quyền kia chỉ có thể xem. &#x3D;&gt; phát triển thêm cơ chế khi user thực hiện xóa bản backup, thì service của app sẽ gửi 1<br>email chứa link xóa tới owner. Owner click vào link confirm thì bản backup đó mới được xóa<ul>
+<li>Link xóa thực chất chỉ là 1 api remove, có thêm parameter là token.</li>
+<li>Token sử dụng jwt</li>
+</ul>
+<pre><code class="java">@Override
+public String genTokenRemoveBackup(int storeId, List&lt;Integer&gt; backupLogIds) &#123;
+    final Date createdDate = clock.now();
+    final Date expirationDate = new Date(createdDate.getTime() + 86400000);  // 24h
+    Map&lt;String, Object&gt; claims = new HashMap&lt;&gt;();
+    claims.put(&quot;storeId&quot;, storeId);
+    claims.put(&quot;backupLogIds&quot;, backupLogIds);
+    return Jwts.builder()
+            .setClaims(claims)
+            .setSubject(String.valueOf(storeId))
+            .setIssuedAt(createdDate)
+            .setExpiration(expirationDate)
+            .signWith(SignatureAlgorithm.HS256, jwtProperty.getSecret())
+            .compact();
+&#125;
+
+@Override
+public boolean validTokenRemoveBackup(int storeId, List&lt;Integer&gt; backupLogIds, String token) &#123;
+    try &#123;
+        var claims = Jwts.parser()
+                .setSigningKey(jwtProperty.getSecret())
+                .parseClaimsJws(token)
+                .getBody();
+        final Date expirationClaim = claims.getExpiration();
+        if (expirationClaim.before(clock.now())) return false;
+
+        int storeIdClaim = (Integer) claims.get(&quot;storeId&quot;);
+        List&lt;Integer&gt; backupLogIdsClaim = (List&lt;Integer&gt;) claims.get(&quot;backupLogIds&quot;);
+        if (!backupLogIds.containsAll(backupLogIdsClaim) || storeIdClaim != storeId) return false;
+        return true;
+    &#125; catch (Exception ex) &#123;
+        return false;
+    &#125;
+&#125;
+</code></pre>
+</li>
+<li>Việc gửi email sử dụng AWS SES. (việc tích hợp này tương đối đơn giản)</li>
+</ul>
+
+      
+       <hr><span id="github_link" style="font-style: italic;color: gray;">via https://github.com/tungtv202/MyNote/tree/master/</span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    © 2019-2023 Tung Explorer
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="full-screen  s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+        /* 渲染*/
+        function HTMLDecode(text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        if (window.mermaid){
+            window.mermaid = null
+        }
+        $.getScript("//cdn.jsdelivr.net/npm/mermaid@8.4.2/dist/mermaid.min.js", function () {
+            var mermaidOptions = JSON.parse(HTMLDecode("{&#34;theme&#34;:&#34;default&#34;,&#34;startOnLoad&#34;:true,&#34;flowchart&#34;:{&#34;useMaxWidth&#34;:false,&#34;htmlLabels&#34;:true}}"))
+            if (window.mermaid) {
+                mermaid.initialize(mermaidOptions)
+                mermaid.contentLoaded()
+            }
+             var s = document.getElementById("github_link");
+             var currentContent = s.textContent;
+             s.textContent = currentContent+window.location.pathname.substring(9).slice(0, -1) + '.md';
+        })
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 572px;
+    }
+    .nav.fullscreen {
+        margin-left: -572px;
+    }
+    .nav-left {
+        width: 150px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 542px;
+        }
+        .nav.fullscreen {
+            margin-left: -542px;
+        }
+        .nav-left {
+            width: 150px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 542px;
+            margin-left: -542px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #fbf4a8;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
