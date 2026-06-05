@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Cassandra Note | Tung Explorer</title>
+  <meta name="keywords" content=" cql , cassandra , database ">
+  <meta name="description" content="Cassandra Note | Tung Explorer">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="Redis SentinelRedis Sentinel is another model of Redis, and as of now, I am aware of at least the following Redis models:  Standalone: The simplest model with just one Redis node. Master-Replica: More">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis sentinel note">
+<meta property="og:url" content="http://example.com/2024/07/Redis/RedisSentinelNote/index.html">
+<meta property="og:site_name" content="Tung Explorer">
+<meta property="og:description" content="Redis SentinelRedis Sentinel is another model of Redis, and as of now, I am aware of at least the following Redis models:  Standalone: The simplest model with just one Redis node. Master-Replica: More">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-28T05:00:26.000Z">
+<meta property="article:modified_time" content="2024-07-28T05:00:26.000Z">
+<meta property="article:author" content="Tung Explorer">
+<meta property="article:tag" content="redis">
+<meta property="article:tag" content="redis sentinel">
+<meta property="article:tag" content="sentinel">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/icon.jpg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/rainbow.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+  <input id="theme_highlight_on" value="true" />
+  <input id="theme_code_copy" value="true" />
+</div>
+
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/"
+   class="avatar_target">
+    <img class="avatar"
+         src="/img/ahbp.gif"/>
+</a>
+<div class="author">
+    <span>Tung Explorer</span>
+</div>
+
+<div class="icon">
+    
+        
+            <a title="github"
+               href="https://github.com/tungtv202"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-github"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="linkedin"
+               href="https://www.linkedin.com/in/tungtv202"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-linkedin"></use>
+                    </svg>
+                
+            </a>
+        
+    
+        
+            <a title="email"
+               href="mailto:tungtv202@gmail.com"
+               target="_blank">
+                
+                    <svg class="iconfont-svg" aria-hidden="true">
+                        <use xlink:href="#icon-email"></use>
+                    </svg>
+                
+            </a>
+        
+    
+</div>
+
+
+
+
+
+<ul>
+    <li>
+        <div class="all active" data-rel="All">All
+            
+                <small>(81)</small>
+            
+        </div>
+    </li>
+    
+        
+            
+                
+    <li>
+        <div data-rel="apache james">
+            
+            apache james
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="aws">
+            
+            aws
+            <small>(4)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="cicd_ops">
+            
+            cicd_ops
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="code_template">
+            
+            code_template
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="database">
+            
+            database
+            <small>(5)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="docker">
+            
+            docker
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="elasticsearch">
+            
+            elasticsearch
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="install_guide">
+            
+            install_guide
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="java">
+            <i class="fold iconfont icon-right"></i>
+            java
+            <small>(30)</small>
+        </div>
+        
+            <ul class="sub hide">
+                
+                    
+    <li>
+        <div data-rel="java&lt;---&gt;feign">
+            
+            feign
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+                
+                    
+    <li>
+        <div data-rel="java&lt;---&gt;jackson">
+            
+            jackson
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+                
+            </ul>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="kafka">
+            
+            kafka
+            <small>(4)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="linux">
+            
+            linux
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="other">
+            
+            other
+            <small>(13)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="rabbitmq">
+            
+            rabbitmq
+            <small>(3)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="redis">
+            
+            redis
+            <small>(2)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="stories">
+            
+            stories
+            <small>(6)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+        
+            
+                
+    <li>
+        <div data-rel="summary_book">
+            
+            summary_book
+            <small>(1)</small>
+        </div>
+        
+    </li>
+
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+        
+            
+            
+            
+    </div>
+    <div>
+        
+        
+    </div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="81">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="find hot key i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="TOC  w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="back"></i>
+            <input id="local-search-input" autocomplete="off"/>
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="match cases"></i>
+            <i class="iconfont icon-tag" data-title="tag"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">---TOC---</div>
+            <i class="iconfont icon-list" data-title="all articles"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>adapter</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>algorithm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>apache james</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>api gateway</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>authen</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>authentication</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>auto scheduler</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>auto tool</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>autocomplete</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>aws</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>backup restore</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bash</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>basic</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bf</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bloom filter</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>bridge</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cassandra</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>chartjs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>chat</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>chromedriver</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cicd</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>code template</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>command</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>completable future</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>concurrency</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>coordinator</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>cql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>crawl</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>database</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ddd</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>decorator</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>dependency</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>dependency injection</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>design pattern</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>diff</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>docker</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>domain driver design</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>durability</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>e-wallet</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>EBS</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ecs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>elasticsearch</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>equal</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>EqualsVerifier</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>evaluation logic</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>false positive</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>feign</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fiber</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fshare</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>functional</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>fuzz</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>gatling</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>gen code</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>GeneratedValue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>get link</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Google Translate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>graceful shutdown</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>grafana</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>ha</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>hashcode</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>healthcheck</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>hibernate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>http client</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>id provider</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>install</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>isolation</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jackson</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>java</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>javers</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jhipster</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jmeter</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jpa</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>junit</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>jvm internal</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafka</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kafka cli</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>KafkaListener</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>keycloak</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>kong</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>krakend</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>leak</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>leak detect</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>lib-common</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>log</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>logback</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>maven</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>memory leak</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>metric</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mirror queue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mockito</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>momo</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>mysql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>netty</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>nginx</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>note</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>note total</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>oauth2</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>object storage</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>observable</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>observer</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>oidc</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>partition</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>paseto</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>pattern</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>performance test</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>persistence</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>phantomreference</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>project loom</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>prometheus</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>proxy</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>proxy chained</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>quartz</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>query sql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>quorum queue</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>rabbitmq</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>rate limiting</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>reactive</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>reactor</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>rebalance</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>redis</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>redis cluster</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>redis sentinel</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>reflection</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>s3</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>script</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>search as you type</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>search contact</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>security</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>segment</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>selenium</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sentinel</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>serialize</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>session</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sharding</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>signed url</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>slo</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>snmp</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>spring</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>spring webflux</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sql</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sso</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>stompJs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>stories</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>superviosr</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>sync</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>template</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>test</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>test tool</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>testing</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread local</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>thread safe</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>token</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>total</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>transaction</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>translate</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>travian</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>unit test</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>use case</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>vagrant</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>virtual thread</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>volatile</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>web socket</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>webclient</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        
+        <a  class="All java "
+           href="/2024/07/Java/FuzzTest/"
+           data-tag="java,fuzz,testing"
+           data-author="" >
+            <span class="post-title" title="Understanding Fuzz Testing">Understanding Fuzz Testing</span>
+            <span class="post-date" title="2024-07-28 12:00:26">2024/07/28</span>
+        </a>
+        
+        
+        <a  class="All redis "
+           href="/2024/07/Redis/RedisSentinelNote/"
+           data-tag="redis,redis sentinel,sentinel"
+           data-author="" >
+            <span class="post-title" title="Redis sentinel note">Redis sentinel note</span>
+            <span class="post-date" title="2024-07-28 12:00:26">2024/07/28</span>
+        </a>
+        
+        
+        <a  class="All redis "
+           href="/2024/04/Redis/RedisClusterNote/"
+           data-tag="redis,redis cluster"
+           data-author="" >
+            <span class="post-title" title="Redis cluster note">Redis cluster note</span>
+            <span class="post-date" title="2024-04-26 12:00:26">2024/04/26</span>
+        </a>
+        
+        
+        <a  class="All docker "
+           href="/2023/08/Docker/Docker_Healthcheck/"
+           data-tag="docker,healthcheck,graceful shutdown"
+           data-author="" >
+            <span class="post-title" title="Docker - Healthcheck &amp; Graceful Shutdown">Docker - Healthcheck &amp; Graceful Shutdown</span>
+            <span class="post-date" title="2023-08-04 18:00:26">2023/08/04</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2022/12/Java/Netty_In_Action/"
+           data-tag="java,netty"
+           data-author="" >
+            <span class="post-title" title="Netty In Action">Netty In Action</span>
+            <span class="post-date" title="2022-12-08 23:26:26">2022/12/08</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2022/05/Other/GatlingMavenSample/"
+           data-tag="maven,gatling,performance test"
+           data-author="" >
+            <span class="post-title" title="Gatling maven sample">Gatling maven sample</span>
+            <span class="post-date" title="2022-05-13 21:00:26">2022/05/13</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2022/04/Java/HowManyMaxThreadsInJava/"
+           data-tag="java,thread"
+           data-author="" >
+            <span class="post-title" title="Java - How many max threads we can create?">Java - How many max threads we can create?</span>
+            <span class="post-date" title="2022-04-19 22:00:26">2022/04/19</span>
+        </a>
+        
+        
+        <a  class="All elasticsearch "
+           href="/2022/04/Opensearch/Autocomplete_contact_feature/"
+           data-tag="elasticsearch,autocomplete,search contact"
+           data-author="" >
+            <span class="post-title" title="ElasticSearch - Contact Autocomplete Feature">ElasticSearch - Contact Autocomplete Feature</span>
+            <span class="post-date" title="2022-04-05 22:00:26">2022/04/05</span>
+        </a>
+        
+        
+        <a  class="All elasticsearch "
+           href="/2022/04/Opensearch/Search_as_you_type_ElasticSearch/"
+           data-tag="elasticsearch,search as you type,autocomplete"
+           data-author="" >
+            <span class="post-title" title="ElasticSearch - Search as you type">ElasticSearch - Search as you type</span>
+            <span class="post-date" title="2022-04-04 18:00:26">2022/04/04</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2022/03/Java/Java_LeakDetect/"
+           data-tag="java,leak,leak detect,phantomreference"
+           data-author="" >
+            <span class="post-title" title="Java - Resource leak detect by PhantomReference">Java - Resource leak detect by PhantomReference</span>
+            <span class="post-date" title="2022-03-10 18:00:26">2022/03/10</span>
+        </a>
+        
+        
+        <a  class="All apache james "
+           href="/2022/03/Other/ApacheJames/"
+           data-tag="apache james"
+           data-author="" >
+            <span class="post-title" title="Apache James - Note">Apache James - Note</span>
+            <span class="post-date" title="2022-03-05 13:05:01">2022/03/05</span>
+        </a>
+        
+        
+        <a  class="All rabbitmq "
+           href="/2022/03/RabbitMQ/RabbitMQ_TestPerformance_Tool/"
+           data-tag="performance test,rabbitmq,test tool"
+           data-author="" >
+            <span class="post-title" title="Rabbitmq - Test performance tool">Rabbitmq - Test performance tool</span>
+            <span class="post-date" title="2022-03-05 13:05:01">2022/03/05</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2022/02/Other/RateLimitingAgorithm/"
+           data-tag="algorithm,rate limiting"
+           data-author="" >
+            <span class="post-title" title="Rate Limiting Algorithm">Rate Limiting Algorithm</span>
+            <span class="post-date" title="2022-02-14 12:00:26">2022/02/14</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2022/02/Java/ProxyChaine/"
+           data-tag="java,proxy,selenium,proxy chained"
+           data-author="" >
+            <span class="post-title" title="Java - Proxy chain">Java - Proxy chain</span>
+            <span class="post-date" title="2022-02-14 11:00:26">2022/02/14</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2022/01/Other/Oauth2_KrakenD_Keycloak_SSO_SLO/"
+           data-tag="sso,oauth2,keycloak,krakend,slo"
+           data-author="" >
+            <span class="post-title" title="Lab - KrakenD + Keycloak + SSO, SLO">Lab - KrakenD + Keycloak + SSO, SLO</span>
+            <span class="post-date" title="2022-01-09 15:31:26">2022/01/09</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2021/12/Other/Keycloak/"
+           data-tag="sso,oidc,id provider"
+           data-author="" >
+            <span class="post-title" title="Keycloak">Keycloak</span>
+            <span class="post-date" title="2021-12-08 21:00:26">2021/12/08</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2021/11/Other/KrakenD_API_Gateway/"
+           data-tag="krakend,kong,api gateway"
+           data-author="" >
+            <span class="post-title" title="KrakendD API Gateway">KrakendD API Gateway</span>
+            <span class="post-date" title="2021-11-25 18:00:26">2021/11/25</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2021/10/Stories/CrawlTravian_GameSupervisor/"
+           data-tag="selenium,crawl,travian,superviosr,chromedriver,chartjs"
+           data-author="" >
+            <span class="post-title" title="Web Game Supervisor">Web Game Supervisor</span>
+            <span class="post-date" title="2021-10-16 12:44:26">2021/10/16</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/09/Java/BuildDependencyInjection/"
+           data-tag="java,dependency,dependency injection,reflection"
+           data-author="" >
+            <span class="post-title" title="Build Dependency Injection">Build Dependency Injection</span>
+            <span class="post-date" title="2021-09-20 23:26:26">2021/09/20</span>
+        </a>
+        
+        
+        <a  class="All summary_book "
+           href="/2021/09/ReviewBooks/ProJavaClusteringAndScalability/"
+           data-tag="cassandra,rabbitmq,redis,mysql,chat"
+           data-author="" >
+            <span class="post-title" title="Java chat app - use Cassandra, MySQL, Redis, RabbitMQ">Java chat app - use Cassandra, MySQL, Redis, RabbitMQ</span>
+            <span class="post-date" title="2021-09-18 15:44:26">2021/09/18</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/08/Java/ProjectLoom/"
+           data-tag="java,concurrency,project loom,fiber,virtual thread"
+           data-author="" >
+            <span class="post-title" title="Java - Project Loom">Java - Project Loom</span>
+            <span class="post-date" title="2021-08-19 18:00:26">2021/08/19</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2021/08/Other/BloomFilter/"
+           data-tag="bloom filter,algorithm,false positive,bf"
+           data-author="" >
+            <span class="post-title" title="Bloom Filter">Bloom Filter</span>
+            <span class="post-date" title="2021-08-12 23:00:26">2021/08/12</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/08/Java/Java_Pattern/"
+           data-tag="command,java,pattern,design pattern,proxy,decorator,bridge,adapter,observer"
+           data-author="" >
+            <span class="post-title" title="Java - Design Pattern">Java - Design Pattern</span>
+            <span class="post-date" title="2021-08-04 00:05:26">2021/08/04</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2021/07/Database/Partition_Database/"
+           data-tag="sql,partition,sharding"
+           data-author="" >
+            <span class="post-title" title="Partition Database">Partition Database</span>
+            <span class="post-date" title="2021-07-31 18:00:26">2021/07/31</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/06/Java/EqualMethod/"
+           data-tag="java,equal,hashcode,EqualsVerifier"
+           data-author="" >
+            <span class="post-title" title="Java - Equal method">Java - Equal method</span>
+            <span class="post-date" title="2021-06-20 18:00:26">2021/06/20</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2021/04/Other/Functional_Pattern/"
+           data-tag="java,pattern,functional"
+           data-author="" >
+            <span class="post-title" title="Functional Pattern">Functional Pattern</span>
+            <span class="post-date" title="2021-04-25 18:00:26">2021/04/25</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2021/04/Database/Cassandra_Note/"
+           data-tag="cql,cassandra,database"
+           data-author="" >
+            <span class="post-title" title="Cassandra Note">Cassandra Note</span>
+            <span class="post-date" title="2021-04-11 12:04:26">2021/04/11</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2021/03/Database/Which_database_should_i_used/"
+           data-tag="database"
+           data-author="" >
+            <span class="post-title" title="Which database should i use">Which database should i use</span>
+            <span class="post-date" title="2021-03-17 18:00:26">2021/03/17</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/02/Java/Maven_Note/"
+           data-tag="java,maven,lib-common"
+           data-author="" >
+            <span class="post-title" title="Maven Note">Maven Note</span>
+            <span class="post-date" title="2021-02-08 18:00:26">2021/02/08</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/02/Java/reactive/Reactive_Reactor_Note/"
+           data-tag="java,reactive,reactor,spring webflux,observable"
+           data-author="" >
+            <span class="post-title" title="Reactive - Reactor Note">Reactive - Reactor Note</span>
+            <span class="post-date" title="2021-02-02 22:00:26">2021/02/02</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2021/01/Java/reactive/ProjectReactorExercise/"
+           data-tag="java,reactive,reactor,spring webflux,webclient"
+           data-author="" >
+            <span class="post-title" title="Reactive Programming - Reactor - DEMO 001">Reactive Programming - Reactor - DEMO 001</span>
+            <span class="post-date" title="2021-01-23 16:00:26">2021/01/23</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2021/01/Stories/App_Sync/"
+           data-tag="sync"
+           data-author="" >
+            <span class="post-title" title="Nhật ký cải tiến / xây mới ứng dụng Sync Data (via Rest API)">Nhật ký cải tiến / xây mới ứng dụng Sync Data (via Rest API)</span>
+            <span class="post-date" title="2021-01-10 10:39:26">2021/01/10</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2020/12/Stories/App_Backup_Restore/"
+           data-tag="backup restore"
+           data-author="" >
+            <span class="post-title" title="Nhật ký xây dựng app Backup &amp; Restore">Nhật ký xây dựng app Backup &amp; Restore</span>
+            <span class="post-date" title="2020-12-28 00:39:26">2020/12/28</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2020/12/Database/JPA_Persistance_note/"
+           data-tag="jpa,hibernate,persistence"
+           data-author="" >
+            <span class="post-title" title="JPA - Hibernate - Persistence Note">JPA - Hibernate - Persistence Note</span>
+            <span class="post-date" title="2020-12-27 13:47:26">2020/12/27</span>
+        </a>
+        
+        
+        <a  class="All database "
+           href="/2020/12/Database/Transaction_Isolation/"
+           data-tag="persistence,transaction,isolation,durability"
+           data-author="" >
+            <span class="post-title" title="Transaction - Isolation &amp; Durability">Transaction - Isolation &amp; Durability</span>
+            <span class="post-date" title="2020-12-20 18:00:26">2020/12/20</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2020/11/Stories/Ddos_Jmeter_ECS/"
+           data-tag="aws,ecs,jmeter,test"
+           data-author="" >
+            <span class="post-title" title="DDos, Stress test, distribution test với Jmeter, Docker, AWS ECS">DDos, Stress test, distribution test với Jmeter, Docker, AWS ECS</span>
+            <span class="post-date" title="2020-11-08 18:00:26">2020/11/08</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/09/Java/Concurrency/"
+           data-tag="java,concurrency,thread local,volatile,thread safe,completable future"
+           data-author="" >
+            <span class="post-title" title="Java - Concurrency">Java - Concurrency</span>
+            <span class="post-date" title="2020-09-30 18:00:26">2020/09/30</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/08/Java/JVM_Internal/"
+           data-tag="java,jvm internal"
+           data-author="" >
+            <span class="post-title" title="Java - JVM Internal">Java - JVM Internal</span>
+            <span class="post-date" title="2020-08-10 18:00:26">2020/08/10</span>
+        </a>
+        
+        
+        <a  class="All rabbitmq "
+           href="/2020/07/RabbitMQ/RabbitMQ_Build_HA_Cluster/"
+           data-tag="ha,rabbitmq,stories,quorum queue"
+           data-author="" >
+            <span class="post-title" title="Rabbitmq - Cluster High Availability">Rabbitmq - Cluster High Availability</span>
+            <span class="post-date" title="2020-07-26 18:00:26">2020/07/26</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/07/Java/SpringSecurity/"
+           data-tag="java,spring,security"
+           data-author="" >
+            <span class="post-title" title="Java - Spring Security">Java - Spring Security</span>
+            <span class="post-date" title="2020-07-18 18:00:26">2020/07/18</span>
+        </a>
+        
+        
+        <a  class="All kafka "
+           href="/2020/07/Kafka/Kafka_RebalanceProtocol/"
+           data-tag="kafka,rebalance,coordinator"
+           data-author="" >
+            <span class="post-title" title="Kafka - Rebalance Protocol">Kafka - Rebalance Protocol</span>
+            <span class="post-date" title="2020-07-13 18:00:26">2020/07/13</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2020/06/AWS/AWS_Note/"
+           data-tag="aws,note total"
+           data-author="" >
+            <span class="post-title" title="AWS - Note Total">AWS - Note Total</span>
+            <span class="post-date" title="2020-06-18 18:00:26">2020/06/18</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/06/Java/Logback/"
+           data-tag="log,logback"
+           data-author="" >
+            <span class="post-title" title="Java - Logback">Java - Logback</span>
+            <span class="post-date" title="2020-06-09 18:00:26">2020/06/09</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/06/Java/Quartz/"
+           data-tag="java,quartz,auto scheduler"
+           data-author="" >
+            <span class="post-title" title="Java - Implement Quartz">Java - Implement Quartz</span>
+            <span class="post-date" title="2020-06-03 18:00:26">2020/06/03</span>
+        </a>
+        
+        
+        <a  class="All rabbitmq "
+           href="/2020/05/RabbitMQ/RabbitMQ_Mirror/"
+           data-tag="ha,rabbitmq,mirror queue"
+           data-author="" >
+            <span class="post-title" title="Rabbitmq - Mirror Queue + Durable Message">Rabbitmq - Mirror Queue + Durable Message</span>
+            <span class="post-date" title="2020-05-18 18:00:26">2020/05/18</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/04/Java/Jhipster/"
+           data-tag="java,jhipster,auto tool,gen code"
+           data-author="" >
+            <span class="post-title" title="Java - Jhipster">Java - Jhipster</span>
+            <span class="post-date" title="2020-04-25 18:00:26">2020/04/25</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2020/04/Stories/BackupRestoreAthenaS3/"
+           data-tag="s3,query sql"
+           data-author="" >
+            <span class="post-title" title="Stories - Query SQL on S3">Stories - Query SQL on S3</span>
+            <span class="post-date" title="2020-04-20 18:00:26">2020/04/20</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2020/04/Other/Paseto/"
+           data-tag="token,paseto,authen"
+           data-author="" >
+            <span class="post-title" title="PASETO - Token base authentication">PASETO - Token base authentication</span>
+            <span class="post-date" title="2020-04-19 18:00:26">2020/04/19</span>
+        </a>
+        
+        
+        <a  class="All install_guide "
+           href="/2020/04/Install_Guide/Install_Config_Note/"
+           data-tag="note"
+           data-author="" >
+            <span class="post-title" title="Install &amp; Config Note">Install &amp; Config Note</span>
+            <span class="post-date" title="2020-04-01 18:00:26">2020/04/01</span>
+        </a>
+        
+        
+        <a  class="All code_template "
+           href="/2020/03/CodeTemplate/GoogleTranslateExmple/"
+           data-tag="code template,Google Translate,translate"
+           data-author="" >
+            <span class="post-title" title="Code Template - Google Translate">Code Template - Google Translate</span>
+            <span class="post-date" title="2020-03-10 18:00:26">2020/03/10</span>
+        </a>
+        
+        
+        <a  class="All cicd_ops "
+           href="/2020/02/Ops/CICD_FLow_Example/"
+           data-tag="cicd"
+           data-author="" >
+            <span class="post-title" title="CICD - Flow Example">CICD - Flow Example</span>
+            <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2020/02/Other/EWallet/"
+           data-tag="e-wallet,momo"
+           data-author="" >
+            <span class="post-title" title="E-Wallet Note">E-Wallet Note</span>
+            <span class="post-date" title="2020-02-22 18:00:26">2020/02/22</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2020/02/Other/Authentication_Topic/"
+           data-tag="authentication,basic,session,token"
+           data-author="" >
+            <span class="post-title" title="Authentication Topic">Authentication Topic</span>
+            <span class="post-date" title="2020-02-17 18:00:26">2020/02/17</span>
+        </a>
+        
+        
+        <a  class="All install_guide "
+           href="/2020/02/Install_Guide/Install_SNMP_Prometheus_Grafana/"
+           data-tag="script,install,snmp,prometheus,grafana"
+           data-author="" >
+            <span class="post-title" title="Install Guide - SNPM + Prometheus + Grafana">Install Guide - SNPM + Prometheus + Grafana</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        
+        <a  class="All stories "
+           href="/2020/02/Stories/48h_inhouse_getLink_project/"
+           data-tag="fshare,get link,stories"
+           data-author="" >
+            <span class="post-title" title="Stories - Get Link Fshare">Stories - Get Link Fshare</span>
+            <span class="post-date" title="2020-02-11 18:00:26">2020/02/11</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/02/Java/Java_Code_Prometheus_Metric/"
+           data-tag="prometheus,java,metric"
+           data-author="" >
+            <span class="post-title" title="Java - Code Application expose Metric for Prometheus">Java - Code Application expose Metric for Prometheus</span>
+            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/02/Java/Java_Total/"
+           data-tag="java,note,KafkaListener"
+           data-author="" >
+            <span class="post-title" title="Java - Note Total">Java - Note Total</span>
+            <span class="post-date" title="2020-02-05 18:00:26">2020/02/05</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2020/01/Other/DDD_EventDrivenArchitecture/"
+           data-tag="ddd,domain driver design"
+           data-author="" >
+            <span class="post-title" title="Domain-Driven Design &amp; Event-Driven Architecture">Domain-Driven Design &amp; Event-Driven Architecture</span>
+            <span class="post-date" title="2020-01-26 18:00:26">2020/01/26</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2020/01/AWS/AWS_LAB_ECS/"
+           data-tag="aws,ecs"
+           data-author="" >
+            <span class="post-title" title="AWS - LAB - ECS">AWS - LAB - ECS</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        
+        <a  class="All install_guide "
+           href="/2020/01/Install_Guide/Mount_EBS_to_EC2/"
+           data-tag="install,EBS"
+           data-author="" >
+            <span class="post-title" title="Install Guide - Mount an EBS volume to EC2 Linux">Install Guide - Mount an EBS volume to EC2 Linux</span>
+            <span class="post-date" title="2020-01-25 18:00:26">2020/01/25</span>
+        </a>
+        
+        
+        <a  class="All linux "
+           href="/2020/01/Linux/Linux_BashScript/"
+           data-tag="script,install,bash"
+           data-author="" >
+            <span class="post-title" title="Linux - Bash Script Collection">Linux - Bash Script Collection</span>
+            <span class="post-date" title="2020-01-22 18:00:26">2020/01/22</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/01/Java/SpringBoot_WebSocket_StompJS/"
+           data-tag="java,web socket,stompJs,spring"
+           data-author="" >
+            <span class="post-title" title="Java - Spring web Socket + StompJS">Java - Spring web Socket + StompJS</span>
+            <span class="post-date" title="2020-01-15 18:00:26">2020/01/15</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2020/01/Java/Javers_Diff/"
+           data-tag="java,javers,diff"
+           data-author="" >
+            <span class="post-title" title="Java - Javers Diff">Java - Javers Diff</span>
+            <span class="post-date" title="2020-01-13 18:00:26">2020/01/13</span>
+        </a>
+        
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/FeignClient_CustomizeByBean/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Customize Feign By Bean">Feign Client - Customize Feign By Bean</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/Feign_BuilderExample/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Client builder example">Feign Client - Client builder example</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        
+        <a  class="All java feign "
+           href="/2020/01/Java/FeignClient/Feign_MultipleConfig/"
+           data-tag="java,http client,feign"
+           data-author="" >
+            <span class="post-title" title="Feign Client - Multiple Configuration">Feign Client - Multiple Configuration</span>
+            <span class="post-date" title="2020-01-09 18:00:26">2020/01/09</span>
+        </a>
+        
+        
+        <a  class="All kafka "
+           href="/2020/01/Kafka/Kafka_Command/"
+           data-tag="command,kafka,kafka cli"
+           data-author="" >
+            <span class="post-title" title="Kafka - CLI Command">Kafka - CLI Command</span>
+            <span class="post-date" title="2020-01-03 18:00:26">2020/01/03</span>
+        </a>
+        
+        
+        <a  class="All kafka "
+           href="/2020/01/Kafka/Kafka_UseCase/"
+           data-tag="kafka,use case"
+           data-author="" >
+            <span class="post-title" title="Kafka - Use case">Kafka - Use case</span>
+            <span class="post-date" title="2020-01-02 18:00:26">2020/01/02</span>
+        </a>
+        
+        
+        <a  class="All cicd_ops "
+           href="/2020/01/Ops/VagrantFile_Template/"
+           data-tag="template,vagrant"
+           data-author="" >
+            <span class="post-title" title="Ops - Vagrant Template">Ops - Vagrant Template</span>
+            <span class="post-date" title="2020-01-01 18:00:26">2020/01/01</span>
+        </a>
+        
+        
+        <a  class="All kafka "
+           href="/2019/12/Kafka/Kafka_Note/"
+           data-tag="kafka,segment,total"
+           data-author="" >
+            <span class="post-title" title="Kafka - Note">Kafka - Note</span>
+            <span class="post-date" title="2019-12-31 18:00:26">2019/12/31</span>
+        </a>
+        
+        
+        <a  class="All code_template "
+           href="/2019/12/CodeTemplate/CodeTemplate_S3/"
+           data-tag="aws,s3,code template"
+           data-author="" >
+            <span class="post-title" title="Code Template - AWS - S3">Code Template - AWS - S3</span>
+            <span class="post-date" title="2019-12-27 18:00:26">2019/12/27</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2019/12/AWS/AWS_PolicyEvaluationLogic/"
+           data-tag="aws,evaluation logic"
+           data-author="" >
+            <span class="post-title" title="AWS - Policy Evaluation Logic">AWS - Policy Evaluation Logic</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        
+        <a  class="All java jackson "
+           href="/2019/12/Java/JackSon/Jackson_Deserialize_Abstractclass/"
+           data-tag="java,serialize,jackson"
+           data-author="" >
+            <span class="post-title" title="Jackson - Deserialize Abstract class">Jackson - Deserialize Abstract class</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        
+        <a  class="All java jackson "
+           href="/2019/12/Java/JackSon/Jackson/"
+           data-tag="java,serialize,jackson"
+           data-author="" >
+            <span class="post-title" title="Jackson - Note">Jackson - Note</span>
+            <span class="post-date" title="2019-12-21 18:00:26">2019/12/21</span>
+        </a>
+        
+        
+        <a  class="All docker "
+           href="/2019/12/Docker/Docker_Command/"
+           data-tag="docker,command,script,install"
+           data-author="" >
+            <span class="post-title" title="Docker - Command">Docker - Command</span>
+            <span class="post-date" title="2019-12-03 18:00:26">2019/12/03</span>
+        </a>
+        
+        
+        <a  class="All aws "
+           href="/2019/05/AWS/AWS_LAB_S3/"
+           data-tag="aws,s3,object storage"
+           data-author="" >
+            <span class="post-title" title="AWS - S3">AWS - S3</span>
+            <span class="post-date" title="2019-05-17 18:00:26">2019/05/17</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2019/05/Other/Signed_URL/"
+           data-tag="s3,object storage,signed url"
+           data-author="" >
+            <span class="post-title" title="Signed URL">Signed URL</span>
+            <span class="post-date" title="2019-05-12 18:00:26">2019/05/12</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2019/03/Java/MemoryLeak/"
+           data-tag="java,memory leak"
+           data-author="" >
+            <span class="post-title" title="Java - Memory Leak">Java - Memory Leak</span>
+            <span class="post-date" title="2019-03-17 18:00:26">2019/03/17</span>
+        </a>
+        
+        
+        <a  class="All other "
+           href="/2019/02/Other/Nginx_ConfigExample/"
+           data-tag="template,nginx"
+           data-author="" >
+            <span class="post-title" title="Nginx - Config example">Nginx - Config example</span>
+            <span class="post-date" title="2019-02-11 18:00:26">2019/02/11</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2018/10/Java/JPA_GeneratedValue/"
+           data-tag="jpa,java,GeneratedValue"
+           data-author="" >
+            <span class="post-title" title="Java - Annotation @GeneratedValue trong JPA">Java - Annotation @GeneratedValue trong JPA</span>
+            <span class="post-date" title="2018-10-12 18:00:26">2018/10/12</span>
+        </a>
+        
+        
+        <a  class="All java "
+           href="/2018/10/Java/Junit_Test/"
+           data-tag="java,junit,mockito,unit test"
+           data-author="" >
+            <span class="post-title" title="Java - Junit Test">Java - Junit Test</span>
+            <span class="post-date" title="2018-10-12 18:00:26">2018/10/12</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="full screen  s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-Database/Cassandra_Note" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">Cassandra Note</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="database">database</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">cql</a>
+            
+            <a class="color5">cassandra</a>
+            
+            <a class="color4">database</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2021-04-11 12:04:26'>2021-04-11 12:04</time>
+        
+    </div>
+    <div class="article-meta">
+        
+            Updated At : <time class="date" title='Updated At: 2021-04-11 12:04:26'>2021-04-11 12:04</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <!-- <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span> -->
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-Type"><span class="toc-text">Data Type</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-User-Defined-Types"><span class="toc-text">3. User Defined Types</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Data-with-JSON"><span class="toc-text">4. Data with JSON</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Materialized-Views"><span class="toc-text">Materialized Views</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Secondary-Indexes"><span class="toc-text">Secondary Indexes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Batches"><span class="toc-text">Batches</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lightweight-Transactions"><span class="toc-text">Lightweight Transactions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#User-Defined-Functions"><span class="toc-text">User Defined Functions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tombstones"><span class="toc-text">Tombstones</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-Tombstones"><span class="toc-text">Why Tombstones?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#When-Do-Tombstones-Cause-Problems"><span class="toc-text">When Do Tombstones Cause Problems?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Counters"><span class="toc-text">Counters</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multi-row-Partitions"><span class="toc-text">Multi-row Partitions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Storing-Data-in-Cassandra"><span class="toc-text">Storing Data in Cassandra</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Snitches"><span class="toc-text">Snitches</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Replication-Strategies"><span class="toc-text">Replication Strategies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tunable-Consistency"><span class="toc-text">Tunable Consistency</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Difference-between-Partition-Key-Composite-Key-and-Clustering-Key"><span class="toc-text">Difference between Partition Key, Composite Key, and Clustering Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Static-Column"><span class="toc-text">Static Column</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-to-quick-warm-up-cassandra-after-start-for-development"><span class="toc-text">How to quick warm up cassandra after start for development?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TWCS-vs-STCS"><span class="toc-text">TWCS vs STCS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TimeWindowCompactionStrategy-TWCS"><span class="toc-text">TimeWindowCompactionStrategy (TWCS)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SizeTieredCompactionStrategy-STCS"><span class="toc-text">SizeTieredCompactionStrategy (STCS)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Choosing-Between-TWCS-and-STCS"><span class="toc-text">Choosing Between TWCS and STCS</span></a></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Data-Type"><a href="#Data-Type" class="headerlink" title="Data Type"></a>Data Type</h2><h3 id="3-User-Defined-Types"><a href="#3-User-Defined-Types" class="headerlink" title="3. User Defined Types"></a>3. User Defined Types</h3><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> TYPE person (name <span class="type">varchar</span>, id <span class="type">varchar</span>); </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> courses ( </span><br><span class="line"> id <span class="type">varchar</span>, </span><br><span class="line"> author frozen<span class="operator">&lt;</span>person<span class="operator">&gt;</span> <span class="keyword">static</span>, </span><br><span class="line"> <span class="operator">/</span><span class="operator">/</span> ... </span><br><span class="line"> clips list<span class="operator">&lt;</span>frozen<span class="operator">&lt;</span>clip<span class="operator">&gt;&gt;</span>, </span><br><span class="line"> module_id <span class="type">int</span>, </span><br><span class="line"> <span class="operator">/</span><span class="operator">/</span> ... </span><br><span class="line"> <span class="keyword">PRIMARY KEY</span> (id, module_id) </span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-Data-with-JSON"><a href="#4-Data-with-JSON" class="headerlink" title="4. Data with JSON"></a>4. Data with JSON</h3><ul>
+<li>Insert<ul>
+<li>normal:</li>
+</ul>
+  <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT INTO</span> courses </span><br><span class="line">(id, module_id, author, clips) </span><br><span class="line"><span class="keyword">VALUES</span> (‘nodejs<span class="operator">-</span>big<span class="operator">-</span>picture’, <span class="number">1</span>, </span><br><span class="line">&#123; </span><br><span class="line">name: ‘Paul O<span class="string">&#x27;&#x27;</span>Fallon<span class="string">&#x27;, </span></span><br><span class="line"><span class="string">id: ‘paul-ofallon&#x27;</span> </span><br><span class="line">&#125;, [&#123; </span><br><span class="line">name: ’Course Overview’, </span><br><span class="line">duration: <span class="number">70</span> </span><br><span class="line">&#125;] </span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Use json</li>
+</ul>
+  <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT INTO</span> courses JSON <span class="string">&#x27;&#123; </span></span><br><span class="line"><span class="string">&quot;id&quot;: &quot;nodejs-big-picture&quot;, </span></span><br><span class="line"><span class="string">&quot;module_id&quot;: 1, </span></span><br><span class="line"><span class="string">&quot;author&quot;: &#123; </span></span><br><span class="line"><span class="string">&quot;name&quot;: &quot;Paul O’Fallon&quot;, </span></span><br><span class="line"><span class="string">&quot;id&quot;: &quot;paul-ofallon&quot; &#125;, </span></span><br><span class="line"><span class="string">&quot;clips&quot;: [&#123; </span></span><br><span class="line"><span class="string">&quot;name&quot;: &quot;Course Overview&quot;, </span></span><br><span class="line"><span class="string">&quot;duration&quot;: 70 </span></span><br><span class="line"><span class="string">&#125;] </span></span><br><span class="line"><span class="string">&#125;&#x27;</span> </span><br></pre></td></tr></table></figure></li>
+<li>Selecting</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> JSON <span class="operator">*</span> <span class="keyword">FROM</span> courses;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> id, name, toJson(released) <span class="keyword">FROM</span> courses;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Materialized-Views"><a href="#Materialized-Views" class="headerlink" title="Materialized Views"></a>Materialized Views</h2><p><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/cassandra/MaterializedViews.JPG" alt="MaterializedView"></p>
+<h2 id="Secondary-Indexes"><a href="#Secondary-Indexes" class="headerlink" title="Secondary Indexes"></a>Secondary Indexes</h2><ul>
+<li>If <code>dont secondary index</code>, you cant query on <code>collection</code> column</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> users ( </span><br><span class="line"> id <span class="type">varchar</span>, </span><br><span class="line"> first_name <span class="type">varchar</span>, </span><br><span class="line"> last_name <span class="type">varchar</span>, </span><br><span class="line"> company <span class="type">varchar</span>, </span><br><span class="line"> tags <span class="keyword">set</span><span class="operator">&lt;</span><span class="type">varchar</span><span class="operator">&gt;</span>, </span><br><span class="line"> <span class="operator">/</span><span class="operator">/</span> ... </span><br><span class="line"> <span class="keyword">PRIMARY KEY</span> (id) </span><br><span class="line">); </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX <span class="keyword">ON</span> users(tags)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> tags <span class="keyword">CONTAINS</span> <span class="string">&#x27;java&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Batches"><a href="#Batches" class="headerlink" title="Batches"></a>Batches</h2><figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span> BATCH </span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> courses (id, tags) </span><br><span class="line"><span class="keyword">VALUES</span> (‘nodejs-big-picture‘, </span><br><span class="line"> &#123;‘developer<span class="string">&#x27;, &#x27;</span>javascript<span class="string">&#x27;, &#x27;</span>node.js<span class="string">&#x27;, &#x27;</span><span class="keyword">open</span>-sourc<span class="string">e&#x27;&#125;); </span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">INSERT INTO course_tags (tag, course_id) </span></span><br><span class="line"><span class="string">VALUES (‘developer’,&#x27;</span>nodejs-big-pictur<span class="string">e&#x27;); </span></span><br><span class="line"><span class="string">// ... etc. </span></span><br><span class="line"><span class="string">APPLY BATCH;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Lightweight-Transactions"><a href="#Lightweight-Transactions" class="headerlink" title="Lightweight Transactions"></a>Lightweight Transactions</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">1.</span> Prepare ! Promise </span><br><span class="line"><span class="bullet">2.</span> Read ! Results </span><br><span class="line"><span class="bullet">3.</span> Propose ! Accept </span><br><span class="line"><span class="bullet">4.</span> Commit ! Ack</span><br></pre></td></tr></table></figure>
+
+<h2 id="User-Defined-Functions"><a href="#User-Defined-Functions" class="headerlink" title="User Defined Functions"></a>User Defined Functions</h2><ul>
+<li>Use <code>hourly</code></li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> asTimeStr(duration, <span class="literal">false</span>) </span><br><span class="line"><span class="keyword">FROM</span> courses </span><br><span class="line"><span class="keyword">WHERE</span> id <span class="operator">=</span> ‘advanced<span class="operator">-</span>javascript’</span><br></pre></td></tr></table></figure>
+
+<pre><code>- Input: 24936 =&gt; Output: 6h 55 m
+</code></pre>
+<ul>
+<li>Defined<br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/cassandra/DefinedFunction.JPG" alt="DefinedFunction"></li>
+</ul>
+<h2 id="Tombstones"><a href="#Tombstones" class="headerlink" title="Tombstones"></a>Tombstones</h2><p>When data is deleted in Cassandra, it isn’t immediately removed from the cluster. Instead, a tombstone is written to the database, marking the data in question as deleted. This tombstone is partitioned data, just like any other data written to the cluster, and it is managed accordingly with hinted handoffs, read repairs, and more.</p>
+<p>For example, consider a keyspace with a replication factor of three, and we delete some data at a consistency level of quorum. Now let’s suppose this write doesn’t make it to the third node in the cluster responsible for that token range. Having the tombstone allows the read repair process to propagate this tombstone to the outdated node.</p>
+<ul>
+<li>Property: <code>gc_grace_seconds</code> (default is 10 days)</li>
+<li>Note: You can see tombstone data using certain tools.</li>
+</ul>
+<h3 id="Why-Tombstones"><a href="#Why-Tombstones" class="headerlink" title="Why Tombstones?"></a>Why Tombstones?</h3><p>Tombstones address a specific use case: when we try to delete a row while one node in the cluster is down. When that node comes back online, it might think another node is “missing” some data. It doesn’t realize that the row has been deleted. As a result, the data could be re-updated or re-inserted into another node. To avoid this, Cassandra doesn’t permanently remove data; it just marks the rows with a “flag” indicating they have been removed.</p>
+<h3 id="When-Do-Tombstones-Cause-Problems"><a href="#When-Do-Tombstones-Cause-Problems" class="headerlink" title="When Do Tombstones Cause Problems?"></a>When Do Tombstones Cause Problems?</h3><ul>
+<li><strong>Disk Usage:</strong> Tombstones can accumulate and consume disk space.</li>
+<li><strong>Read Performance:</strong> When querying with a specific partition key that includes too many rows marked as deleted, read performance can degrade.</li>
+</ul>
+<h2 id="Counters"><a href="#Counters" class="headerlink" title="Counters"></a>Counters</h2><p>Counters are a special data type in Cassandra since dealing with them in a distributed environment requires special<br>care. Counters must live in tables by themselves other than the primary keys they also carry with them. Some added<br>overhead as they rely on read before, right.</p>
+<h2 id="Multi-row-Partitions"><a href="#Multi-row-Partitions" class="headerlink" title="Multi-row Partitions"></a>Multi-row Partitions</h2><ol>
+<li>Composite partition keys and Clustering keys<br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/cassandra/Key.JPG" alt="Key"></li>
+<li>Static columns</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> courses ( </span><br><span class="line"> id <span class="type">varchar</span>, </span><br><span class="line"> name <span class="type">varchar</span> <span class="keyword">STATIC</span>, </span><br><span class="line"> module_id <span class="type">int</span>, </span><br><span class="line"> module_name <span class="type">varchar</span>, </span><br><span class="line"> <span class="keyword">PRIMARY KEY</span> (id, module_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Time Series Data</li>
+</ol>
+<ul>
+<li>TimeUUID Data Type<ul>
+<li>Example: <code>45b94a50-12e5-11e5-9114-091830ac5256</code></li>
+<li>The number of 100 ns intervals since UUID epoch</li>
+<li>MAC address</li>
+<li>Clock sequence number to prevent duplicates</li>
+</ul>
+</li>
+<li>cql ex:</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> course_page_views ( </span><br><span class="line"> course_id text, </span><br><span class="line"> view_id timeuuid, </span><br><span class="line"> <span class="keyword">PRIMARY KEY</span> (course_id, view_id) </span><br><span class="line">) <span class="keyword">WITH</span> CLUSTERING <span class="keyword">ORDER</span> <span class="keyword">BY</span> (view_id <span class="keyword">DESC</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>now</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> course_page_views ( </span><br><span class="line"> course_id text, </span><br><span class="line"> view_id timeuuid, </span><br><span class="line"> <span class="keyword">PRIMARY KEY</span> (course_id, view_id) </span><br><span class="line">) <span class="keyword">WITH</span> CLUSTERING <span class="keyword">ORDER</span> <span class="keyword">BY</span> (view_id <span class="keyword">DESC</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>dateOf &#x2F; unixTimestampOf</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> course_id, dateOf(view_id) </span><br><span class="line"><span class="keyword">FROM</span> course_page_views <span class="keyword">WHERE</span> course_id <span class="operator">=</span> ‘advanced<span class="operator">-</span>python‘;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>minTimeuuid &#x2F; maxTimeuuid</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> dateOf(view_id) </span><br><span class="line"><span class="keyword">FROM</span> course_page_views </span><br><span class="line"><span class="keyword">WHERE</span> course_id <span class="operator">=</span> ‘advanced<span class="operator">-</span>python<span class="string">&#x27; </span></span><br><span class="line"><span class="string">AND view_id &gt;= maxTimeuuid(&#x27;</span><span class="number">2019</span><span class="number">-11</span><span class="number">-01</span> <span class="number">00</span>:<span class="number">00</span><span class="operator">+</span><span class="number">0000</span><span class="string">&#x27;) </span></span><br><span class="line"><span class="string">AND view_id &lt; minTimeuuid(‘2019-12-01 00:00+0000&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Bucketing Time series data</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> course_page_views ( </span><br><span class="line"> bucket_id text, </span><br><span class="line"> course_id text, </span><br><span class="line"> view_id timeuuid, </span><br><span class="line"> <span class="keyword">PRIMARY KEY</span> ((bucket_id, course_id), view_id) </span><br><span class="line">) <span class="keyword">WITH</span> CLUSTERING <span class="keyword">ORDER</span> <span class="keyword">BY</span> (view_id <span class="keyword">DESC</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="Storing-Data-in-Cassandra"><a href="#Storing-Data-in-Cassandra" class="headerlink" title="Storing Data in Cassandra"></a>Storing Data in Cassandra</h2><p>All data stored in Cassandra is associated with a token</p>
+<h2 id="Snitches"><a href="#Snitches" class="headerlink" title="Snitches"></a>Snitches</h2><p>???</p>
+<h2 id="Replication-Strategies"><a href="#Replication-Strategies" class="headerlink" title="Replication Strategies"></a>Replication Strategies</h2><p><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/cassandra/Cassandra_terminology.JPG" alt="Cassandra_Terminology"></p>
+<ol>
+<li>SimpleStrategy</li>
+</ol>
+<ul>
+<li>Used in dev env or single data center cluster</li>
+<li>CQL ex</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> KEYSPACE keyspace101 <span class="keyword">with</span> replication <span class="operator">=</span></span><br><span class="line">&#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;SimpleStrategy&#x27;</span>, <span class="string">&#x27;replication_factor&#x27;</span> : <span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>replication_factor : 3</code> &#x3D; asking Cassandra to store three copies of all the partitions in all the tables written to<br>the cluster, in this keyspace</p>
+<ol start="2">
+<li>NetworkTopologyStrategy</li>
+</ol>
+<ul>
+<li>CQL ex</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> KEYSPACE keyspace102 <span class="keyword">with</span> replication <span class="operator">=</span></span><br><span class="line">&#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;NetworkTopologyStrategy&#x27;</span>, <span class="string">&#x27;DC1&#x27;</span> : <span class="number">3</span>, <span class="string">&#x27;DC2&#x27;</span>: <span class="number">1</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>storing 4 copies of the data for each partition in each table&#x2F;in the keyspace. <code>BUT</code> 3 in DC1, and 1 in DC2</p>
+<h2 id="Tunable-Consistency"><a href="#Tunable-Consistency" class="headerlink" title="Tunable Consistency"></a>Tunable Consistency</h2><ul>
+<li><code>Hinted Handoff</code> is used to handle transient failures</li>
+<li>(Write Consistency + Read Consistency) &gt; Replication Factor</li>
+<li>Command set consistency level<ul>
+<li>multi-dc: <code> consistency local_one;</code></li>
+<li>single-dc: <code>consistency quorum;</code></li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>Read<br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/cassandra/TunableConsistency_Reads.JPG" alt="Tunable Consistency Reads"></li>
+</ol>
+<ul>
+<li>Read Repair<ul>
+<li>What happens when 1 node with old data, and 2 node with good data?</li>
+<li>Then, the third node will return a digest that does not match the other two nodes.</li>
+<li>The coordinator node will then read the full data from all three nodes, determine the correct data</li>
+<li>Write correct data back to the node that’s in error</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>Write</li>
+</ol>
+<ul>
+<li><p>Coordinator (node receive write statement) will wait to receive an ack of the other node before returning a positive<br>response to the collar<br><img src="https://tungexplorer.s3.ap-southeast-1.amazonaws.com/cassandra/TunableConsistency_Writes.JPG" alt="Tunable Consistency - Writes"></p>
+</li>
+<li><p>Hinted Handoff</p>
+<ul>
+<li>What happens if one of those writes fails?</li>
+<li>Cassandra uses a strategy called a hinted handoff to help in these situations</li>
+<li>The data is written down on the coordinator node</li>
+<li>Then the coordinator know tries repeatedly to deliver the data</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>Consistency with multiple data centers</li>
+</ol>
+<ul>
+<li>EACH_QUORUM</li>
+<li>LOCAL_QUORUM</li>
+<li>LOCAL_ONE</li>
+</ul>
+<h2 id="Difference-between-Partition-Key-Composite-Key-and-Clustering-Key"><a href="#Difference-between-Partition-Key-Composite-Key-and-Clustering-Key" class="headerlink" title="Difference between Partition Key, Composite Key, and Clustering Key"></a>Difference between Partition Key, Composite Key, and Clustering Key</h2><ul>
+<li><strong>Primary Key:</strong> Cassandra uses a special type of primary key called a composite key to represent a group of related rows, also called “Partitions”.</li>
+<li><strong>Primary Key &#x3D; Partition Key + OPTIONAL Clustering Columns</strong></li>
+<li><strong>Partition Key:</strong> It determines the nodes on which rows are stored and can contain multiple columns.</li>
+<li><strong>Composite Key:</strong> It controls how data is stored inside the partition.</li>
+</ul>
+<h2 id="Static-Column"><a href="#Static-Column" class="headerlink" title="Static Column"></a>Static Column</h2><p>A static column is a special column that is shared by all the rows of a partition. The static column is very useful when we want to share a column with a single value.</p>
+<ul>
+<li>A table that does not define any clustering columns cannot have a static column.</li>
+<li>You can batch conditional updates to a static column.</li>
+<li>Use the DISTINCT keyword to select static columns.</li>
+<li>If <code>COMPACT STORAGE</code> is specified when the table is built, static columns are not allowed.</li>
+<li>If a column is part of the partition key or clustering columns, it cannot be described as a static column.</li>
+</ul>
+<h2 id="How-to-quick-warm-up-cassandra-after-start-for-development"><a href="#How-to-quick-warm-up-cassandra-after-start-for-development" class="headerlink" title="How to quick warm up cassandra after start for development?"></a>How to quick warm up cassandra after start for development?</h2><ul>
+<li>Run with argument <code>JVM_OPTS=-Dcassandra.skip_wait_for_gossip_to_settle=0 -Dcassandra.initial_token=1</code><br>Example in docker-compose file</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">cassandra:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">cassandra:4.1.3</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9042:9042&quot;</span></span><br><span class="line">    <span class="attr">healthcheck:</span></span><br><span class="line">      <span class="attr">test:</span> [<span class="string">&quot;CMD&quot;</span>, <span class="string">&quot;cqlsh&quot;</span>, <span class="string">&quot;-e&quot;</span>, <span class="string">&quot;describe keyspaces&quot;</span>]</span><br><span class="line">      <span class="attr">interval:</span> <span class="string">3s</span></span><br><span class="line">      <span class="attr">timeout:</span> <span class="string">20s</span></span><br><span class="line">      <span class="attr">retries:</span> <span class="number">5</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">JVM_OPTS=-Dcassandra.skip_wait_for_gossip_to_settle=0</span> <span class="string">-Dcassandra.initial_token=1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="TWCS-vs-STCS"><a href="#TWCS-vs-STCS" class="headerlink" title="TWCS vs STCS"></a>TWCS vs STCS</h2><h3 id="TimeWindowCompactionStrategy-TWCS"><a href="#TimeWindowCompactionStrategy-TWCS" class="headerlink" title="TimeWindowCompactionStrategy (TWCS)"></a>TimeWindowCompactionStrategy (TWCS)</h3><p><strong>Use Case:</strong></p>
+<p>TWCS is specifically designed for time-series data, where data is constantly appended and older data becomes less frequently accessed.</p>
+<p><strong>How It Works:</strong></p>
+<p>TWCS divides data into windows based on time intervals (e.g., hours, days, or weeks). Within each window, data is organized using Size-Tiered Compaction (STCS). When a window becomes older than a specified time threshold, it is compacted into a single SSTable (Sorted String Table). This helps in efficiently managing time-series data with minimal disk I&#x2F;O.</p>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Efficient for time-series data.</li>
+<li>Reduces read amplification for recent data.</li>
+<li>Older data is less frequently compacted, reducing compaction overhead.</li>
+</ul>
+<h3 id="SizeTieredCompactionStrategy-STCS"><a href="#SizeTieredCompactionStrategy-STCS" class="headerlink" title="SizeTieredCompactionStrategy (STCS)"></a>SizeTieredCompactionStrategy (STCS)</h3><p><strong>Use Case:</strong></p>
+<p>STCS is a general-purpose compaction strategy that can be used for a wide range of workloads.</p>
+<p><strong>How It Works:</strong></p>
+<p>STCS organizes data into SSTables based on their size. When the number of SSTables in a given level exceeds a threshold, compaction is triggered. SSTables are merged into larger SSTables, and data is compacted based on size.</p>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Simplicity and good performance for various workloads.</li>
+<li>Effective for write-intensive workloads where data is rapidly changing.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Less efficient for time-series data since it doesn’t consider time-based access patterns.</li>
+</ul>
+<h3 id="Choosing-Between-TWCS-and-STCS"><a href="#Choosing-Between-TWCS-and-STCS" class="headerlink" title="Choosing Between TWCS and STCS"></a>Choosing Between TWCS and STCS</h3><p>The choice between TWCS and STCS depends on your data and access patterns:</p>
+<ul>
+<li>If you are dealing with time-series data, such as log data, sensor readings, or financial data, TWCS is typically a better choice. It optimizes storage and access patterns for time-based data.</li>
+<li>For general-purpose workloads or write-intensive applications, STCS can work well. It’s simple to configure and is suitable for scenarios where data isn’t primarily organized by time.</li>
+</ul>
+<p>In some cases, a mixed strategy approach is used, where you might use TWCS for recent data and STCS for historical or less frequently accessed data to strike a balance between efficiency and simplicity.</p>
+<p>Ultimately, the choice of compaction strategy should align with your specific use case and performance requirements. It’s important to benchmark and monitor your Cassandra cluster to ensure that the chosen strategy meets your needs.</p>
+
+      
+       <hr><span id="github_link" style="font-style: italic;color: gray;">via https://github.com/tungtv202/MyNote/tree/master/</span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    © 2019-2023 Tung Explorer
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="full-screen  s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+        /* 渲染*/
+        function HTMLDecode(text) {
+            var temp = document.createElement("div");
+            temp.innerHTML = text;
+            var output = temp.innerText || temp.textContent;
+            temp = null;
+            return output;
+        }
+        if (window.mermaid){
+            window.mermaid = null
+        }
+        $.getScript("//cdn.jsdelivr.net/npm/mermaid@8.4.2/dist/mermaid.min.js", function () {
+            var mermaidOptions = JSON.parse(HTMLDecode("{&#34;theme&#34;:&#34;default&#34;,&#34;startOnLoad&#34;:true,&#34;flowchart&#34;:{&#34;useMaxWidth&#34;:false,&#34;htmlLabels&#34;:true}}"))
+            if (window.mermaid) {
+                mermaid.initialize(mermaidOptions)
+                mermaid.contentLoaded()
+            }
+             var s = document.getElementById("github_link");
+             var currentContent = s.textContent;
+             s.textContent = currentContent+window.location.pathname.substring(9).slice(0, -1) + '.md';
+        })
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 572px;
+    }
+    .nav.fullscreen {
+        margin-left: -572px;
+    }
+    .nav-left {
+        width: 150px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 542px;
+        }
+        .nav.fullscreen {
+            margin-left: -542px;
+        }
+        .nav-left {
+            width: 150px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 542px;
+            margin-left: -542px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #fbf4a8;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
